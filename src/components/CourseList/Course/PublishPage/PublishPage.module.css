@@ -1,0 +1,70 @@
+.PubishContainer {
+    position: relative;
+  border: 1px solid black;
+  max-width: 900px;
+  min-height: 460px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.CloseBtn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+.SelectContainer{
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
+}
+.FlexBox {
+  display: flex;
+}
+.ColumnBox {
+  margin-right: 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.TitleContainer {
+  margin-bottom: 10px;
+}
+.DescriptionContainer {
+  height: 100%;
+}
+.TitleContainer,
+.DescriptionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.DescriptionContainer textarea {
+  resize: none;
+  flex-grow: 1;
+}
+.TitleContainer input,
+.DescriptionContainer textarea {
+  border-radius: 10px;
+  padding: 10px;
+}
+.FileUploaderContainer {
+  height: 445px;
+  width: 310px;
+  margin: 10px;
+  margin-right: 30px;
+}
+.PubishContainer .PublishBtn{
+  background-color: rgb(173, 173, 245);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.PubishContainer .PublishBtn:hover {
+  background-color: rgb(134, 134, 191);
+}

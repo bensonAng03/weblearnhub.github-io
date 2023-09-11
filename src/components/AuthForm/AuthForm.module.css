@@ -1,0 +1,79 @@
+
+.FormModel {
+  width: 400px;
+  height: 400px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, #adeebd, #a0e5f3);
+  margin: 10px 0;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+.FormModel form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.FormModel p{
+    display: block;
+    height: 30px;
+    color: red;
+}
+.FormModel label {
+  margin-top: 30px;
+  font-weight: bold;
+}
+#NameLabel,#ConfirmPasswordLabel{
+    margin-top: 0;
+}
+.FormModel input {
+  outline: none;
+  width: 400px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.Buttons{
+  width:100%;
+}
+.FormModel button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.FormModel button:hover {
+  background-color: #3e8e41;
+}
+
+.FormModel h2 {
+  margin-bottom: 20px;
+}
+
+.FormModel .Buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 10px;
+}
+/* .FormModel .error{
+    color: red;
+    margin-top: 0;
+}
+.FormModel .error::before{
+    line-height: 15px;
+    font-size: 16px;
+    color: red;
+    content: "Password and confirm password are different!  ";
+} */

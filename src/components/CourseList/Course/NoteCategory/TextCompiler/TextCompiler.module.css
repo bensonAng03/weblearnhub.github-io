@@ -1,0 +1,29 @@
+.TextCompilerContainer{
+    width: 500px;
+    height: 500px;
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+}
+.DeleteBtn{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 10;
+    cursor: pointer;
+}
+.PublishBtn{
+    background-color: rgb(173, 173, 245);
+    color: white;
+    border: none;
+    padding: 2px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+.PublishBtn:hover {
+    background-color: rgb(134, 134, 191);
+  }

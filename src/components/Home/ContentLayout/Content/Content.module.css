@@ -1,0 +1,12 @@
+.Content{
+    width: 80%;
+    padding: 20px;
+    font-size: 20px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    line-height: 40px;
+    border: 1px solid #ccc;
+}
+.ContentItem *{
+    text-align: left;
+}

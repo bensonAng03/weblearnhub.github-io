@@ -1,0 +1,62 @@
+.Invoice{
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  position: relative;
+  line-height: 25px;
+}
+.Invoice h3{
+  color: rgb(0, 105, 147);
+}
+.PaymentForm {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  position: relative;
+}
+.CloseBtn{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+.FormGroup {
+  width: 95%;
+  margin: 5px;
+}
+.PaymentForm input{
+  outline: none;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.FlexLayout{
+  width: 95%;
+  display: flex;
+}
+.FlexLayout .FormGroup{
+  width: 200px;
+}
+.FlexLayout input{
+  width: 80%;
+}
+
+.PaymentForm .SubmitBtn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.PaymentForm .SubmitBtn:hover {
+  background-color: #0056b3;
+}

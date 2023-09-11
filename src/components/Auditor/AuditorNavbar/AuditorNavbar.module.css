@@ -1,0 +1,16 @@
+.NavBar{
+    width: 100%;
+    display: flex;
+    background-color: rgb(173, 173, 245);
+    font-size: 25px;
+    line-height: 30px;
+}
+.NavBar li{
+    flex: 1;
+    color: white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+.Active{
+    background-color: rgb(134, 134, 191);
+}

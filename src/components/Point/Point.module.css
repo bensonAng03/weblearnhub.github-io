@@ -1,0 +1,31 @@
+    .PointContainer{
+        color: gold;
+        text-align: right;
+        background-color: rgb(68, 17, 88);
+        border: 1px solid gold;
+        margin: 0px;
+        padding: 2px;
+        display: flex;
+        flex-direction: row;
+        font-size: 15px;
+        height: 16px;
+        border-radius: 5px;
+    }
+    .PointContainer span{
+        margin: 0 2px;
+    }
+    .AddPointBtn{
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 5px;
+        position: relative;
+        top: -5px;
+        right: -5px;
+        background-color: gold;
+        color: white;
+        border: 1px solid rgb(68, 17, 88);
+        border-radius: 5px;
+    }

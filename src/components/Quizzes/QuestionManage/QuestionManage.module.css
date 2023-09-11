@@ -1,0 +1,73 @@
+.QuizContainer {
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    display: flex;
+  }
+  .CreateQuestionContainer{
+    flex: 1;
+    height: 500px;
+    overflow-x: auto;
+  }
+  .CreateQuestionContainer h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .CreateQuestionContainer label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .ChoiceBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .CreateQuestionContainer input[type="text"]{
+    width: 70%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .CreateQuestionContainer input[type="radio"],.CreateQuestionContainer input[type="checkbox"]{
+    background-color: #428bca;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+  
+  .CreateQuestionContainer button {
+    padding: 8px 16px;
+    margin: 5px;
+    background-color: #428bca;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .CreateQuestionContainer ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .CreateQuestionContainer li {
+    margin-bottom: 5px;
+  }
+  
+  .CreateQuestionContainer li::before {
+    content: "•";
+    margin-right: 5px;
+  }
+  .QuestionDataContainer{
+    flex: 1;
+    overflow-x: auto;
+    height: 500px;
+  }
+  .SelectedChoice{
+    color: #428bca;
+  }
