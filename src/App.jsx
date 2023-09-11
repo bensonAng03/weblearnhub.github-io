@@ -3,7 +3,7 @@ import { Routes, Route} from "react-router-dom";
 import CourseList from "./components/CourseList/CourseList";
 import Home from "./components/Home/Home";
 import LiveCourse from "./components/LiveCourse/LiveCourse";
-import Profile from "./components/Profile/profile";
+import Profile from "./components/Profile/Profile";
 import Course from "./components/CourseList/Course/Course";
 import CourseCategory from "./components/CourseList/Course/CourseCategory/CourseCategory";
 import ClassworkCategory from "./components/CourseList/Course/ClassworkCategory/ClassworkCategory";
