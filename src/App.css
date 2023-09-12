@@ -1,0 +1,20 @@
+li{
+  list-style: none;
+}
+div{
+  margin: 0 auto;
+  text-align: center;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+a{
+  color: black;
+  text-decoration: none;
+}
+.AppContainer{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

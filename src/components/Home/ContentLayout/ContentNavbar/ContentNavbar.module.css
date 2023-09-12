@@ -1,0 +1,21 @@
+.NavBar{
+    width: 20%;
+    margin-right: 20px;
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(173, 173, 245);
+    font-size: 25px;
+    line-height: 30px;
+}
+.NavBar li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    color: white;
+}
+.Active{
+    background-color: rgb(134, 134, 191);
+}

@@ -1,0 +1,25 @@
+.Navbar{
+    display: flex;
+    align-items: center;
+    width: 40%;
+    z-index: 1;
+    position: absolute;
+    left:0;
+}
+.Navbar li{
+    background-color: rgb(173, 173, 245);
+    height: 30px;
+    line-height: 30px;
+    border-right: 1px solid white;
+    display: block;
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    color: white;
+    cursor: pointer;
+}
+.Navbar .Active{
+    background-color: #f8f8f8;
+    border-right: none;
+    color: black;
+}

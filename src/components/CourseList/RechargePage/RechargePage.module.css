@@ -1,0 +1,36 @@
+.RechargePage{
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    flex-direction: column;
+    position: relative;
+    display: flex;
+}
+.DeleteBtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.RechargePage li{
+    border:5px solid rgb(124, 0, 218);
+    border-radius: 5px;
+    font-size: 20px;
+    color: rgb(2, 0, 121);
+    display: flex;
+    height: 100px;
+    width: 100px;
+    margin: 7px;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+.Point{
+    background-color: gold;
+    border-radius: 5px;
+    width: 90%;
+    display: block;
+    line-height: 30px;
+}
+.TopBox,.BottomBox{
+    display: flex;
+}

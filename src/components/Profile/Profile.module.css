@@ -1,0 +1,17 @@
+.Profile {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  width: auto;
+  position: relative;
+}
+.ItemContainer {
+  width: 650px;
+  height: 600px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

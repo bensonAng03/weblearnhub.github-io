@@ -1,0 +1,73 @@
+.EditDetail {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.CloseBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.DefaultChoices{
+  max-height: 125px;
+  width: 95%;
+  overflow: auto;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.ChoicesItem{
+  display: flex;
+  flex-direction: column;
+}
+.ChoicesItem input{
+  width: auto;
+}
+.ChoicesItem .ChoicesBtn{
+  color: black;
+  margin: 2px 0;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f2f2f2;
+  border: none;
+}
+.ChoicesItem .Active{
+  background-color: rgb(96, 96, 181);
+}
+.EditDetail textarea {
+  width: 95%;
+  height: 100px;
+  min-height: 100px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+.SubmitBtn{
+  display: block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.SubmitBtn:hover {
+  background-color: #0056b3;
+}

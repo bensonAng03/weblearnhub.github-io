@@ -1,0 +1,151 @@
+.Course {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+.RightContainer {
+  position: absolute;
+  right: 20px;
+  top: -10px;
+  z-index: 1;
+}
+.Contain {
+  margin: 0 auto;
+}
+.CourseInfo {
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  background-color: red;
+  position: relative;
+  height: 100px;
+  width: 650px;
+  margin-top: 20px;
+  background: linear-gradient(to right, rgb(72, 137, 233), #ffffff);
+  padding: 40px;
+}
+.CourseInfo h2 ,.CourseInfo p{
+  text-align: left;
+  margin-left: 100px;
+  width: 550px;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.EditBtn,
+.SetBtn {
+    font-size: 20px;
+  color: rgb(70, 32, 238);
+}
+.SetBtn,.ReportBtn{
+    width: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.EditBtn {
+  margin-right: 10px;
+}
+.ReportBtn{
+  border: none;
+  font-size: 16px;
+  line-height: 16px;
+  background-color: #dc3545; /* 可以根据你的颜色需求进行调整 */
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+  right: 20px;
+  width:auto;
+}
+.EditContainer {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+}
+
+.EditContainer li {
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.EditContainer li:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+.ShowClass {
+  display: block;
+}
+.TchImg {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+.TchImg img {
+  width: 100%;
+}
+.BtnContainer {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+.PublishBtn,
+.VideoBtn {
+  border-radius: 10px;
+  padding: 7px;
+  border: none;
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+}
+.PublishBtn {
+  margin-left: 10px;
+}
+.CourseNavbar {
+  margin: 10px auto;
+  width: 650px;
+}
+.CourseNavbar ul {
+  display: block;
+  display: flex;
+  align-items: center;
+}
+.Link {
+  display: block;
+  flex-grow: 1;
+}
+.Link a {
+  display: block;
+  line-height: 30px;
+  font-size: 21px;
+  color: rgb(105, 105, 105);
+  text-decoration: none;
+  font-weight: bold;
+}
+/* .Link:first-child{
+    border-bottom: 2px solid rgb(72, 137, 233);
+} */
+/* .ActiveLink{
+    border-bottom: 2px solid rgb(72, 137, 233);
+} */
+.Active {
+  border-bottom: 2px solid rgb(72, 137, 233);
+}

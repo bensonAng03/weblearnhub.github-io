@@ -1,0 +1,193 @@
+.CourseList{
+  width: 95%;
+}
+.FunctionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+}
+.LeftContainer {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(218, 71, 218);
+  border-radius: 5px;
+}
+
+.SearchBar {
+  width: 300px;
+  height: 20px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}
+.SearchBtn {
+  color: white;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  padding: 7px;
+  background-color: rgb(218, 71, 218);
+}
+.RightContainer {
+  flex: 1;
+  margin-top: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.AddBtn {
+  margin: 0 5px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  padding: 7px;
+  border-radius: 50%;
+  background-color: rgb(218, 71, 218);
+}
+.BarBtnContainer{
+  position: relative;
+  width: 100%;
+}
+.BarBtn{
+  position: absolute;
+  right: 10px;
+}
+.CourseTypeList{
+  padding: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  position: absolute;
+  right: 42px;
+  z-index: 1;
+}
+.CourseTypeList li {
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.CourseTypeList li:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+.ShowClass {
+  display: block;
+}
+.CoursesList{  
+  margin-top: 30px;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+.Course {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  height: 140px;
+  width: 344px;
+  position: relative;
+  margin: 5px;
+  border: 1px solid #adadf5;
+  border-radius: 5px;
+}
+.CourseInfo {
+  padding: 10px;
+  background-color: #adadf5;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.StatusBox{
+  border: 1px solid rgb(128, 105, 223);
+  background-color: rgb(138, 110, 251);
+  color: white;
+  padding: 0 5px;
+  border-radius: 5px;
+  position: absolute;
+  left: 5px;
+  top: 3px;
+}
+.TchName,
+.Title {
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.Title{
+  border: none;
+  background-color: transparent;
+  max-width: 220px;
+}
+.TchName{
+  width: 180px;
+}
+.ManageBtn {
+  position: absolute;
+  right: 10px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  color: #555555;
+}
+.ManageContainer {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 4px;
+  z-index: 1;
+}
+.ManageContainer li {
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.ManageContainer li:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+.DeleteBtn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.ShowClass {
+  display: block;
+}
+.TchImg {
+  display: flex;
+  top: 40px;
+  right: 10px;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.TchImg img {
+  width: 100%;
+}
+.NotFound{
+  align-items: center;
+}

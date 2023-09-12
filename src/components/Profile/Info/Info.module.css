@@ -1,0 +1,55 @@
+.InfoContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ImgContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid rgb(173, 173, 245);
+}
+.Img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+.InputField {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.InfoContainer label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.InfoContainer input {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.BtnContainer{
+  display: flex;
+  flex-direction: row;
+}
+.BtnContainer button {
+  background-color: rgb(173, 173, 245);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.BtnContainer button:hover {
+  background-color: rgb(134, 134, 191);
+}

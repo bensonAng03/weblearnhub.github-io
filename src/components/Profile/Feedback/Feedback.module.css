@@ -1,0 +1,50 @@
+.Feedback {
+  background-color: #ccc;
+  border-radius: 5px;
+  width: 95%;
+  height: 91%;
+  overflow: auto;
+}
+.BtnContainer{
+  width: 98%;
+  display: flex;
+  align-items: flex-start;
+}
+.Feedback button {
+  background-color: rgb(173, 173, 245);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.Feedback button:hover {
+  background-color: rgb(134, 134, 191);
+}
+.FeedbackItem {
+  position: relative;
+  background-color: #e2e2e2;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.FeedbackItem input{
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.FeedbackItemInfo {
+  width: 92%;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+}
+.NotFound{
+    font-size: 25px;
+    margin-top: 20px;
+}

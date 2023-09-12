@@ -1,0 +1,44 @@
+.ApplyItemManage {
+  margin: 20px;
+  display: flex;
+}
+
+.ApplyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  min-width: 300px;
+  min-height: 130px;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.ApplyItem p {
+  margin: 5px 0;
+}
+
+.Title{
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.ApplyItem ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.ApplyItem li {
+  margin: 2px 0;
+}
+.ImageContainer{
+  width: 200px;
+  height: auto;
+  background-color: purple;
+}
+.Img{
+  width: 100%;
+}

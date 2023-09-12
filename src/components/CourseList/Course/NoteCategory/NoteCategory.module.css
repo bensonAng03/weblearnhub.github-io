@@ -1,0 +1,119 @@
+.NotResourse {
+  color: gray;
+  font-style: 24px;
+}
+.NoteList {
+  margin-top: 10px;
+  flex: 1;
+  column-gap: 16px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .NoteList {
+    width: 1000px;
+    column-count: 5;
+  }
+}
+
+@media only screen and (max-width: 999px) and (min-width: 800px) {
+  .NoteList {
+    width: 800px;
+    column-count: 4;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  .NoteList {
+    width: 600px;
+    column-count: 3;
+  }
+}
+
+.NoteItem {
+  position: relative;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  break-inside: avoid-column;
+  margin-bottom: 12px;
+  list-style: none;
+}
+.BarBtn,
+.ReportBtn {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  display: block;
+  width: 25px;
+}
+.NoteBarList {
+  padding: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  z-index: 1;
+}
+.NoteBarList li {
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.NoteBarList li:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+.ShowClass {
+  display: block;
+}
+.NoteItem h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.Content {
+  text-align: left;
+  overflow-wrap: break-word;
+}
+.NoteItem p {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.Timestamp {
+  font-size: 22px;
+  line-height: 30px;
+  background-color: rgb(189, 189, 189);
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+.LikesContainer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+}
+.LikesContainer p {
+  position: relative;
+  top: 2px;
+}
+.ColorRed {
+  color: red;
+}
+.PublishBox button {
+  padding: 10px;
+  background-color: rgb(173, 173, 245);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.PublishBox button:hover {
+  background-color: rgb(134, 134, 191);
+}
