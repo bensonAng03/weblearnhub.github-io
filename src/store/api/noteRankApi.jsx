@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = 'http://localhost:1337/api/';
+const baseURL = 'https://fyp-web-learn-hub-strapi-n2yp.vercel.app/api/';
 const token = localStorage.getItem('token');
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 export const noteRankApi = {
@@ -28,7 +28,6 @@ export const noteRankApi = {
       };
     }
   },
-  
   getNoteRankById: async (id,courseId=0) => {
     try {
       let response;
@@ -38,6 +37,20 @@ export const noteRankApi = {
         response = await axios.get(`${baseURL}note-ranks?filters[userId]=${id}&filters[courseId]=${courseId}`,{headers});
       
       }
+      return {
+        isSuccess: true,
+        data: response.data.data,
+      }
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: error.response ? error.response.data.error.message : error.message,
+      };
+    }
+  },
+  getNotesByUserId: async (id) => {
+    try {
+      let response = await axios.get(`${baseURL}note-ranks?filters[authorId]=${id}`,{headers});
       return {
         isSuccess: true,
         data: response.data.data,

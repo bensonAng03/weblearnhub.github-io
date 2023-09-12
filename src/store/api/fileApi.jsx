@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = 'http://localhost:1337/api/';
+const baseURL = 'https://fyp-web-learn-hub-strapi-n2yp.vercel.app/api/';
 const token = localStorage.getItem('token');
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 const fileApi = {
