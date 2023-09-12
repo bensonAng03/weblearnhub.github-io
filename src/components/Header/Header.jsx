@@ -27,7 +27,7 @@ const Header = () => {
       {isShowHeader && (
         <header className={classes.Header}>
           <div className={classes.ImageContainer}>
-            <img src="/src/assets/logo.png" alt="logo image" />
+            <img src="src/assets/logo.png" alt="logo image" />
           </div>
           <nav className={classes.Navbar}>
             <NavLink
