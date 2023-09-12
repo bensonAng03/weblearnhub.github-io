@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import io from "socket.io-client";
 import Peer from "peerjs";
@@ -109,11 +109,7 @@ const LiveCourse = () => {
   }, [countdown, paused, isCheckInteractionStatus]);
 
   const restartTimer = (time = 0) => {
-<<<<<<< HEAD
     setCountdown(time != 0 && time > 0 ? time : inactivityThreshold);
-=======
-    setCountdown(time !== 0 && time > 0 ? time : inactivityThreshold);
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
     setIsShowWarning(false);
     setPaused(false); // 重新开始计时
     myVideoRef.current.parentNode.style.backgroundColor = ""; // 恢复初始背景颜色
@@ -137,13 +133,8 @@ const LiveCourse = () => {
     });
     socket.on("user-connected", (userId, usernameData) => {
       if (
-<<<<<<< HEAD
         userId != userCameraIdData &&
         userId != userScreenIdData &&
-=======
-        userId !== userCameraIdData &&
-        userId !== userScreenIdData &&
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         !userCameraIdList.includes(userId) &&
         !userScreenIdList.includes(userId)
       ) {
@@ -165,11 +156,7 @@ const LiveCourse = () => {
       }
     });
     socket.on("user-disconnected", (username, userId) => {
-<<<<<<< HEAD
       setUsers((prevUsers) => prevUsers.filter((user) => user != username));
-=======
-      setUsers((prevUsers) => prevUsers.filter((user) => user !== username));
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       if (userId.startsWith("camera")) {
         const videoToRemove = document.getElementById(userId);
         const videoWrapperToRemove = videoToRemove?.parentNode;
@@ -179,11 +166,7 @@ const LiveCourse = () => {
         if (videoToRemove) {
           videoContainerRef.current.removeChild(videoWrapperToRemove);
         }
-<<<<<<< HEAD
         userCameraIdList = userCameraIdList.filter((id) => id != userId);
-=======
-        userCameraIdList = userCameraIdList.filter((id) => id !== userId);
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       } else if (userId.startsWith("share")) {
         const videoToRemove = document.getElementById(userId);
         const videoWrapperToRemove = videoToRemove?.parentNode;
@@ -193,11 +176,7 @@ const LiveCourse = () => {
         if (videoToRemove) {
           videoContainerRef.current.removeChild(videoWrapperToRemove);
         }
-<<<<<<< HEAD
         userScreenIdList = userScreenIdList.filter((id) => id != userId);
-=======
-        userScreenIdList = userScreenIdList.filter((id) => id !== userId);
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       }
     });
     socket.on("get-info", (existingUsersId, existingUsers, time) => {
@@ -215,17 +194,10 @@ const LiveCourse = () => {
         // 如果数组中已经包含自己的用户ID，则删除自己的用户ID
         if (existingUsersId[0].startsWith("camera")) {
           let userIdSet = Array.from(new Set(existingUsersId));
-<<<<<<< HEAD
           userCameraIdList = userIdSet.filter((id) => id != userCameraIdData);
         } else if (existingUsersId[0].startsWith("share")) {
           let userIdSet = Array.from(new Set(existingUsersId));
           userScreenIdList = userIdSet.filter((id) => id != userScreenIdData);
-=======
-          userCameraIdList = userIdSet.filter((id) => id !== userCameraIdData);
-        } else if (existingUsersId[0].startsWith("share")) {
-          let userIdSet = Array.from(new Set(existingUsersId));
-          userScreenIdList = userIdSet.filter((id) => id !== userScreenIdData);
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         }
       } else {
         console.log("change the list");
@@ -267,11 +239,7 @@ const LiveCourse = () => {
           });
           for (let i = 0; i < userCameraIdList.length; i++) {
             let peer = userCameraIdList[i];
-<<<<<<< HEAD
             if (peer != userCameraIdData) {
-=======
-            if (peer !== userCameraIdData) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
               // 排除当前用户
               console.log("Calling peer: ", peer);
               console.log(peer);
@@ -291,17 +259,14 @@ const LiveCourse = () => {
     }
     sendPersonalStatus(isShareScreen, isOpenCameraData, isShareAudioData);
   };
-  const toggleShareScreen = (status = false) => {
+  // const toggleShareScreen = (status = false) => {
+  const toggleShareScreen = () => {
     console.log(
       !isShareScreen,
       userScreenIdData === shareVideoRef.current.id,
       userScreenIdData,
       shareVideoRef.current.id,
-<<<<<<< HEAD
       shareVideoRef.current.srcObject != null
-=======
-      shareVideoRef.current.srcObject !== null
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
     );
     console.log("isShareScreen:", isShareScreen);
     setIsShowShareScreen(!isShowShareScreen);
@@ -319,11 +284,7 @@ const LiveCourse = () => {
             });
             for (let i = 0; i < userScreenIdList.length; i++) {
               let peer = userScreenIdList[i];
-<<<<<<< HEAD
               if (peer != userScreenIdData) {
-=======
-              if (peer !== userScreenIdData) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
                 // 排除当前用户
                 console.log("Calling peer: ", peer);
                 console.log(peer);
@@ -338,11 +299,7 @@ const LiveCourse = () => {
             setIsShowShareScreen(false);
             setIsShareScreen(false);
           });
-<<<<<<< HEAD
       } else if (userScreenIdData != shareVideoRef.current.id) {
-=======
-      } else if (userScreenIdData !== shareVideoRef.current.id) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         console.log("shareVideoRef.current.id", shareVideoRef.current.id);
         socket.emit(
           "request-share-myvideo-stream",
@@ -363,11 +320,7 @@ const LiveCourse = () => {
     }
   };
   useEffect(() => {
-<<<<<<< HEAD
     if (shareVideoRef.current.srcObject != null) {
-=======
-    if (shareVideoRef.current.srcObject !== null) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       setIsShowShareScreen(true);
     } else {
       setIsShowShareScreen(false);
@@ -388,7 +341,8 @@ const LiveCourse = () => {
     socket.on("stopped-share-video-stream", (userId, publisherId) => {
       if (userScreenIdData == publisherId) {
         setIsShareScreen(true);
-        toggleShareScreen(true);
+        // toggleShareScreen(true);
+        toggleShareScreen();
       } else {
         console.log("stopped-share-video-stream");
         shareVideoRef.current.srcObject?.getTracks().forEach((track) => {
@@ -402,11 +356,7 @@ const LiveCourse = () => {
       }
       if (
         publisherId &&
-<<<<<<< HEAD
         userScreenIdData != publisherId &&
-=======
-        userScreenIdData !== publisherId &&
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         userScreenIdData == userId
       ) {
         alert("The broadcaster of the live stream has asked you to close the video.");
@@ -416,11 +366,7 @@ const LiveCourse = () => {
       console.log("requested-video", userId);
       console.log("call", userCameraIdData, userId);
       console.log(cameraVideo);
-<<<<<<< HEAD
       if (cameraVideo != null) {
-=======
-      if (cameraVideo !== null) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         console.log("2");
         console.log(myVideoRef.current.srcObject);
         console.log(userId);
@@ -429,11 +375,7 @@ const LiveCourse = () => {
       }
     });
     socket.on("requested-share-video-stream", (userId) => {
-<<<<<<< HEAD
       if (screenVideo != null) {
-=======
-      if (screenVideo !== null) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         console.log("share:", userId.replace("share", ""), screenVideo);
         sharePeer.call(userId.replace("share", ""), screenVideo);
       }
@@ -539,7 +481,8 @@ const LiveCourse = () => {
       console.log("requested-share-yourvideo-stream");
       if (userId == userScreenIdData) {
         if (isShare) {
-          toggleShareScreen(true);
+          toggleShareScreen();
+          // toggleShareScreen(true);
           // setIsShareScreen(true);
         } else {
           setIsShareScreen(false);
@@ -557,11 +500,7 @@ const LiveCourse = () => {
         ]);
       } else {
         setRaiseHandList((prevMessages) =>
-<<<<<<< HEAD
           prevMessages.filter((item) => item.userId != userId)
-=======
-          prevMessages.filter((item) => item.userId !== userId)
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         );
       }
     });
@@ -575,39 +514,23 @@ const LiveCourse = () => {
     socket.on("muted-audio", (publisherId) => {
       console.log("publisherId", publisherId);
       console.log("userCameraIdData", userCameraIdData);
-<<<<<<< HEAD
       const newArray = userCameraIdList.filter((item) => item != publisherId);
-=======
-      const newArray = userCameraIdList.filter((item) => item !== publisherId);
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       console.log(newArray);
       for (let i = 0; i < newArray.length; i++) {
         let tempUserId = newArray[i];
         const streamElement = document.getElementById(tempUserId);
-<<<<<<< HEAD
         if (streamElement && streamElement.length != 0) {
-=======
-        if (streamElement && streamElement.length !== 0) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
           console.log("changeColor");
           console.log(streamElement);
           streamElement.parentNode.style.backgroundColor = "";
           streamElement.previousSibling.style.color = "";
         }
       }
-<<<<<<< HEAD
       if (publisherId != undefined && publisherId === userCameraIdData) {
         console.log("same");
       } else {
         setIsShareAudio(false);
         if (myVideoRef.current.srcObject != null) {
-=======
-      if (publisherId !== undefined && publisherId === userCameraIdData) {
-        console.log("same");
-      } else {
-        setIsShareAudio(false);
-        if (myVideoRef.current.srcObject !== null) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
           const videoTracks = myVideoRef.current.srcObject.getVideoTracks();
           const audioTracks = myVideoRef.current.srcObject.getAudioTracks();
 
@@ -735,11 +658,7 @@ const LiveCourse = () => {
       if (videoToRemove) {
         videoContainerRef.current.removeChild(videoWrapperToRemove);
       }
-<<<<<<< HEAD
       userCameraIdList = userCameraIdList.filter((id) => id != tempUserId);
-=======
-      userCameraIdList = userCameraIdList.filter((id) => id !== tempUserId);
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
     } else if (tempUserId.startsWith("share")) {
       const videoToRemove = document.getElementById(tempUserId);
       const videoWrapperToRemove = videoToRemove?.parentNode;
@@ -749,19 +668,11 @@ const LiveCourse = () => {
       if (videoToRemove) {
         videoContainerRef.current.removeChild(videoWrapperToRemove);
       }
-<<<<<<< HEAD
       userScreenIdList = userScreenIdList.filter((id) => id != tempUserId);
     }
   };
   const handleSendMessage = (messageInput) => {
     if (messageInput.trim() != "") {
-=======
-      userScreenIdList = userScreenIdList.filter((id) => id !== tempUserId);
-    }
-  };
-  const handleSendMessage = (messageInput) => {
-    if (messageInput.trim() !== "") {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       socket.emit("message", {
         content: messageInput,
         sender: username,
@@ -799,11 +710,7 @@ const LiveCourse = () => {
     for (let i = 0; i < userScreenIdList.length; i++) {
       let tempUserId = userScreenIdList[i];
       const streamElement = document.getElementById(tempUserId);
-<<<<<<< HEAD
       if (streamElement && streamElement.length != 0) {
-=======
-      if (streamElement && streamElement.length !== 0) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         streamElement.muted = false;
         streamElement.addEventListener("loadedmetadata", () => {
           streamElement.play();
@@ -813,11 +720,7 @@ const LiveCourse = () => {
     for (let i = 0; i < userCameraIdList.length; i++) {
       let tempUserId = userCameraIdList[i];
       const streamElement = document.getElementById(tempUserId);
-<<<<<<< HEAD
       if (streamElement && streamElement.length != 0) {
-=======
-      if (streamElement && streamElement.length !== 0) {
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         streamElement.muted = false;
         streamElement.addEventListener("loadedmetadata", () => {
           streamElement.play();
@@ -892,11 +795,7 @@ const LiveCourse = () => {
       ]);
     } else {
       setRaiseHandList((prevMessages) =>
-<<<<<<< HEAD
         prevMessages.filter((item) => item.userId != userCameraIdData)
-=======
-        prevMessages.filter((item) => item.userId !== userCameraIdData)
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
       );
     }
     socket.emit("raise-hand", room, userCameraIdData, username, isRaiseHand);
@@ -998,11 +897,7 @@ const LiveCourse = () => {
                     : classes.VideoLayoutContainer
                 }
               >
-<<<<<<< HEAD
                 {myVideoRef.current?.srcObject?.getVideoTracks() != [] && (
-=======
-                {myVideoRef.current?.srcObject?.getVideoTracks() !== [] && (
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
                   <p className={classes.Username}>{username}</p>
                 )}
                 <video className={classes.MyVideo} ref={myVideoRef} />
