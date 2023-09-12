@@ -8,6 +8,7 @@ export const courseApi = {
     try {
       let response;
       if (keyword == null) {
+<<<<<<< HEAD
         if(userId){
           if (type == "customCourses") {
             response = await axios.get(
@@ -23,6 +24,16 @@ export const courseApi = {
         }else{
           response = await axios.get(
             `${baseURL}courses?&filters[status]=approved`,
+=======
+        if (type == "customCourses") {
+          response = await axios.get(
+            `${baseURL}courses?filters[authorId]=${userId}`,
+            { headers }
+          );
+        } else {
+          response = await axios.get(
+            `${baseURL}courses?filters[authorId][$ne]=${userId}&filters[status]=approved`,
+>>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
             { headers }
           );
         }

@@ -382,7 +382,11 @@ const CourseList = () => {
                 </div>
                 <div className={classes.TchImg}>
                   <img
+<<<<<<< HEAD
                     src={avatarUrl}
+=======
+                    src={`http://localhost:1337${avatarUrl}`}
+>>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
                     alt="teacher image"
                   />
                 </div>

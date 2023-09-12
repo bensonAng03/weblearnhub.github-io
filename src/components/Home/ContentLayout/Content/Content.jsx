@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import React from "react";
+>>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
 import classes from "./Content.module.css";
 const about = `Web LearnHub is a globally recognized learning platform, truly deserving its status as a five-star online learning haven!
 
