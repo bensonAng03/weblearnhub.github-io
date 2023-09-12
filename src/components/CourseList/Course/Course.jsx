@@ -168,11 +168,7 @@ const Course = () => {
               </ul>
               <div className={classes.TchImg}>
                 <img
-<<<<<<< HEAD
                   src={courseData?.avatar?.url || 'https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg'}
-=======
-                  src={`http://localhost:1337${courseData?.avatar?.url || '/uploads/unkown_Avatar_3920a9b7df.jpg'}`}
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
                   alt="teacher image"
                 />
               </div>

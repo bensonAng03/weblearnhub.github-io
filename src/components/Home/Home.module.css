@@ -35,11 +35,7 @@
 .CourseInfoContainer {
   margin-top: 50px;
   padding-top: 200px;
-<<<<<<< HEAD
   max-height: 785px;
-=======
-  height: 785px;
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
   overflow-y: auto;
   width: 95%;
   display: flex;

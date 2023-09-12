@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./Info.module.css";
 import { userApi } from "../../../store/api/userApi";
 import assetApi from "../../../store/api/assetApi";
@@ -10,11 +10,7 @@ import { quizApi } from "../../../store/api/quizApi";
 import { noteApi } from "../../../store/api/noteApi";
 import { courseApi } from "../../../store/api/courseApi";
 const userId = JSON.parse(localStorage.getItem("user"))?.id;
-<<<<<<< HEAD
 const avatarId = localStorage.getItem("user")?.avatar
-=======
-const avatarId = JSON.parse(localStorage.getItem("user"))?.avatar
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
   ? JSON.parse(localStorage.getItem("user"))?.avatar.id
   : 0;
 let originalAvatar = {},
@@ -75,8 +71,6 @@ const Info = () => {
           setUsername(data.username);
           originalAvatar = data.avatar;
           originalUsername = data.username;
-        } else {
-          console.error("Error:", response.error);
         }
       })
       .catch((error) => {
@@ -227,10 +221,6 @@ const Info = () => {
           setIsLoading(false);
         });
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
     if (newPassword && confirmPassword) {
       if (newPassword === confirmPassword) {
         authApi
@@ -283,13 +273,8 @@ const Info = () => {
               className={classes.Img}
               src={
                 avatar?.url
-<<<<<<< HEAD
                   ? avatar?.url
                   : "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg"
-=======
-                  ? `http://localhost:1337${avatar?.url}`
-                  : "http://localhost:1337/uploads/unkown_Avatar_3920a9b7df.jpg"
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
               }
               alt="user image"
             />

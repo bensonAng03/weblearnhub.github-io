@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./Home.module.css";
 import { userApi } from "../../store/api/userApi";
 import { courseApi } from "../../store/api/courseApi";
 import { useNavigate } from "react-router-dom";
 import ContentLayout from "./ContentLayout/ContentLayout";
-let userId = JSON.parse(localStorage.getItem("user"))?.id;
 const Home = () => {
   const [courseInfoArr, setCourseInfoArr] = useState([]);
   const [teacherInfoArr, setTeacherInfoArr] = useState([]);
@@ -69,17 +68,10 @@ const Home = () => {
   };
   const generateTeacherInfo = (item, index) => {
     const avatarUrl =
-<<<<<<< HEAD
       item.avatar?.url || "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
     return (
       <div key={index} className={classes.TeacherInfoItem}>
         <img src={avatarUrl} alt="teacher image" />
-=======
-      item.avatar?.url || "/uploads/unkown_Avatar_3920a9b7df.jpg";
-    return (
-      <div key={index} className={classes.TeacherInfoItem}>
-        <img src={`http://localhost:1337${avatarUrl}`} alt="teacher image" />
->>>>>>> 67366d9d78d0fae611d04a306e0f6aecd8774adc
         <h3>{item.username}</h3>
         <p className={classes.Position}>{item.position}</p>
         <p className={classes.TeacherDescription}>{item.description}</p>
