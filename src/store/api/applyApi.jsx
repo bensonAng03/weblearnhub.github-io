@@ -1,7 +1,5 @@
 import axios from "axios";
-
 const baseURL = "https://fyp-my-strapi.onrender.com/api/";
-
 const token = localStorage.getItem("token");
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
