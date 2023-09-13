@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://fyp-web-learn-hub-strapi-eei1xrsgj-bensonang03.vercel.app/api/";
+const baseURL = "https://fyp-my-strapi.onrender.com/api/";
 
 const token = localStorage.getItem("token");
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
