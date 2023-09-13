@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import classes from "./AuthForm.module.css";
 import { login } from "../../store/reducer/authSlice";
@@ -10,7 +10,6 @@ const AuthForm = () => {
   const formRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const {type}=useParams()
   const [isLoginForm, setIsLoginForm] = useState(false);
   const [showError, setShowError] = useState(true);
   const [error, setError] = useState("");
@@ -85,10 +84,10 @@ const AuthForm = () => {
               userData.role=data.role.type
               localStorage.setItem("user",JSON.stringify(userData))
               console.log(userData.role)  
-              window.location.reload()
+              // window.location.reload()
             } else {
               console.error("Error:", response.error);
-              window.location.reload()
+              // window.location.reload()
             }
           })
           .catch((error) => {
