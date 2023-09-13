@@ -41,7 +41,7 @@ const RankingBoard = ({ username }) => {
     switch (type) {
       case "total":
         try {
-          const response = await rankApi.getRanks(index, studentsArr);
+          const response = await rankApi.getRanks(index,id,studentsArr);
           const { data, isSuccess } = response;
           if (isSuccess) {
             sortFn(data);
@@ -58,7 +58,7 @@ const RankingBoard = ({ username }) => {
         break;
       case "quiz":
         try {
-          const response = await quizRankApi.getQuizRanks(index, studentsArr);
+          const response = await quizRankApi.getQuizRanks(index, id,studentsArr);
           const { data, isSuccess } = response;
           if (isSuccess) {
             sortFn(data);
@@ -75,7 +75,7 @@ const RankingBoard = ({ username }) => {
         break;
       case "note":
         try {
-          const response = await noteRankApi.getNoteRanks(index, studentsArr);
+          const response = await noteRankApi.getNoteRanks(index,id,studentsArr);
           const { data, isSuccess } = response;
           if (isSuccess) {
             sortFn(data);

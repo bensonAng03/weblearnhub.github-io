@@ -1,9 +1,9 @@
 import axios from 'axios';
-const baseURL = 'https://fyp-web-learn-hub-strapi-n2yp.vercel.app/api/';
+const baseURL = 'https://fyp-web-learn-hub-strapi-eei1xrsgj-bensonang03.vercel.app/api/';
 const token = localStorage.getItem('token');
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 export const rankApi = {
-  getRanks: async (startIndex,studentsArr=[]) => {
+  getRanks: async (startIndex,courseId,studentsArr=[]) => {
     try {
       let response;
       if (studentsArr.length > 0) {
@@ -15,7 +15,7 @@ export const rankApi = {
         }
         response = await axios.get(`${baseURL}ranks?${userIdFilters}`, { headers });
       } else {
-        response = await axios.get(`${baseURL}ranks?pagination[limit]=25&pagination[start]=${startIndex}&sort[0]=score:desc&sort[1]=updatedAt:desc`,{headers});
+        response = await axios.get(`${baseURL}ranks?filters[courseId]=${courseId}&pagination[limit]=25&pagination[start]=${startIndex}&sort[0]=score:desc&sort[1]=updatedAt:desc`,{headers});
       }
       return {
         isSuccess: true,
