@@ -28,6 +28,7 @@ const Payment = ({
   const [expiryDate, setExpiryDate] = useState("");
   const [securityCode, setSecurityCode] = useState("");
   const [isShowInvoice, setIsShowInvoice] = useState(false);
+  console.log("type:",type)
   const formatPrice = (tempPrice, tempPoint = 0) => {
     const pointDiscountAmount = Math.min(tempPoint / 800, tempPrice * 0.15);
     console.log("pointDiscountAmount" + pointDiscountAmount);
