@@ -167,6 +167,9 @@ const CourseList = () => {
     }
   };
   const toggleShowPaymentFn = () => {
+    if(!isShowPayment){
+      setSelectedCourse("")
+    }
     setIsShowPayment(!isShowPayment);
   };
   const openCourseFn = (course,id,title, authorId, students) => {
@@ -184,7 +187,6 @@ const CourseList = () => {
       console.log("close");
       setPointType("discount");
       toggleShowPaymentFn(false);
-      setSelectedCourse("")
     }
   };
   const formatStatus = (status) => {
