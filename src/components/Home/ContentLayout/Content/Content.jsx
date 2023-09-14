@@ -237,9 +237,10 @@ const Content = ({ type }) => {
               {item?.subTitle &&
                 item.subTitle.map((subTitleItem, subTitleIndex) => {
                   <div key={subTitleIndex}>
-                    {console.log(subTitleItem)}
+                    {console.log(subTitleItem.title)}
+                    {console.log(subTitleItem.content)}
                     <h3>{subTitleItem.title}</h3>;
-                    {subTitleItem.content.map((item, index) => (
+                    {subTitleItem?.content && subTitleItem.content.map((item, index) => (
                       <p key={index}>{item}</p>
                     ))}
                   </div>;
