@@ -170,7 +170,7 @@ const CourseList = () => {
     setIsShowPayment(!isShowPayment);
   };
   const openCourseFn = (course,id,title, authorId, students) => {
-    console.log(course)
+    console.log("course:",course)
     setSelectedCourse(course);
     setCourseTitle(title)
     if (
