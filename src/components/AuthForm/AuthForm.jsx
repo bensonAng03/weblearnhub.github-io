@@ -84,10 +84,10 @@ const AuthForm = () => {
               userData.role=data.role.type
               localStorage.setItem("user",JSON.stringify(userData))
               console.log(userData.role)  
-              // window.location.reload()
+              window.location.reload()
             } else {
               console.error("Error:", response.error);
-              // window.location.reload()
+              window.location.reload()
             }
           })
           .catch((error) => {
