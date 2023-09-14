@@ -241,8 +241,9 @@ const Content = ({ type }) => {
                     {subTitleItem?.content && subTitleItem.content.map((item, index) => (
                       <p key={index}>{item}</p>
                     ))}
-                  </div>;
-                }))
+                  </div>
+                ))
+              }
             </div>
           ))}
         </div>
