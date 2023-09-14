@@ -174,7 +174,7 @@ const Payment = ({
                     .addResponse({
                       content: `utilizing RM${calculatedPrice} and deducting ${usedPoint} points.`,
                       authorId: userId,
-                      courseId,
+                      itemId: courseId,
                       type: "updateReceipt",
                     })
                     .then((response) => {

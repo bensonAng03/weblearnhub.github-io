@@ -179,10 +179,12 @@ const CourseList = () => {
     ) {
       console.log("open");
       navigate(`/courses/${id}/course`);
+      setSelectedCourse("")
     } else {
       console.log("close");
       setPointType("discount");
       toggleShowPaymentFn(false);
+      setSelectedCourse("")
     }
   };
   const formatStatus = (status) => {
