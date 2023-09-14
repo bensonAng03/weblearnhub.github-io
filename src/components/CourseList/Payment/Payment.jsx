@@ -71,7 +71,7 @@ const Payment = ({
       console.log(price);
       console.log(point);
       result = formatPrice(price, point);
-      console.log("point", point);
+      console.log("result:",result)
       calculatedPrice = result.formattedPrice;
       usedPoint = result.usedPoints;
       console.log(usedPoint);
