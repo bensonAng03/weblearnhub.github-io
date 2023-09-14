@@ -13,6 +13,7 @@ let calculatedPrice;
 let usedPoint;
 let result = {};
 const Payment = ({
+  fetchFn=null,
   courseName,
   username,
   userId,
@@ -124,6 +125,7 @@ const Payment = ({
                     .then((response) => {
                       const { data, isSuccess } = response;
                       if (isSuccess) {
+                        fetchFn && fetchFn()
                         setCardNumber("");
                         setNameOnCard("");
                         setExpiryDate("");
@@ -193,6 +195,7 @@ const Payment = ({
                               .then((res) => {
                                 const { isSuccess } = res;
                                 if (isSuccess) {
+                                  fetchFn && fetchFn()
                                   setCardNumber("");
                                   setNameOnCard("");
                                   setExpiryDate("");

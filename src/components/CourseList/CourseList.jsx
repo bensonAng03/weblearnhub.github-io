@@ -166,10 +166,10 @@ const CourseList = () => {
       setIsPublish(!isPublish);
     }
   };
+  const fetchSelectedCourse =()=>{
+    setSelectedCourse("");
+  }
   const toggleShowPaymentFn = () => {
-    if (!isShowPayment) {
-      setSelectedCourse("");
-    }
     setIsShowPayment(!isShowPayment);
   };
   const openCourseFn = (course, id, title, authorId, students) => {
@@ -285,6 +285,7 @@ const CourseList = () => {
         <ul className={classes.CoursesList}>
           {isShowPayment && (
             <Payment
+              fetchFn={fetchSelectedCourse}
               courseName={pointType !== "recharge" ? courseTitle : ""}
               username={username}
               userId={userId}
