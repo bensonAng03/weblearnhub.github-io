@@ -174,18 +174,16 @@ const CourseList = () => {
   };
   const openCourseFn = (course, id, title, authorId, students) => {
     console.log("course:", course);
-    setSelectedCourse(course);
     setCourseTitle(title);
     if (
       authorId == userId ||
       (students !== null && students.includes(userId.toString()))
     ) {
-      console.log("open");
       navigate(`/courses/${id}/course`);
     } else {
-      console.log("close");
       setPointType("discount");
-      toggleShowPaymentFn(false);
+      setSelectedCourse(course);
+      toggleShowPaymentFn(true);
     }
   };
   const formatStatus = (status) => {
@@ -218,9 +216,6 @@ const CourseList = () => {
   const toggleChargeFn = () => {
     setIsRecharge((prevState) => !prevState);
   };
-  useEffect(() => {
-    console.log(isShowPayment);
-  }, [isShowPayment]);
   return (
     <div className={classes.CourseList}>
       <div className={classes.FunctionContainer}>
@@ -297,7 +292,7 @@ const CourseList = () => {
               point={pointType !== "recharge" ? point : 0}
               courseId={pointType !== "recharge" ? selectedCourse.id : 0}
               price={
-                selectedCourse?.attributes
+                pointType !== "recharge"
                   ? selectedCourse?.attributes?.price
                   : rechargePrice
               }
