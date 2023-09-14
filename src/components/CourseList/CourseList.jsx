@@ -303,7 +303,7 @@ const CourseList = () => {
           {courses.length >0 ? courses.map((course) => {
             const avatarUrl =
               course.attributes?.avatar?.url ||
-              "/uploads/unkown_Avatar_3920a9b7df.jpg";
+              "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
             return (
               <li className={classes.Course} key={course.id}>
                 <div className={classes.CourseInfo}>
