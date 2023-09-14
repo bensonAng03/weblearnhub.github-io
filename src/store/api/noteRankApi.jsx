@@ -31,11 +31,10 @@ export const noteRankApi = {
   getNoteRankById: async (id,courseId=0) => {
     try {
       let response;
-      if(courseId!==0){
+      if(courseId==0){
         response = await axios.get(`${baseURL}note-ranks?filters[userId]=${id}`,{headers});
       }else{
         response = await axios.get(`${baseURL}note-ranks?filters[userId]=${id}&filters[courseId]=${courseId}`,{headers});
-      
       }
       return {
         isSuccess: true,

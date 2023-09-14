@@ -212,7 +212,7 @@ const Payment = ({
                       console.log(error);
                     });
 
-                  noteRankApi.getNoteRankById(userId).then((response) => {
+                  noteRankApi.getNoteRankById(userId,courseId).then((response) => {
                     const { isSuccess, data } = response;
                     if (isSuccess) {
                       if (data.length == 0) {
@@ -239,7 +239,7 @@ const Payment = ({
                       }
                     }
                   });
-                  quizRankApi.getQuizRankById(userId).then((response) => {
+                  quizRankApi.getQuizRankById(userId,courseId).then((response) => {
                     const { isSuccess, data } = response;
                     if (isSuccess) {
                       console.log(data)
