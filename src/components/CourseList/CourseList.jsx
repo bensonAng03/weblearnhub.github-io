@@ -181,8 +181,7 @@ const CourseList = () => {
       (students !== null && students.includes(userId.toString()))
     ) {
       console.log("open");
-      navigate(`/courses/${id}/course`);
-      setSelectedCourse("")
+      navigate(`/courses/${id}/course`)
     } else {
       console.log("close");
       setPointType("discount");
