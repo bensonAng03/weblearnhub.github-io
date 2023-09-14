@@ -232,17 +232,18 @@ const Content = ({ type }) => {
           {data[type].map((item, index) => (
             <div key={index}>
               <h2>{item.title}</h2>
-              {item?.content && item.content.map((item, index) => (
-                <p key={index}>{item}</p>
-              ))}
-              {item?.subTitle && item.subTitle.map((subTitleItem, subTitleIndex) => {
-                <h3 key={subTitleIndex}>{subTitleItem.title}</h3>;
-                {
-                  subTitleItem.content.map((item, index) => (
-                    <p key={index}>{item}</p>
-                  ));
-                }
-              })}
+              {item?.content &&
+                item.content.map((item, index) => <p key={index}>{item}</p>)}
+              {item?.subTitle &&
+                item.subTitle.map((subTitleItem, subTitleIndex) => {
+                  <>
+                    {console.log(subTitleItem)}
+                    <h3 key={subTitleIndex}>{subTitleItem.title}</h3>;
+                    {subTitleItem.content.map((item, index) => (
+                      <p key={index}>{item}</p>
+                    ))}
+                  </>;
+                })}
             </div>
           ))}
         </div>
