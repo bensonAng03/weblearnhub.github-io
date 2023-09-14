@@ -37,11 +37,11 @@ const CourseList = () => {
   const [isRecharge, setIsRecharge] = useState(false);
   const [rechargePrice, setRechargePrice] = useState(0);
   const [point, setPoint] = useState(0);
-  const [courseTitle,setCourseTitle] = useState("");
+  const [courseTitle, setCourseTitle] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     fetchFn();
-  }, [courseType,isShowPayment]);
+  }, [courseType, isShowPayment]);
   const fetchFn = () => {
     fetchCourse(courseType);
     fetchUserInfo();
@@ -167,21 +167,21 @@ const CourseList = () => {
     }
   };
   const toggleShowPaymentFn = () => {
-    if(!isShowPayment){
-      setSelectedCourse("")
+    if (!isShowPayment) {
+      setSelectedCourse("");
     }
     setIsShowPayment(!isShowPayment);
   };
-  const openCourseFn = (course,id,title, authorId, students) => {
-    console.log("course:",course)
+  const openCourseFn = (course, id, title, authorId, students) => {
+    console.log("course:", course);
     setSelectedCourse(course);
-    setCourseTitle(title)
+    setCourseTitle(title);
     if (
       authorId == userId ||
       (students !== null && students.includes(userId.toString()))
     ) {
       console.log("open");
-      navigate(`/courses/${id}/course`)
+      navigate(`/courses/${id}/course`);
     } else {
       console.log("close");
       setPointType("discount");
@@ -218,9 +218,9 @@ const CourseList = () => {
   const toggleChargeFn = () => {
     setIsRecharge((prevState) => !prevState);
   };
-  useEffect(()=>{
-    console.log(isShowPayment)
-  },[isShowPayment])
+  useEffect(() => {
+    console.log(isShowPayment);
+  }, [isShowPayment]);
   return (
     <div className={classes.CourseList}>
       <div className={classes.FunctionContainer}>
@@ -289,119 +289,129 @@ const CourseList = () => {
       {isSuccess ? (
         <ul className={classes.CoursesList}>
           {isShowPayment && (
-             <Payment
-               courseName={pointType !== "recharge" ? courseTitle:""}
-               username={username}
-               userId={userId}
-               type={pointType}
-               point={pointType !== "recharge" ? point : 0}
-               courseId={pointType !== "recharge" ? selectedCourse.id : 0}
-               price={
+            <Payment
+              courseName={pointType !== "recharge" ? courseTitle : ""}
+              username={username}
+              userId={userId}
+              type={pointType}
+              point={pointType !== "recharge" ? point : 0}
+              courseId={pointType !== "recharge" ? selectedCourse.id : 0}
+              price={
+                selectedCourse?.attributes
+                  ? selectedCourse?.attributes?.price
+                  : rechargePrice
+              }
+              closeFn={toggleShowPaymentFn}
+            />
+          )}
+          {/* price={
                  pointType !== "recharge"
-                   ? selectedCourse.attributes.price
+                   ? selectedCourse?.attributes?.price
                    : rechargePrice
-               }
-               closeFn={toggleShowPaymentFn}
-             />
-           )}
-          {courses.length >0 ? courses.map((course) => {
-            const avatarUrl =
-              course.attributes?.avatar?.url ||
-              "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
-            return (
-              <li className={classes.Course} key={course.id}>
-                <div className={classes.CourseInfo}>
-                  {course.attributes.authorId == userId && (
-                    <>
-                      <div className={classes.StatusBox}>
-                        {formatStatus(course.attributes.status)}
-                      </div>
-                    </>
-                  )}
-
-                  <button
-                    onClick={() =>
-                      openCourseFn(
-                        course,
-                        course.id,
-                        course.attributes.title,
-                        course.attributes.authorId,
-                        course.attributes.students
-                      )
-                    }
-                    className={classes.Title}
-                  >
-                    {course.attributes.title}
-                  </button>
-                  <p className={classes.TchName}>{course.attributes.author}</p>
-                  {course.attributes.authorId == userId &&
-                    course.attributes.status != "approved" && (
+               } */}
+          {courses.length > 0 ? (
+            courses.map((course) => {
+              const avatarUrl =
+                course.attributes?.avatar?.url ||
+                "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
+              return (
+                <li className={classes.Course} key={course.id}>
+                  <div className={classes.CourseInfo}>
+                    {course.attributes.authorId == userId && (
                       <>
-                        <FontAwesomeIcon
-                          icon={faEllipsisV}
-                          className={classes.ManageBtn}
-                          onClick={() => toggleBarContainer(course.id)}
-                        />
-                        <ul
-                          className={`${classes.ManageContainer} ${
-                            barContainers[course.id] ? classes.ShowClass : ""
-                          }`}
-                          onMouseLeave={() => handleMouseLeave(course.id)}
-                        >
-                          <li
-                            onClick={() => {
-                              toggleBarContainer(course.id);
-                              publishCourseFn(
-                                course.id,
-                                course.attributes.status
-                              );
-                            }}
-                          >
-                            Publish
-                          </li>
-
-                          <li
-                            onClick={() => {
-                              deleteCourseFn(
-                                course.id,
-                                course.attributes.status
-                              );
-                            }}
-                          >
-                            Delete
-                          </li>
-                        </ul>
+                        <div className={classes.StatusBox}>
+                          {formatStatus(course.attributes.status)}
+                        </div>
                       </>
                     )}
-                  {course.attributes.authorId == userId &&
-                    course.attributes.status == "approved" && (
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className={classes.DeleteBtn}
-                        onClick={() => {
-                          deleteCourseFn(course.id, course.attributes.status);
-                        }}
+
+                    <button
+                      onClick={() =>
+                        openCourseFn(
+                          course,
+                          course.id,
+                          course.attributes.title,
+                          course.attributes.authorId,
+                          course.attributes.students
+                        )
+                      }
+                      className={classes.Title}
+                    >
+                      {course.attributes.title}
+                    </button>
+                    <p className={classes.TchName}>
+                      {course.attributes.author}
+                    </p>
+                    {course.attributes.authorId == userId &&
+                      course.attributes.status != "approved" && (
+                        <>
+                          <FontAwesomeIcon
+                            icon={faEllipsisV}
+                            className={classes.ManageBtn}
+                            onClick={() => toggleBarContainer(course.id)}
+                          />
+                          <ul
+                            className={`${classes.ManageContainer} ${
+                              barContainers[course.id] ? classes.ShowClass : ""
+                            }`}
+                            onMouseLeave={() => handleMouseLeave(course.id)}
+                          >
+                            <li
+                              onClick={() => {
+                                toggleBarContainer(course.id);
+                                publishCourseFn(
+                                  course.id,
+                                  course.attributes.status
+                                );
+                              }}
+                            >
+                              Publish
+                            </li>
+
+                            <li
+                              onClick={() => {
+                                deleteCourseFn(
+                                  course.id,
+                                  course.attributes.status
+                                );
+                              }}
+                            >
+                              Delete
+                            </li>
+                          </ul>
+                        </>
+                      )}
+                    {course.attributes.authorId == userId &&
+                      course.attributes.status == "approved" && (
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className={classes.DeleteBtn}
+                          onClick={() => {
+                            deleteCourseFn(course.id, course.attributes.status);
+                          }}
+                        />
+                      )}
+                  </div>
+                  <div className={classes.TchImg}>
+                    <img src={avatarUrl} alt="teacher image" />
+                  </div>
+                  {course.attributes.status === "approved" &&
+                    ((course.attributes.students !== null &&
+                      !course.attributes.students.includes(
+                        userId.toString()
+                      )) ||
+                      course.attributes.students === null) && (
+                      <CoursePrice
+                        price={course.attributes.price}
+                        status={course.attributes.status}
                       />
                     )}
-                </div>
-                <div className={classes.TchImg}>
-                  <img
-                    src={avatarUrl}
-                    alt="teacher image"
-                  />
-                </div>
-                {course.attributes.status === "approved" &&
-                  ((course.attributes.students !== null &&
-                    !course.attributes.students.includes(userId.toString())) ||
-                    course.attributes.students === null) && (
-                    <CoursePrice
-                      price={course.attributes.price}
-                      status={course.attributes.status}
-                    />
-                  )}
-              </li>
-            );
-          }) : <div className={classes.NotFound}>Not Found</div>}
+                </li>
+              );
+            })
+          ) : (
+            <div className={classes.NotFound}>Not Found</div>
+          )}
         </ul>
       ) : (
         // </div>
