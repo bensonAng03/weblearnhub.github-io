@@ -29,9 +29,15 @@ export const rankApi = {
     }
   },
   
-  getRankById: async (id) => {
+  getRankById: async (id,courseId=0) => {
     try {
-      const response = await axios.get(`${baseURL}ranks?filters[userId]=${id}`,{headers});
+      let response;
+      if(courseId==0){
+        response = await axios.get(`${baseURL}ranks?filters[userId]=${id}`,{headers});
+      }else{
+        response = await axios.get(`${baseURL}ranks?filters[userId]=${id}&filters[courseId]=${courseId}`,{headers});
+      
+      }
       return {
         isSuccess: true,
         data: response.data.data,

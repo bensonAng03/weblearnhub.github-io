@@ -27,7 +27,6 @@ const Payment = ({
   const [expiryDate, setExpiryDate] = useState("");
   const [securityCode, setSecurityCode] = useState("");
   const [isShowInvoice, setIsShowInvoice] = useState(false);
-  console.log("courseId:",courseId)
   const formatPrice = (tempPrice, tempPoint = 0) => {
     const pointDiscountAmount = Math.min(tempPoint / 800, tempPrice * 0.15);
     console.log("pointDiscountAmount" + pointDiscountAmount);
@@ -223,7 +222,7 @@ const Payment = ({
                       }
                     }
                   });
-                  rankApi.getRankById(userId).then((response) => {
+                  rankApi.getRankById(userId,courseId).then((response) => {
                     const { isSuccess, data } = response;
                     if (isSuccess) {
                       if (data.length == 0) {
