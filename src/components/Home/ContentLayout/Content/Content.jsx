@@ -235,16 +235,14 @@ const Content = ({ type }) => {
               {item?.content &&
                 item.content.map((item, index) => <p key={index}>{item}</p>)}
               {item?.subTitle &&
-                item.subTitle.map((subTitleItem, subTitleIndex) => {
+                item.subTitle.map((subTitleItem, subTitleIndex) => (
                   <div key={subTitleIndex}>
-                    {console.log(subTitleItem.title)}
-                    {console.log(subTitleItem.content)}
-                    <h3>{subTitleItem.title}</h3>;
+                    <h3>{subTitleItem.title}</h3>
                     {subTitleItem?.content && subTitleItem.content.map((item, index) => (
                       <p key={index}>{item}</p>
                     ))}
                   </div>;
-                })}
+                }))
             </div>
           ))}
         </div>
