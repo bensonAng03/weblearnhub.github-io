@@ -10,6 +10,7 @@
     height: 100%;
 }
 .ImageContainer img{
+    background-color: white;
     height: 100%;
 }
 .Navbar{
