@@ -2,7 +2,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 import { useEffect, useState } from "react";
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
-let avatarUrl = localStorage.getItem("user")?.avatar ? JSON.parse(localStorage.getItem("user"))?.avatar?.url : "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
+let avatarUrl = JSON.parse(localStorage.getItem("user"))?.avatar?.url ?? "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
 const Header = () => {
   const [isShowHeader, setIsShowHeader] = useState(false);
   const navigate = useNavigate();
