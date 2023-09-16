@@ -23,6 +23,7 @@ const Info = () => {
   const [avatar, setAvatar] = useState({});
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(false);
   const [warnInfo, setWarnInfo] = useState("");
   const isImage = (file) => {
     const validImageTypes = [
@@ -35,6 +36,7 @@ const Info = () => {
     return validImageTypes.includes(file.type);
   };
   const handleFileChange = (event) => {
+    setIsImageLoading(true)
     const file = event.target.files[0];
     if (file && isImage(file)) {
       assetApi
@@ -42,7 +44,7 @@ const Info = () => {
         .then((response) => {
           const { data, isSuccess } = response;
           if (isSuccess) {
-            setIsLoading(false);
+            setIsImageLoading(false)
             const newAvatar = {
               mime: data[0].mime,
               url: data[0].url,
@@ -51,7 +53,7 @@ const Info = () => {
             setAvatar(newAvatar);
           } else {
             console.error("Error:", response.error);
-            setIsLoading(false);
+            setIsImageLoading(false)
           }
         })
         .catch((error) => {
@@ -269,6 +271,7 @@ const Info = () => {
       {isSuccess ? (
         <div className={classes.InfoContainer}>
           <label htmlFor="avatar" className={classes.ImgContainer}>
+            {(isImageLoading || isLoading) ? <div className={classes.Loading}>loading...</div> :
             <img
               className={classes.Img}
               src={
@@ -278,6 +281,7 @@ const Info = () => {
               }
               alt="user image"
             />
+            }
           </label>
           <input
             type="file"
