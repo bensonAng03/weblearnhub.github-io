@@ -177,7 +177,7 @@ const Info = () => {
     userData.role = data.role.type;
     localStorage.setItem("user", JSON.stringify(userData));
     setIsLoading(false);
-    // window.location.reload()
+    window.location.reload()
   };
   const updateLocalStorage = async (updateData, data) => {
     const isFinish = await updateAllData(updateData);

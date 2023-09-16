@@ -25,7 +25,7 @@ import {
 import classes from "./LiveCourse.module.css";
 import RandomNamePicker from "./RandomNamePicker/RandomNamePicker";
 import Backdrop from "../UI/Backdrop/Backdrop";
-const socket = io("https://socket-server-rwl3.onrender.com:80");
+const socket = io("https://socket-server-rwl3.onrender.com");
 // const socket = io("127.0.0.1:3000");
 let userCameraIdData = "";
 let userScreenIdData = "";
