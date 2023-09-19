@@ -2,3 +2,23 @@
     border: 1px solid black;
     width: 100%;
 }
+.FunctionBar{
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.FunctionBar input{
+    outline: none;
+}
+.FunctionBar input,.FunctionBar button{
+    width: 100px;
+    height: 40px;
+}
+.Whiteboard .FunctionBar input[type="number"]{
+    text-align: center;
+    height: 36px;
+}
+.FunctionBar button:hover{
+    background-color: rgb(187, 187, 187);
+}

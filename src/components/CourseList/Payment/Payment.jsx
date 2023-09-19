@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { userApi } from "../../../store/api/userApi";
 import { responseApi } from "../../../store/api/responseApi";
 import { courseApi } from "../../../store/api/courseApi";
@@ -9,6 +9,7 @@ import Backdrop from "../../UI/Backdrop/Backdrop";
 import classes from "./Payment.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+let discountPrice;
 let calculatedPrice;
 let usedPoint;
 let result = {};
@@ -42,7 +43,7 @@ const Payment = ({
       Math.floor(pointDiscountAmount * 800)
     );
     console.log("usedpoint", usedPoints);
-    return { formattedPrice, usedPoints };
+    return { formattedPrice, usedPoints,pointDiscountAmount};
   };
   const roundToNearest = (value, nearest) => {
     return Math.round(value / nearest) * nearest;
@@ -74,14 +75,26 @@ const Payment = ({
       console.log("result:",result)
       calculatedPrice = result.formattedPrice;
       usedPoint = result.usedPoints;
+      discountPrice=result.pointDiscountAmount
       console.log(usedPoint);
     }
   }, []);
 
-  function isValidExpiryDate(date) {
+  const isValidExpiryDate=(date)=>{
     // 验证日期格式 "MM/YY"，其中 MM 是 01 到 12 的数字，YY 是 00 到 99 的数字
     const pattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
-    return pattern.test(date);
+    
+    if (!pattern.test(date)) {
+      return false; // 日期格式不正确，直接返回 false
+    }
+  
+    const [month, year] = date.split('/'); // 将输入日期拆分为月份和年份部分
+    const inputDate = new Date(`20${year}`, month - 1); // 创建输入日期的 JavaScript Date 对象
+  
+    const today = new Date(); // 获取当前日期
+  
+    // 比较输入日期和当前日期
+    return inputDate >= today;
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -113,7 +126,7 @@ const Payment = ({
                 userId
               )
               .then((response) => {
-                const { data, isSuccess } = response;
+                const {isSuccess } = response;
                 if (isSuccess) {
                   responseApi
                     .addResponse({
@@ -124,7 +137,7 @@ const Payment = ({
                       type: "updateReceipt",
                     })
                     .then((response) => {
-                      const { data, isSuccess } = response;
+                      const {isSuccess } = response;
                       if (isSuccess) {
                         fetchFn && fetchFn()
                         setCardNumber("");
@@ -295,7 +308,7 @@ const Payment = ({
     }
     setCardNumber(e.target.value);
   };
-  function capitalizeFirstLetter(string) {
+  const capitalizeFirstLetter=(string)=>{
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   return (
@@ -318,18 +331,18 @@ const Payment = ({
                 ? `Point(${calculatedPoint(+price)})`
                 : capitalizeFirstLetter(courseName)}
               : 1 * RM
-              {price} = RM
-              {price}
+              {calculatedPrice} = RM
+              {calculatedPrice}
             </li>
             {type !== "recharge" && (
               <li>
                 Discount: RM
-                {calculatedPrice && price - parseFloat(calculatedPrice)}
+                {discountPrice && parseFloat(discountPrice) - price}
               </li>
             )}
           </ul>
           <hr />
-          <p>Total Amount: RM{type == "recharge" ? price : calculatedPrice}</p>
+          <p>Total Amount: RM{type == "recharge" ? `${price}.00` : calculatedPrice}</p>
         </div>
       ) : (
         <div className={classes.PaymentForm}>

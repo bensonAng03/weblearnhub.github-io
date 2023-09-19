@@ -8,6 +8,7 @@ export const courseApi = {
     try {
       let response;
       if (keyword == null) {
+        console.log(type)
         if(userId){
           if (type == "customCourses") {
             response = await axios.get(
@@ -21,13 +22,14 @@ export const courseApi = {
             );
           }
         }else{
+          console.log("no userId")
           response = await axios.get(
             `${baseURL}courses?&filters[status]=approved`,
             { headers }
           );
         }
       } else {
-        response = await axios.get(`${baseURL}courses?_q=${keyword}`, {
+        response = await axios.get(`${baseURL}courses?_q=${keyword}&filters[status]=approved`, {
           headers,
         });
       }
@@ -63,7 +65,6 @@ export const courseApi = {
   getCourseById: async (id) => {
     try {
       const response = await axios.get(`${baseURL}courses/${id}`, { headers });
-      // return response.data;
       return {
         isSuccess: true,
         data: response.data.data,

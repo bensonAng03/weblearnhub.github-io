@@ -107,7 +107,6 @@
 }
 .AssetsContainer {
   display: flex;
-  float: left;
   width: 100%;
   overflow: auto;
 }

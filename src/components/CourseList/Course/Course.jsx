@@ -51,12 +51,10 @@ const Course = () => {
         const { data, isSuccess } = response;
         if (isSuccess) {
           setCourseData(data.attributes);
-          // avatarUrl=data.attributes?.avatar?.url || '/uploads/unkown_Avatar_3920a9b7df.jpg';
           setIsSuccess(true);
         } else {
           console.error("Error:", response.error);
           setCourseData({});
-          // setCourseId("");
           setIsSuccess(false);
         }
       })
@@ -104,7 +102,7 @@ const Course = () => {
         <UpdateItemForm
           type="Course"
           id={params.id}
-          data={courseData}
+          update={true}
           toggleFn={editCourseNameFn}
           fetchFn={fetchCourse}
         />

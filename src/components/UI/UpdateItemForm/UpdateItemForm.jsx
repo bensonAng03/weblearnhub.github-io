@@ -8,19 +8,16 @@ import { quizApi } from "../../../store/api/quizApi";
 let username = JSON.parse(localStorage.getItem("user"))?.username;
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 let userData = JSON.parse(localStorage.getItem("user"));
-const UpdateItemForm = ({type="", id=0,data=null, toggleFn=null, fetchFn=null}) => {
+const UpdateItemForm = ({type="",id=0,update=false, toggleFn=null, fetchFn=null}) => {
   const [itemName, setItemName] = useState("");
   const addItemFn = () => {
     if(type=="Course"){
-      if (data==null) {
+      if (!update) {
         courseApi
           .addCourse({
             author: username,
             title: itemName,
-            avatar:userData.avatar ?? 
-            {
-              url:"/uploads/unkown_Avatar_3920a9b7df.jpg"
-            },
+            avatar:userData.avatar ?? null,
             authorId:userId,
             price:0,
             status:"not_reviewed"
@@ -62,7 +59,7 @@ const UpdateItemForm = ({type="", id=0,data=null, toggleFn=null, fetchFn=null}) 
       }
     }else{
       if(type=="Quiz"){
-        if (data==null) {
+        if (!update) {
           console.log("add");
           quizApi
             .addQuiz({

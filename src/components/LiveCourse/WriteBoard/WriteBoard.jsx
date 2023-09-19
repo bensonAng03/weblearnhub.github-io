@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import classes from "./WriteBoard.module.css"
 const WriteBoard = () => {
   const canvasRef = useRef(null);
@@ -13,7 +13,7 @@ const WriteBoard = () => {
     const ctx = canvas.getContext("2d");
 
     if (eraserMode) {
-      ctx.strokeStyle = "#FFFFFF"; // Set eraser color to white
+      ctx.strokeStyle = "#FFFFFF"; 
     } else {
       ctx.strokeStyle = brushColor;
     }
@@ -39,7 +39,6 @@ const WriteBoard = () => {
   }, [lines]);
 
   const handleMouseDown = (e) => {
-    const canvas = canvasRef.current;
     const { offsetX, offsetY } = e.nativeEvent;
     setIsDrawing(true);
     setLines((prevLines) => [
@@ -54,7 +53,6 @@ const WriteBoard = () => {
 
   const handleMouseMove = (e) => {
     if (!isDrawing) return;
-    const canvas = canvasRef.current;
     const { offsetX, offsetY } = e.nativeEvent;
     setLines((prevLines) => {
       const lastLine = prevLines[prevLines.length - 1];
@@ -84,6 +82,25 @@ const WriteBoard = () => {
 
   return (
     <div className={classes.Whiteboard}>
+        <div className={classes.FunctionBar}>
+        <input
+          type="color"
+          value={brushColor}
+          onChange={(e) => setBrushColor(e.target.value)}
+        />
+        <input
+          type="number"
+          value={brushSize.toString()}
+          min="1"
+          max="20"
+          onChange={(e) => setBrushSize(parseInt(e.target.value))}
+        />
+        <button onClick={handleUndo}>Undo</button>
+        <button onClick={handleClear}>Clear</button>
+        <button onClick={toggleEraserMode}>
+          {eraserMode ? "Use Brush" : "Use Eraser"}
+        </button>
+      </div>
       <canvas
         ref={canvasRef}
         width={800}
@@ -92,29 +109,6 @@ const WriteBoard = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       />
-      <div>
-        <label>Color:</label>
-        <input
-          type="color"
-          value={brushColor}
-          onChange={(e) => setBrushColor(e.target.value)}
-        />
-        <label>Brush Size:</label>
-        <input
-          type="number"
-          value={brushSize.toString()}
-          min="1"
-          max="20"
-          onChange={(e) => setBrushSize(parseInt(e.target.value))}
-        />
-      </div>
-      <div>
-        <button onClick={handleUndo}>Undo</button>
-        <button onClick={handleClear}>Clear</button>
-        <button onClick={toggleEraserMode}>
-          {eraserMode ? "Use Brush" : "Use Eraser"}
-        </button>
-      </div>
     </div>
   );
 };

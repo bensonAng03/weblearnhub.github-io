@@ -93,40 +93,6 @@ const NoteCategory = ({ scope }) => {
         console.error("Error:", error);
       });
   };
-
-  // const updateNoteRank = () => {
-  //   noteRankApi
-  //     .getNoteRankById(userId)
-  //     .then((response) => {
-  //       const { data, isSuccess } = response;
-  //       if (isSuccess) {
-  //         if (data[0]?.attributes !== undefined) {
-            // 如果没有排名数据，添加新的排名数据
-            // noteRankApi
-            //   .addNoteRank({
-            //     username,
-            //     userId,
-            //     courseId:id,
-            //     score: 0,
-            //   })
-            //   .then((response) => {
-            //     const { data, isSuccess } = response;
-            //     if (isSuccess) {
-            //       console.log(data);
-            //     }
-            //   })
-            //   .catch((error) => {
-            //     console.error("Error:", error);
-            //   });
-            
-  //         }
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-  // };
-
   const updateNoteFn = (noteDataTemp, noteIdParam = noteId) => {
     noteApi
       .updateNote(noteDataTemp, noteIdParam)

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Card from "../../../UI/Card/Card";
 import classes from "./CourseCategory.module.css";
 import { Link, useParams } from "react-router-dom";
-import topicApi from "../../../../store/api/topicApi";
+import {topicApi} from "../../../../store/api/topicApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFile,

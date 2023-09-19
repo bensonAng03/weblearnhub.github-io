@@ -23,7 +23,7 @@ const RankingBoard = ({ username }) => {
   const [rankingData, setRankingData] = useState([]);
   const [quizRankingData, setQuizRankingData] = useState([]);
   const [noteRankingData, setNoteRankingData] = useState([]);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [scoreType, setScoreType] = useState("quiz");
   const [point, setPoint] = useState(0);
   const [isManagePoint, setIsManagePoint] = useState(false);
@@ -46,11 +46,6 @@ const RankingBoard = ({ username }) => {
           if (isSuccess) {
             sortFn(data);
             setRankingData((prevData) => [...prevData, ...data]);
-            setIsSuccess(true);
-          } else {
-            console.error("Error:", response.error);
-            setRankingData([]);
-            setIsSuccess(false);
           }
         } catch (error) {
           console.error("Error:", error);
@@ -63,11 +58,6 @@ const RankingBoard = ({ username }) => {
           if (isSuccess) {
             sortFn(data);
             setQuizRankingData((prevData) => [...prevData, ...data]);
-            setIsSuccess(true);
-          } else {
-            console.error("Error:", response.error);
-            setQuizRankingData([]);
-            setIsSuccess(false);
           }
         } catch (error) {
           console.error("Error:", error);
@@ -80,14 +70,11 @@ const RankingBoard = ({ username }) => {
           if (isSuccess) {
             sortFn(data);
             setNoteRankingData((prevData) => [...prevData, ...data]);
-            setIsSuccess(true);
-          } else {
-            console.error("Error:", response.error);
-            setNoteRankingData([]);
-            setIsSuccess(false);
-          }
+          } 
         } catch (error) {
           console.error("Error:", error);
+        }finally{
+          setIsLoading(false);
         }
         break;
     }
@@ -229,7 +216,7 @@ const RankingBoard = ({ username }) => {
   };
   return (
     <>
-      {isSuccess && (
+      {!isLoading && (
         <div className={classes.RankContainer}>
           <h2>Ranking Board</h2>
           <div className={classes.RankButtons}>

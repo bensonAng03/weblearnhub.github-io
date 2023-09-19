@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import classes from "./ClassworkCategory.module.css";
 import { Link, useParams } from "react-router-dom";
-import assignmentApi from "../../../../store/api/assignmentApi";
+import {assignmentApi} from "../../../../store/api/assignmentApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFile,
@@ -578,11 +578,11 @@ const ClassworkCategory = () => {
                                   key={index}
                                 >
                                   <Link
-                                    to={`http://localhost:1337${item.url}`}
+                                    to={item.url}
                                     target="_blank"
                                   >
                                   <img
-                                    src={`http://localhost:1337${item.url}`}
+                                    src={item.url}
                                     alt="Classwork Image"
                                   />
                                   </Link>
@@ -594,7 +594,7 @@ const ClassworkCategory = () => {
                                   className={classes.ClassworkFile}
                                   key={index}
                                 >
-                                  <Link to={`http://localhost:1337${item.url}`}>
+                                  <Link to={item.url}>
                                   <FontAwesomeIcon
                                     icon={getIconByMime(item.mime)}
                                     className={classes.FileIcon}
@@ -616,12 +616,12 @@ const ClassworkCategory = () => {
                                     key={index}
                                   >
                                     <img
-                                      src={`http://localhost:1337${item.url}`}
+                                      src={item.url}
                                       alt="Classwork Image"
                                     />
 
                                     <Link
-                                      to={`http://localhost:1337${item.url}`}
+                                      to={item.url}
                                       target="_blank"
                                     >
                                       <FontAwesomeIcon
@@ -638,7 +638,7 @@ const ClassworkCategory = () => {
                                     key={index}
                                   >
                                     <Link 
-                                      to={`http://localhost:1337${item.url}`}
+                                      to={item.url}
                                     >
                                       <FontAwesomeIcon
                                         icon={getIconByMime(item.mime)}

@@ -5,7 +5,7 @@ const baseURL = 'https://fyp-my-strapi.onrender.com/api/';
 const token = localStorage.getItem('token');
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-const topicApi = {
+export const topicApi = {
   getTopicsById: async (id) => {
     try {
       const response = await axios.get(
@@ -91,5 +91,3 @@ const topicApi = {
     }
   }
 };
-
-export default topicApi;

@@ -137,11 +137,12 @@ const CourseList = () => {
 
   const searchCourseFn = () => {
     courseApi
-      .getCourses(courseType, searchKeyword.toLowerCase())
+      .getCourses("purchasedCourses", searchKeyword.toLowerCase())
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
           console.log(data);
+          setCourseType("purchasedCourses")
           setCourses(data);
           setIsSuccess(true);
         } else {
@@ -217,7 +218,7 @@ const CourseList = () => {
     setIsRecharge((prevState) => !prevState);
   };
   return (
-    <div className={classes.CourseList}>
+    <div className={classes.CourseListOuter}>
       <div className={classes.FunctionContainer}>
         <div className={classes.LeftContainer}>
           <input
@@ -269,6 +270,7 @@ const CourseList = () => {
       {isAddCourse && (
         <UpdateItemForm
           type="Course"
+          update={false}
           toggleFn={toggleCourseFn}
           fetchFn={() => fetchCourse(courseType)}
         />
@@ -300,11 +302,6 @@ const CourseList = () => {
               closeFn={toggleShowPaymentFn}
             />
           )}
-          {/* price={
-                 pointType !== "recharge"
-                   ? selectedCourse?.attributes?.price
-                   : rechargePrice
-               } */}
           {courses.length > 0 ? (
             courses.map((course) => {
               const avatarUrl =
@@ -314,11 +311,9 @@ const CourseList = () => {
                 <li className={classes.Course} key={course.id}>
                   <div className={classes.CourseInfo}>
                     {course.attributes.authorId == userId && (
-                      <>
-                        <div className={classes.StatusBox}>
-                          {formatStatus(course.attributes.status)}
-                        </div>
-                      </>
+                      <div className={classes.StatusBox}>
+                        {formatStatus(course.attributes.status)}
+                      </div>
                     )}
 
                     <button

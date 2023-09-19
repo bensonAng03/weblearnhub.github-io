@@ -134,6 +134,7 @@ const Quizzes = () => {
           {isAddQuiz && (
             <UpdateItemForm
               type="Quiz"
+              update={false}
               toggleFn={toggleQuizFn}
               fetchFn={fetchQuizzes}
             />
@@ -151,12 +152,10 @@ const Quizzes = () => {
             className={classes.AddBtn}
             onClick={toggleQuizFn}
           />
-          <div className={classes.BarBtnContainer}>
             <FontAwesomeIcon
               icon={faBars}
               className={classes.BarBtn}
-              onClick={() => setToggleCourseType(!toggleCourseType)}
-            />
+              onClick={() => setToggleCourseType(!toggleCourseType)}/>
             <ul
               className={` ${classes.QuizTypeList} ${
                 toggleCourseType ? classes.ShowClass : ""
@@ -170,7 +169,6 @@ const Quizzes = () => {
                 Custom Quizzes
               </li>
             </ul>
-          </div>
           {Object.keys(quizzes).length > 0 ? (
             <ul className={classes.QuizzesList}>
               {Object.keys(quizzes).map((id) => {

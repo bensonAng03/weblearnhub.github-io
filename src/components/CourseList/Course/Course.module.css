@@ -96,9 +96,11 @@
   position: absolute;
   left: 20px;
   top: 20px;
+  background-color: white;
 }
 .TchImg img {
   width: 100%;
+  object-fit: cover;
 }
 .BtnContainer {
   display: flex;

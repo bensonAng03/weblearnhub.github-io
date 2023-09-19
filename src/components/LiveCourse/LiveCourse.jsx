@@ -26,7 +26,6 @@ import classes from "./LiveCourse.module.css";
 import RandomNamePicker from "./RandomNamePicker/RandomNamePicker";
 import Backdrop from "../UI/Backdrop/Backdrop";
 const socket = io("https://socket-server-rwl3.onrender.com");
-// const socket = io("127.0.0.1:3000");
 let userCameraIdData = "";
 let userScreenIdData = "";
 let userCameraIdList = [];
@@ -68,6 +67,9 @@ const LiveCourse = () => {
   const interactionTimeInputRef = useRef(null);
   window.onbeforeunload = () => {
     socket.emit("disconnect");
+    // if(shareVideoRef.current.id==userScreenIdData){
+    //   socket.emit("stop-share-video-stream",room,userScreenIdData)
+    // }
     removeVideoStream(userCameraIdData);
     removeVideoStream(userScreenIdData);
     sharePeer.destroy((err) => {
@@ -143,7 +145,7 @@ const LiveCourse = () => {
         if (userId.startsWith("camera")) {
           userCameraIdList.push(userId);
           socket.emit("request-video-stream", room, userCameraIdData, username);
-          "add user-connected"
+          ("add user-connected");
           addVideoStream(userId, usernameData);
         } else if (userId.startsWith("share")) {
           userScreenIdList.push(userId);
@@ -169,13 +171,10 @@ const LiveCourse = () => {
         }
         userCameraIdList = userCameraIdList.filter((id) => id != userId);
       } else if (userId.startsWith("share")) {
-        const videoToRemove = document.getElementById(userId);
-        const videoWrapperToRemove = videoToRemove?.parentNode;
-        videoToRemove?.srcObject?.getTracks().forEach((track) => {
-          track.stop();
-        });
-        if (videoToRemove) {
-          videoContainerRef.current.removeChild(videoWrapperToRemove);
+        if (shareVideoRef.current.id == userId) {
+          setIsShowShareScreen(false);
+          shareVideoRef.current.id = "";
+          shareVideoRef.current.srcObject = null;
         }
         userScreenIdList = userScreenIdList.filter((id) => id != userId);
       }
@@ -205,7 +204,7 @@ const LiveCourse = () => {
         if (existingUsersId[0].startsWith("camera")) {
           userCameraIdList = existingUsersId;
           existingUsersId.forEach((userId) => {
-            console.log("add existing")
+            console.log("add existing");
             addVideoStream(userId, existingUsers);
           });
         } else if (existingUsersId[0].startsWith("share")) {
@@ -260,7 +259,6 @@ const LiveCourse = () => {
     }
     sendPersonalStatus(isShareScreen, isOpenCameraData, isShareAudioData);
   };
-  // const toggleShareScreen = (status = false) => {
   const toggleShareScreen = () => {
     console.log(
       !isShareScreen,
@@ -320,13 +318,13 @@ const LiveCourse = () => {
       }
     }
   };
-  useEffect(() => {
-    if (shareVideoRef.current.srcObject != null) {
-      setIsShowShareScreen(true);
-    } else {
-      setIsShowShareScreen(false);
-    }
-  }, [shareVideoRef.current]);
+  // useEffect(() => {
+  //   if (shareVideoRef.current.srcObject != null) {
+  //     setIsShowShareScreen(true);
+  //   } else {
+  //     setIsShowShareScreen(false);
+  //   }
+  // }, [shareVideoRef.current]);
   useEffect(() => {
     socket.on("stopped-video-stream", (userId) => {
       const videoToRemove = document.getElementById(userId);
@@ -360,7 +358,9 @@ const LiveCourse = () => {
         userScreenIdData != publisherId &&
         userScreenIdData == userId
       ) {
-        alert("The broadcaster of the live stream has asked you to close the video.");
+        alert(
+          "The broadcaster of the live stream has asked you to close the video."
+        );
       }
     });
     socket.on("requested-video-stream", (userId) => {
@@ -379,15 +379,16 @@ const LiveCourse = () => {
       if (screenVideo != null) {
         console.log("share:", userId.replace("share", ""), screenVideo);
         sharePeer.call(userId.replace("share", ""), screenVideo);
+      } else {
+        setIsShareScreen(false);
       }
-      // socket.off("requested-share-video-stream");
     });
     socket.on(
       "requested-share-myvideo-stream",
       (userId, screenPublisherId, publisherId = "") => {
-        console.log("publisherId:",publisherId)
-        console.log("userId:",userId)
-        console.log("screenPublisherId",screenPublisherId)
+        console.log("publisherId:", publisherId);
+        console.log("userId:", userId);
+        console.log("screenPublisherId", screenPublisherId);
         let isShare;
         if (publisherId.length != 0) {
           if (userScreenIdData == publisherId) {
@@ -405,7 +406,7 @@ const LiveCourse = () => {
                 screenPublisherId,
                 publisherId
               );
-              console.log("userScreenIdData == userId")
+              console.log("userScreenIdData == userId");
               socket.emit(
                 "request-share-yourvideo-stream",
                 room,
@@ -413,43 +414,42 @@ const LiveCourse = () => {
                 isShare
               );
             } else {
-              console.log("123")
-              console.log("userScreenIdData:",userScreenIdData)
-              console.log("screenPublisherId:",screenPublisherId)
+              console.log("123");
+              console.log("userScreenIdData:", userScreenIdData);
+              console.log("screenPublisherId:", screenPublisherId);
               isShare = confirm(
                 `Are you sure you want to share the video with ${userId}? Confirming will close the currently shared video.`
               );
-                if (isShare) {
-                  console.log("3");
-                  setIsShareScreen(false);
-                  shareVideoRef.current.srcObject
-                    ?.getTracks()
-                    .forEach((track) => {
-                      track.stop();
-                    });
-                  shareVideoRef.current.srcObject = null;
-                  sendPersonalStatus(!isShareScreen, isOpenCamera, isShareAudio);
-                  socket.emit(
-                    "stop-share-video-stream",
-                    room,
-                    screenPublisherId,
-                    publisherId
-                  );
-                }
-                console.log("userScreenIdData !=userId")
+              if (isShare) {
+                console.log("3");
+                setIsShareScreen(false);
+                shareVideoRef.current.srcObject
+                  ?.getTracks()
+                  .forEach((track) => {
+                    track.stop();
+                  });
+                shareVideoRef.current.srcObject = null;
+                sendPersonalStatus(!isShareScreen, isOpenCamera, isShareAudio);
                 socket.emit(
-                  "request-share-yourvideo-stream",
+                  "stop-share-video-stream",
                   room,
-                  userId,
-                  isShare
+                  screenPublisherId,
+                  publisherId
                 );
-              
+              }
+              console.log("userScreenIdData !=userId");
+              socket.emit(
+                "request-share-yourvideo-stream",
+                room,
+                userId,
+                isShare
+              );
             }
           }
         } else {
-          console.log("publsiherId:none")
+          console.log("publsiherId:none");
           if (userScreenIdData == screenPublisherId) {
-            console.log("userScreenIdData == screenPublisherId")
+            console.log("userScreenIdData == screenPublisherId");
             isShare = confirm(
               `确认让${userId}共享视频吗?确认后，你会关闭共享视频。`
             );
@@ -488,7 +488,9 @@ const LiveCourse = () => {
         } else {
           setIsShareScreen(false);
           setIsShowShareScreen(true);
-          alert("The person currently sharing the video has declined your video sharing request.");
+          alert(
+            "The person currently sharing the video has declined your video sharing request."
+          );
         }
       }
     });
@@ -618,7 +620,7 @@ const LiveCourse = () => {
     }
   };
   const addVideoStream = (tempUserId, tempUsername = "") => {
-    console.log(tempUsername)
+    console.log(tempUsername);
     if (tempUsername == username) return;
     if (document.getElementById(tempUserId) || tempUserId == userCameraIdData) {
       return;
@@ -631,12 +633,12 @@ const LiveCourse = () => {
     video.setAttribute("id", tempUserId);
     video.srcObject = null;
     let tempUsernameData;
-    console.log(tempUsername)
+    console.log(tempUsername);
     if (Array.isArray(tempUsername)) {
       const tempUserArr = tempUsername.find(
         (item) => item.userCameraId == tempUserId
       );
-      console.log(tempUserArr)
+      console.log(tempUserArr);
       tempUsernameData = tempUserArr.username;
       console.log(username);
     } else {
@@ -985,13 +987,13 @@ const LiveCourse = () => {
         )}
         {userId == authorId && (
           <>
-                  <button onClick={toggleRecording}>
-          {isRecording ? (
-            <FontAwesomeIcon icon={faStop} />
-          ) : (
-            <FontAwesomeIcon icon={faRecordVinyl} />
-          )}
-        </button>
+            <button onClick={toggleRecording}>
+              {isRecording ? (
+                <FontAwesomeIcon icon={faStop} />
+              ) : (
+                <FontAwesomeIcon icon={faRecordVinyl} />
+              )}
+            </button>
             <button>
               <Link to="/white-board" target="_blank">
                 <FontAwesomeIcon icon={faPen} />

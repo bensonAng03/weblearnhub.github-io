@@ -5,8 +5,9 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
-const QuizResult = ({ score, numCorrectQuestions, numQuestions, questionInfo }) => {
-  const percentage = ((numCorrectQuestions / numQuestions) * 100).toFixed(2);
+const QuizResult = ({ score, numCorrectQuestions, numQuestions,numCorrectSelected,numCorrectAnswerLength,questionInfo }) => {
+  console.log(numCorrectSelected)
+  const percentage = ((numCorrectSelected / numCorrectAnswerLength) * 100).toFixed(2);
   let encouragementMessage = "";
 
   if (percentage >= 90) {

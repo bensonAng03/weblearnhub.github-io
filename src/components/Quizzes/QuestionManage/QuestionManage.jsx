@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import classes from "./QuestionManage.module.css";
 import { questionApi } from "../../../store/api/questionApi";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { quizApi } from "../../../store/api/quizApi";
+import UpdateItemForm from "../../UI/UpdateItemForm/UpdateItemForm";
 
 const QuestionManage = () => {
   const [question, setQuestion] = useState("");
@@ -13,6 +17,7 @@ const QuestionManage = () => {
   const [quizTitle, setQuizTitle] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [questionId, setQuestionId] = useState("");
+  const [isQuizNameEdit,setIsQuizNameEdit]=useState(false)
   const params = useParams();
   const choicesListRef = useRef(null);
   useEffect(() => {
@@ -172,6 +177,7 @@ const QuestionManage = () => {
 
     // Check if at least one answer is selected
     if (selectedAnswers.length === 0) {
+      console.log(selectedAnswers)
       // Display error message or perform the desired action
       return;
     }
@@ -199,8 +205,20 @@ const QuestionManage = () => {
     setSelectedAnswers(selectedAnswerIndexes);
     setQuestionId(index);
   };
+  const editQuizNameFn=()=>{
+    setIsQuizNameEdit(prevState=>!prevState)
+  }
   return (
     <div className={classes.QuizContainer}>
+      {isQuizNameEdit && (
+        <UpdateItemForm
+          type="Quiz"
+          id={params.id}
+          update={true}
+          toggleFn={editQuizNameFn}
+          fetchFn={fetchQuestions}
+        />
+      )}
       <div className={classes.CreateQuestionContainer}>
         <h3>Create a Quiz</h3>
         <div>
@@ -228,35 +246,52 @@ const QuestionManage = () => {
                   checked={selectedAnswers.includes(index)}
                   onChange={() => handleAnswerChange(index)}
                 />
-                <button onClick={() => handleDeleteChoice(index)}>
-                  Delete
-                </button>
+                <FontAwesomeIcon icon={faTrash} className={classes.FaTrash} onClick={() => handleDeleteChoice(index)}/>
               </div>
             ))}
           </div>
-          <button onClick={handleAddChoice}>Add Choice</button>
         </div>
+        <div className={classes.DisplayBox}>
+
+        <button onClick={handleAddChoice}>Add Choice</button>
         <button onClick={createQuestionFn}>Generate Question</button>
         <Link to={"/quizzes"}>
           <button>Complete</button>
         </Link>
+        </div>
       </div>
       <div className={classes.QuestionDataContainer}>
         {isGetQuestionsByIdSuccess &&
           Array.isArray(questionData) &&
           questionData.length !== 0 && (
             <>
-              <div>
+              <div className={classes.TitleContainer}>
                 <h3>{quizTitle}</h3>
-                {/* <FontAwesomeIcon icon={faEdit} onClick={updateQuizName}/> */}
+                <FontAwesomeIcon icon={faEdit} className={classes.FaEdit} onClick={editQuizNameFn}/>
               </div>
               {console.log(questionData)}
               <ul className={classes.QuestionDataList}>
                 {questionData?.map((questionItem, questionIndex) => (
                   <div className={classes.QuestionItem} key={questionItem.id}>
+                    <div className={classes.FaIconContainer}>
+
+                     <FontAwesomeIcon className={classes.FaIcon} icon={faEdit} onClick={() =>
+                          editQuestionFn(
+                            questionItem.id,
+                            questionItem.attributes.title,
+                            questionItem.attributes.choices.data,
+                            questionItem.attributes.answers.data
+                          )
+                        } />
+                      <FontAwesomeIcon className={classes.FaIcon} icon={faTrash} 
+                        onClick={() => deleteQuestionFn(questionItem.id)}
+                      />
+                    </div>
+                    <div className={classes.QuestionTitleContainer}>Q{questionIndex + 1}:
                     <p>
-                      Q{questionIndex + 1}:{questionItem.attributes.title}
+                      {questionItem.attributes.title}
                     </p>
+                    </div>
                     <ul className={classes.ChoicesList}>
                       {questionItem.attributes.choices.data.map(
                         (item, index) => (
@@ -270,28 +305,12 @@ const QuestionManage = () => {
                             }`}
                             key={index}
                           >
+                            
                             {item}
                           </li>
                         )
                       )}
                     </ul>
-                    <div>
-                      <button
-                        onClick={() =>
-                          editQuestionFn(
-                            questionItem.id,
-                            questionItem.attributes.title,
-                            questionItem.attributes.choices.data,
-                            questionItem.attributes.answers.data
-                          )
-                        }
-                      >
-                        Edit
-                      </button>
-                      <button onClick={() => deleteQuestionFn(questionItem.id)}>
-                        Delete
-                      </button>
-                    </div>
                   </div>
                 ))}
               </ul>

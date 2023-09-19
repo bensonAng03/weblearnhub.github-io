@@ -1,8 +1,8 @@
 import FileUploader from "../../../UI/FileUploader/FileUploader";
 import classes from "./PublishPage.module.css";
 import { useEffect, useState } from "react";
-import topicApi from "../../../../store/api/topicApi";
-import assignmentApi from "../../../../store/api/assignmentApi";
+import {topicApi} from "../../../../store/api/topicApi";
+import {assignmentApi} from "../../../../store/api/assignmentApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
