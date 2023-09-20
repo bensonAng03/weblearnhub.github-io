@@ -64,8 +64,7 @@ const LiveCourse = () => {
   const [isShowConfirmModal, setIsShowConfirmModal] = useState(false);
   const [confirmModalInfo, setConfirmModalInfo] = useState({});
   const [isToggleStreamLoading, setIsToggleStreamLoading] = useState(false);
-  const [isToggleShareScreenLoading, setIsToggleShareScreenLoading] =
-    useState(false);
+  const [isToggleShareScreenLoading, setIsToggleShareScreenLoading] = useState(false);
   const { room, id: authorId } = useParams(null);
   const videoContainerRef = useRef(null);
   const shareVideoRef = useRef(null);
@@ -229,91 +228,96 @@ const LiveCourse = () => {
     };
   }, []);
   const toggleStream = (isOpenCameraData, isShareAudioData) => {
-    setIsOpenCamera(isOpenCameraData);
-    setIsShareAudio(isShareAudioData);
-    if (isOpenCameraData || isShareAudioData) {
-      navigator.mediaDevices
-        .getUserMedia({ video: isOpenCameraData, audio: isShareAudioData })
-        .then((stream) => {
-          myVideoRef.current.srcObject = stream;
-          cameraVideo = stream;
-          myVideoRef.current.muted = true;
-          myVideoRef.current.addEventListener("loadedmetadata", () => {
-            myVideoRef.current.play();
-          });
-          for (let i = 0; i < userCameraIdList.length; i++) {
-            let peer = userCameraIdList[i];
-            if (peer != userCameraIdData) {
-              // 排除当前用户
-              console.log("Calling peer: ", peer);
-              console.log(peer);
-              cameraPeer.call(peer.replace("camera", ""), cameraVideo);
-            }
-          }
-          setIsToggleStreamLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error accessing camera:", error);
-          setIsToggleStreamLoading(false);
-        });
-    } else {
-      myVideoRef.current.srcObject.getTracks().forEach((track) => {
-        track.stop();
-      });
-      myVideoRef.current.srcObject = null;
-      socket.emit("stop-video-stream", room, userCameraIdData);
-      setIsToggleStreamLoading(false);
-    }
-    sendPersonalStatus(isShareScreen, isOpenCameraData, isShareAudioData);
-  };
-  const toggleShareScreen = () => {
-    if (!isShareScreen) {
-      if (!shareVideoRef.current.srcObject) {
+    if(!isToggleStreamLoading){
+      setIsToggleStreamLoading(true)
+      setIsOpenCamera(isOpenCameraData);
+      setIsShareAudio(isShareAudioData);
+      if (isOpenCameraData || isShareAudioData) {
         navigator.mediaDevices
-          .getDisplayMedia({ video: true })
+          .getUserMedia({ video: isOpenCameraData, audio: isShareAudioData })
           .then((stream) => {
-            shareVideoRef.current.srcObject = stream;
-            screenVideo = stream;
-            shareVideoRef.current.muted = mutedStatus;
-            shareVideoRef.current.setAttribute("id", userScreenIdData);
-            shareVideoRef.current.addEventListener("loadedmetadata", () => {
-              shareVideoRef.current.play();
+            myVideoRef.current.srcObject = stream;
+            cameraVideo = stream;
+            myVideoRef.current.muted = mutedStatus;
+            console.log(mutedStatus);
+            myVideoRef.current.addEventListener("loadedmetadata", () => {
+              myVideoRef.current.play();
             });
-            for (let i = 0; i < userScreenIdList.length; i++) {
-              let peer = userScreenIdList[i];
-              if (peer != userScreenIdData) {
-                sharePeer.call(peer.replace("share", ""), stream);
+            for (let i = 0; i < userCameraIdList.length; i++) {
+              let peer = userCameraIdList[i];
+              if (peer != userCameraIdData) {
+                // 排除当前用户
+                console.log("Calling peer: ", peer);
+                console.log(peer);
+                cameraPeer.call(peer.replace("camera", ""), cameraVideo);
               }
             }
-            setIsToggleShareScreenLoading(false);
-            setIsShowShareScreen(true)
+            setIsToggleStreamLoading(false)
           })
           .catch((error) => {
-            console.error(error);
-            shareVideoRef.current.srcObject = null;
-            setIsShareScreen(false);
-            setIsShowShareScreen(false)
-            setIsToggleShareScreenLoading(false);
+            console.error("Error accessing camera:", error);
+            setIsToggleStreamLoading(false)
           });
-      } else if (userScreenIdData != shareVideoRef.current.id) {
-        socket.emit(
-          "request-share-myvideo-stream",
-          room,
-          userScreenIdData,
-          shareVideoRef.current.id
-        );
-        setIsShowShareScreen(true)
-      }
-    } else {
-      if (shareVideoRef.current.id === userScreenIdData) {
-        shareVideoRef.current.srcObject?.getTracks().forEach((track) => {
+      } else {
+        myVideoRef.current.srcObject.getTracks().forEach((track) => {
           track.stop();
         });
-        socket.emit("stop-share-video-stream", room, userScreenIdData);
-        shareVideoRef.current.setAttribute("id", "");
-        shareVideoRef.current.srcObject = null;
-        setIsToggleShareScreenLoading(false);
-        setIsShowShareScreen(false)
+        myVideoRef.current.srcObject = null;
+        socket.emit("stop-video-stream", room, userCameraIdData);
+        setIsToggleStreamLoading(false)
+      }
+      sendPersonalStatus(isShareScreen, isOpenCameraData, isShareAudioData);
+    }
+  };
+  const toggleShareScreen = () => {
+    if(!isToggleShareScreenLoading){
+      setIsToggleShareScreenLoading(true)
+      setIsShowShareScreen(!isShowShareScreen);
+      if (!isShareScreen) {
+        if (!shareVideoRef.current.srcObject) {
+          navigator.mediaDevices
+            .getDisplayMedia({ video: true })
+            .then((stream) => {
+              shareVideoRef.current.srcObject = stream;
+              screenVideo = stream;
+              shareVideoRef.current.muted = mutedStatus;
+              shareVideoRef.current.setAttribute("id", userScreenIdData);
+              shareVideoRef.current.addEventListener("loadedmetadata", () => {
+                shareVideoRef.current.play();
+              });
+              for (let i = 0; i < userScreenIdList.length; i++) {
+                let peer = userScreenIdList[i];
+                if (peer != userScreenIdData) {
+                  sharePeer.call(peer.replace("share", ""), stream);
+                }
+              }
+              setIsToggleShareScreenLoading(false)
+            })
+            .catch((error) => {
+              console.error(error);
+              shareVideoRef.current.srcObject = null;
+              setIsShowShareScreen(false);
+              setIsShareScreen(false);
+              setIsToggleShareScreenLoading(false)
+            });
+        } else if (userScreenIdData != shareVideoRef.current.id) {
+          socket.emit(
+            "request-share-myvideo-stream",
+            room,
+            userScreenIdData,
+            shareVideoRef.current.id
+          );
+        }
+      } else {
+        if (shareVideoRef.current.id === userScreenIdData) {
+          shareVideoRef.current.srcObject?.getTracks().forEach((track) => {
+            track.stop();
+          });
+          socket.emit("stop-share-video-stream", room, userScreenIdData);
+          shareVideoRef.current.setAttribute("id", "");
+          shareVideoRef.current.srcObject = null;
+          setIsToggleShareScreenLoading(false)
+        }
       }
     }
   };
@@ -393,12 +397,12 @@ const LiveCourse = () => {
                 isShare
               );
             } else {
-              setIsShowConfirmModal(true);
+              setIsShowConfirmModal(true)
               setConfirmModalInfo({
                 message: `Are you sure you want to share the video with ${userId}? Confirming will close the currently shared video.`,
                 userId,
                 publisherId,
-                screenPublisherId,
+                screenPublisherId
               });
               // socket.emit(
               //   "request-share-yourvideo-stream",
@@ -417,7 +421,7 @@ const LiveCourse = () => {
               message: `Are you sure you want to share the video with ${userId}? Confirming will close the currently shared video.`,
               userId,
               publisherId,
-              screenPublisherId,
+              screenPublisherId
             });
           }
         }
@@ -427,16 +431,15 @@ const LiveCourse = () => {
       console.log("requested-share-yourvideo-stream");
       if (userId == userScreenIdData) {
         if (isShare) {
-          setIsShareScreen(true);
           toggleShareScreen();
-          setIsToggleShareScreenLoading(false);
+          setIsToggleShareScreenLoading(false)
         } else {
           setIsShareScreen(false);
           setIsShowShareScreen(true);
           alert(
             "The person currently sharing the video has declined your video sharing request."
           );
-          setIsToggleShareScreenLoading(false);
+          setIsToggleShareScreenLoading(false)
         }
       }
     });
@@ -566,44 +569,34 @@ const LiveCourse = () => {
     }
   };
   const addVideoStream = (tempUserId, tempUsername = "") => {
-    console.log(tempUserId);
     console.log(tempUsername);
     if (tempUsername == username) return;
-    let tempUsernameData;
-    if (Array.isArray(tempUsername)) {
-      const tempUserArr = tempUsername.filter(
-        (item) =>
-          item.userCameraId.length != 0 && item.userCameraId != userCameraIdData
-      );
-      tempUsernameData = tempUserArr;
-      console.log(tempUsernameData);
-      if (!tempUsernameData) return;
-      tempUsernameData.forEach((item) => {
-        const isHave = document.getElementById(item.userCameraId);
-        if (!isHave) {
-          const videoWrapper = document.createElement("div");
-          const video = document.createElement("video");
-          video.setAttribute("id", item.userCameraId);
-          video.srcObject = null;
-          const p = document.createElement("p");
-          p.textContent = item.username;
-          videoWrapper.appendChild(p);
-          videoWrapper.appendChild(video);
-          videoContainerRef.current.appendChild(videoWrapper);
-        }
-      });
-    } else {
-      const videoWrapper = document.createElement("div");
-      const video = document.createElement("video");
-      video.setAttribute("id", tempUserId);
-      video.srcObject = null;
-      const p = document.createElement("p");
-      p.textContent = tempUsername;
-      videoWrapper.appendChild(p);
-      videoWrapper.appendChild(video);
-      videoContainerRef.current.appendChild(videoWrapper);
+    if (document.getElementById(tempUserId) || tempUserId == userCameraIdData) {
       return;
     }
+    console.log(tempUserId);
+    console.log("123");
+    console.log(videoContainerRef.current);
+    const videoWrapper = document.createElement("div");
+    const video = document.createElement("video");
+    video.setAttribute("id", tempUserId);
+    video.srcObject = null;
+    let tempUsernameData;
+    console.log(tempUsername);
+    if (Array.isArray(tempUsername)) {
+      const tempUserArr = tempUsername.filter(
+        (item) => item.userCameraId !== userCameraIdData
+      );
+      console.log(tempUserArr);
+      tempUsernameData = tempUserArr;
+    } else {
+      tempUsernameData = tempUsername;
+    }
+    const p = document.createElement("p");
+    p.textContent = tempUsernameData;
+    videoWrapper.appendChild(p);
+    videoWrapper.appendChild(video);
+    videoContainerRef.current.appendChild(videoWrapper);
   };
   const removeVideoStream = (tempUserId) => {
     console.log(userScreenIdList);
@@ -665,6 +658,16 @@ const LiveCourse = () => {
   };
   const openSoundFn = () => {
     mutedStatus = false;
+    for (let i = 0; i < userScreenIdList.length; i++) {
+      let tempUserId = userScreenIdList[i];
+      const streamElement = document.getElementById(tempUserId);
+      if (streamElement && streamElement.length != 0) {
+        streamElement.muted = mutedStatus;
+        streamElement.addEventListener("loadedmetadata", () => {
+          streamElement.play();
+        });
+      }
+    }
     for (let i = 0; i < userCameraIdList.length; i++) {
       let tempUserId = userCameraIdList[i];
       const streamElement = document.getElementById(tempUserId);
@@ -675,6 +678,14 @@ const LiveCourse = () => {
         });
       }
     }
+    myVideoRef.current.muted = mutedStatus;
+    myVideoRef.current.addEventListener("loadedmetadata", () => {
+      myVideoRef.current.play();
+    });
+    shareVideoRef.current.muted = mutedStatus;
+    shareVideoRef.current.addEventListener("loadedmetadata", () => {
+      shareVideoRef.current.play();
+    });
   };
   const mediaRecorderRef = useRef(null);
   const streamRef = useRef(null);
@@ -754,19 +765,13 @@ const LiveCourse = () => {
     toggleStream(isOpenCamera, !isShareAudio);
   };
   const shareCameraStream = () => {
-    if (!isToggleStreamLoading) {
-      setIsToggleStreamLoading(true);
-      handleInteraction();
-      setIsOpenCamera(!isOpenCamera);
-      toggleStream(!isOpenCamera, isShareAudio);
-    }
+    handleInteraction();
+    setIsOpenCamera(!isOpenCamera);
+    toggleStream(!isOpenCamera, isShareAudio);
   };
   const shareStream = () => {
-    if (!isToggleShareScreenLoading) {
-      setIsToggleShareScreenLoading(true);
-      setIsShareScreen(!isShareScreen);
-      toggleShareScreen();
-    }
+    setIsShareScreen(!isShareScreen);
+    toggleShareScreen();
   };
   const showRaiseHandList = () => {
     setType(type === "raiseHandList" ? "" : "raiseHandList");
@@ -810,10 +815,10 @@ const LiveCourse = () => {
       );
     }
   }, []);
-  const confirmFn = (screenPublisherId, publisherId, userIdTemp) => {
+  const confirmFn = (screenPublisherId,publisherId,userIdTemp) => {
     setIsShowConfirmModal(false);
     setIsShareScreen(false);
-    setConfirmModalInfo({});
+    setConfirmModalInfo({})
     shareVideoRef.current.srcObject?.getTracks().forEach((track) => {
       track.stop();
     });
@@ -831,8 +836,13 @@ const LiveCourse = () => {
   const cancelFn = (userIdTemp) => {
     setIsShowConfirmModal(false);
     setIsShareScreen(true);
-    setConfirmModalInfo({});
-    socket.emit("request-share-yourvideo-stream", room, userIdTemp, false);
+    setConfirmModalInfo({})
+    socket.emit(
+      "request-share-yourvideo-stream",
+      room,
+      userIdTemp,
+      false
+    );
   };
   return (
     <div className={classes.LiveCourseContainer}>

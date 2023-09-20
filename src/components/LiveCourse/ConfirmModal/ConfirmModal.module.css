@@ -6,3 +6,16 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+.ConfirmModal button{
+    font-size: 14px;
+    background-color: rgb(173, 173, 245);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+}
+.ConfirmModal button:hover{
+    background-color: rgb(134, 134, 191);;
+}

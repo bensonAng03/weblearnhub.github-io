@@ -6,6 +6,10 @@
     line-height: 30px;
 }
 .NavBar li{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 1;
     color: white;
     border-left: 1px solid white;

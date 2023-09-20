@@ -16,6 +16,9 @@
   border-radius: 4px;
   background-color: #f9f9f9;
 }
+.ItemId{
+  cursor: pointer;
+}
 
 .ApplyItem p {
   margin: 5px 0;
@@ -41,4 +44,33 @@
 }
 .Img{
   width: 100%;
+}
+.ScoreContainer{
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(144, 144, 144);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+.ScoreContainer input{
+  outline: none;
+  font-size: 20px;
+  width: 220px;
+  border-radius: 5px;
+}
+.ButtonContainer button{
+  font-size: 14px;
+  background-color: rgb(173, 173, 245);
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 5px;
+}
+.ButtonContainer button:hover{
+  background-color: rgb(134, 134, 191);;
 }

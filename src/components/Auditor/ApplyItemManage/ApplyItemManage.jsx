@@ -196,7 +196,7 @@ const ApplyItemManage = ({ type }) => {
                 <div key={index} className={classes.ApplyItem}>
                   {isShowInfoDetail && <InfoDetail type={type} id={applyItem.attributes.itemId} content={applyItem.attributes} closeFn={toggleShowInfoDetail}/>}
                   
-                  <p onClick={toggleShowInfoDetail}>
+                  <p onClick={toggleShowInfoDetail} className={classes.ItemId}>
                     {type === "approveQuiz" || type === "deleteQuiz"
                       ? "Quiz"
                       : type === "reportNote"
@@ -212,12 +212,12 @@ const ApplyItemManage = ({ type }) => {
                     </>
                   )}
                   {type === "approveQuiz" && (
-                    <>
-                      <label>
-                        score:
+                    <div className={classes.ScoreContainer}>
+                      <label className={classes.Score}>
+                        Score:
                         <input ref={inputRef} type="number" />
                       </label>
-                    </>
+                    </div>
                   )}
                   {(type === "deleteCourse" || type === "deleteQuiz") && (
                     <p>Reason:{applyItem.attributes.content}</p>

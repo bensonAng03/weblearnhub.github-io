@@ -1,8 +1,9 @@
 .InfoDetail {
-    padding: 10px;
+    padding: 20px;
     border-radius: 15px;
   background-color: white;
-  width: 75%;
+  max-width: 75%;
+  min-width: 650px;
   height:90%;
   display: flex;
   flex-direction: column;
@@ -12,13 +13,29 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    width: 100%;
+    width: 97%;
     margin-left: 15px;
 }
-.CloseBtn{
+.InfoHeader button{
   position: absolute;
-  right: 50px;
-  top: 10px;
+  right: 15px;
+  width: 120px;
+  font-size: 14px;
+  background-color: rgb(173, 173, 245);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.InfoHeader button:hover{
+  background-color: rgb(134, 134, 191);;
+}
+.CloseBtn{
+  cursor: pointer;
+  position: absolute;
+  right: -5px;
+  top: -5px;
 }
 .CourseTypeBtn{
   position: absolute;
@@ -27,9 +44,9 @@
   width: 100px;
 }
 .InfoContent {
-    flex: 1;
-    width: 100%;
-  overflow-x: auto;
+  flex: 1;
+  width: 97%;
+  overflow-y: auto;
 }
 .InfoContentList {
   display: flex;
@@ -40,7 +57,7 @@
   overflow: auto;
 }
 .InfoContentList li{
-    margin: 10px;
+    margin-bottom:5px;
     width: 95%;
     padding: 10px;
     border-radius: 5px;
@@ -91,6 +108,7 @@
     right: 5px;
   }
   .QuestionItemContainer{
+    word-wrap: break-word;
     margin-top: 10px;
     width: 98%;
     padding: 0px 1%;
@@ -108,6 +126,7 @@
     border-radius: 5px;
   }
   .ChoiceItemContainer li{
+    word-wrap: break-word;
     margin: 5px 0;
     width: 97%;
   }
@@ -116,7 +135,8 @@
     color: white;
   }
   .NoteContainer{
-    width: 95%;
+    word-wrap: break-word;
+    width: 90%;
     height: 95%;
     padding: 20px;
     margin-top: 10px;
