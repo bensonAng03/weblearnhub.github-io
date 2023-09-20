@@ -26,7 +26,8 @@ const App = () => {
   let role = JSON.parse(localStorage.getItem("user"))?.role;
   return (
     <>
-    {(role=="authenticated" || role=="public" || role==undefined )?<div className="AppContainer">
+    {(role=="authenticated" || role=="public" || role==undefined )?
+    <div className="AppContainer">
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -54,9 +55,9 @@ const App = () => {
         <Route path="quizzes/:id/create-quiz" element={<NeedAuth><QuestionManage /></NeedAuth>} />
         <Route path="me" element={<NeedAuth><Profile /></NeedAuth>} />
         <Route path='auth-form' element={<AuthForm/>}/>
-        <Route path='white-board' element={<WhiteBoard/>}/>
+        <Route path='white-board' element={<NeedAuth><WhiteBoard/></NeedAuth>}/>
       </Routes>
-    </div>:
+    </div> :
     <div className="AppContainer">
       <NeedAuditor>
         <Review/>

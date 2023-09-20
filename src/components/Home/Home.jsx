@@ -7,8 +7,8 @@ import ContentLayout from "./ContentLayout/ContentLayout";
 const Home = () => {
   const [courseInfoArr, setCourseInfoArr] = useState([]);
   const [teacherInfoArr, setTeacherInfoArr] = useState([]);
-  const [isCourseInfoLoading, setIsCourseInfoLoading] = useState(false);
-  const [isTeacherInfoLoading, setIsTeacherInfoLoading] = useState(false);
+  const [isCourseInfoLoading, setIsCourseInfoLoading] = useState(true);
+  const [isTeacherInfoLoading, setIsTeacherInfoLoading] = useState(true);
   const [type, setType] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -17,36 +17,32 @@ const Home = () => {
   }, []);
   const fetchTeacherInfo = async () => {
     try {
-      setIsTeacherInfoLoading(false);
+      setIsTeacherInfoLoading(true);
       setTeacherInfoArr([]);
       const response = await userApi.getUsers();
       if (response.isSuccess) {
         setTeacherInfoArr(response.data.filter((item) => item.position));
-        setIsTeacherInfoLoading(true);
+        setIsTeacherInfoLoading(false);
       }
-    } catch (e) {
-      console.log(e);
-      setIsTeacherInfoLoading(true);
+    } catch (error) {
+      console.log(error);
+      setIsTeacherInfoLoading(false);
     }
   };
   const fetchCourseInfo = async () => {
     try {
-      setIsCourseInfoLoading(false);
+      setIsCourseInfoLoading(true);
       setCourseInfoArr([]);
       const response = await courseApi.getCourses();
       if (response.isSuccess) {
-        console.log(response.data);
         setCourseInfoArr(
           response.data.filter((item) => item.attributes.description)
         );
-        console.log(
-          response.data.filter((item) => item.attributes.description)
-        );
-        setIsCourseInfoLoading(true);
+        setIsCourseInfoLoading(false);
       }
-    } catch (e) {
-      console.log(e);
-      setIsCourseInfoLoading(true);
+    } catch (error) {
+      console.log(error);
+      setIsCourseInfoLoading(false);
     }
   };
   const generateCourseInfo = (item, index) => {
@@ -104,14 +100,14 @@ const Home = () => {
               </p>
             </div>
             <div className={classes.CourseInfoContainer}>
-              {isCourseInfoLoading &&
+              {!isCourseInfoLoading &&
                 courseInfoArr.map((item, index) =>
                   generateCourseInfo(item, index)
                 )}
             </div>
             <div className={classes.TeacherInfoOuterContainer}>
               <div className={classes.TeacherInfoContainer}>
-                {isTeacherInfoLoading &&
+                {!isTeacherInfoLoading &&
                   teacherInfoArr.map((item, index) =>
                     generateTeacherInfo(item, index)
                   )}

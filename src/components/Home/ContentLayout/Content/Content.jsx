@@ -217,9 +217,7 @@ const data = {
     },
   ],
 };
-
 const Content = ({ type }) => {
-  console.log(type);
   return (
     <div className={classes.Content}>
       {type == "about" && (

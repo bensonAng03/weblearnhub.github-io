@@ -3,7 +3,6 @@ import ContentNavbar from './ContentNavbar/ContentNavbar'
 import Content from './Content/Content'
 import classes from "./ContentLayout.module.css"
 const ContentLayout = ({type,getContentTypeFn}) => {
-  console.log(type)
   const [contentType,setContentType]=useState(type)
   const getTypeFn=(typeTemp)=>{
     if(typeTemp==""){

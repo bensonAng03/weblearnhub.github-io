@@ -72,7 +72,7 @@ const AuthForm = () => {
             const from = location.state?.preLocation?.pathname || "/";
             navigate(from, { replace: true });
           }
-          if(localStorage.getItem("user")!==undefined){
+          if(localStorage.getItem("user")!=undefined){
             userApi
           .getUserById(JSON.parse(localStorage.getItem("user"))?.id)
           .then((response) => {
@@ -82,9 +82,6 @@ const AuthForm = () => {
               const userData=JSON.parse(localStorage.getItem("user"))
               userData.role=data.role.type
               localStorage.setItem("user",JSON.stringify(userData))
-              window.location.reload()
-            } else {
-              console.error("Error:", response.error);
               window.location.reload()
             }
           })
@@ -147,7 +144,6 @@ const AuthForm = () => {
         <h3>{isLoginForm ? "Login" : "Register"}</h3>
         <p>
           {showError && error && error}
-          {/* {error && error} */}
         </p>
         <label id={classes.NameLabel}>Name:</label>
         <input
