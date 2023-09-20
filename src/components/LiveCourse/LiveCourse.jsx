@@ -32,6 +32,7 @@ let userCameraIdList = [];
 let userScreenIdList = [];
 let cameraVideo = null;
 let screenVideo = null;
+let mutedStatus=true;
 let username = JSON.parse(localStorage.getItem("user"))?.username;
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 let sharePeer = new Peer(undefined, {
@@ -58,7 +59,7 @@ const LiveCourse = () => {
   const [isCheckInteractionStatus, setIsCheckInteractionStatus] =
     useState(true);
   const [isUsersListSuccess, setIsUsersListSuccess] = useState(false);
-  const [mutedStatus, setMutedStatus] = useState(true);
+  // const [mutedStatus, setMutedStatus] = useState(true);
   const { room, id: authorId } = useParams(null);
   const videoContainerRef = useRef(null);
   const shareVideoRef = useRef(null);
