@@ -708,12 +708,12 @@ const LiveCourse = () => {
     );
   };
   const openSoundFn = () => {
-    setMutedStatus(false);
+    mutedStatus=false
     for (let i = 0; i < userScreenIdList.length; i++) {
       let tempUserId = userScreenIdList[i];
       const streamElement = document.getElementById(tempUserId);
       if (streamElement && streamElement.length != 0) {
-        streamElement.muted = false;
+        streamElement.muted = mutedStatus;
         streamElement.addEventListener("loadedmetadata", () => {
           streamElement.play();
         });
@@ -723,17 +723,17 @@ const LiveCourse = () => {
       let tempUserId = userCameraIdList[i];
       const streamElement = document.getElementById(tempUserId);
       if (streamElement && streamElement.length != 0) {
-        streamElement.muted = false;
+        streamElement.muted = mutedStatus;
         streamElement.addEventListener("loadedmetadata", () => {
           streamElement.play();
         });
       }
     }
-    myVideoRef.current.muted = false;
+    myVideoRef.current.muted = mutedStatus;
     myVideoRef.current.addEventListener("loadedmetadata", () => {
       myVideoRef.current.play();
     });
-    shareVideoRef.current.muted = false;
+    shareVideoRef.current.muted = mutedStatus;
     shareVideoRef.current.addEventListener("loadedmetadata", () => {
       shareVideoRef.current.play();
     });
