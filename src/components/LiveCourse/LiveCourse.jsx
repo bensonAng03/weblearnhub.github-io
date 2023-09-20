@@ -67,9 +67,6 @@ const LiveCourse = () => {
   const interactionTimeInputRef = useRef(null);
   window.onbeforeunload = () => {
     socket.emit("disconnect");
-    // if(shareVideoRef.current.id==userScreenIdData){
-    //   socket.emit("stop-share-video-stream",room,userScreenIdData)
-    // }
     removeVideoStream(userCameraIdData);
     removeVideoStream(userScreenIdData);
     sharePeer.destroy((err) => {
@@ -234,6 +231,7 @@ const LiveCourse = () => {
           myVideoRef.current.srcObject = stream;
           cameraVideo = stream;
           myVideoRef.current.muted = mutedStatus;
+          console.log(mutedStatus)
           myVideoRef.current.addEventListener("loadedmetadata", () => {
             myVideoRef.current.play();
           });
