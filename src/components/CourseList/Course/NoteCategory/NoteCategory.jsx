@@ -84,7 +84,6 @@ const NoteCategory = ({ scope }) => {
         if (isSuccess) {
           setIsEditNote(false);
           fetchNotes();
-          // updateNoteRank();
         } else {
           console.error("Failed to add note:", data);
         }

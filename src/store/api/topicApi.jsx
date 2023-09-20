@@ -9,7 +9,7 @@ export const topicApi = {
   getTopicsById: async (id) => {
     try {
       const response = await axios.get(
-        `${baseURL}courses/${id}?populate[0]=topics&populate[1]=topics.assests`,
+        `${baseURL}courses/${id}?populate=topics`,
         { headers }
       );
       return {

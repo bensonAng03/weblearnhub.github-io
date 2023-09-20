@@ -52,7 +52,6 @@ const Info = () => {
             };
             setAvatar(newAvatar);
           } else {
-            console.error("Error:", response.error);
             setIsImageLoading(false)
           }
         })

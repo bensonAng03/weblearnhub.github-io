@@ -2,8 +2,8 @@
     padding: 10px;
     border-radius: 15px;
   background-color: white;
-  width: 90%;
-  height: 90%;
+  width: 75%;
+  height:90%;
   display: flex;
   flex-direction: column;
 }
@@ -32,10 +32,11 @@
   overflow-x: auto;
 }
 .InfoContentList {
-  display: flex;flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
+  height: 100%;
   overflow: auto;
 }
 .InfoContentList li{
@@ -89,7 +90,36 @@
     top: 10px;
     right: 5px;
   }
-  .SelectedChoice{
-    background-color: blue;
+  .QuestionItemContainer{
+    margin-top: 10px;
+    width: 98%;
+    padding: 0px 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ChoiceItemContainer{
+    margin-top: 5px;
+    background-color: white;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+  }
+  .ChoiceItemContainer li{
+    margin: 5px 0;
+    width: 97%;
+  }
+  .ChoiceItemContainer .SelectedChoice{
+    background-color: rgb(149, 149, 255);
     color: white;
+  }
+  .NoteContainer{
+    width: 95%;
+    height: 95%;
+    padding: 20px;
+    margin-top: 10px;
+    background-color: #e7e7e7;
+    border-radius: 5px;
   }

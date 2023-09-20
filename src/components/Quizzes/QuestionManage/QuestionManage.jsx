@@ -4,7 +4,6 @@ import { questionApi } from "../../../store/api/questionApi";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { quizApi } from "../../../store/api/quizApi";
 import UpdateItemForm from "../../UI/UpdateItemForm/UpdateItemForm";
 
 const QuestionManage = () => {
@@ -53,13 +52,10 @@ const QuestionManage = () => {
     questionApi
       .delQuestion(id)
       .then((response) => {
-        const { data, isSuccess } = response;
+        const {isSuccess } = response;
         if (isSuccess) {
           console.log("ok");
           fetchQuestions();
-        } else {
-          console.error("Error:", response.error);
-          // setQuestionData([]);
         }
       })
       .catch((error) => {

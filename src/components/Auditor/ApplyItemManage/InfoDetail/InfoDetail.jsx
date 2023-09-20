@@ -24,7 +24,8 @@ import { questionApi } from "../../../../store/api/questionApi";
 const InfoDetail = ({ type, id, content, closeFn }) => {
   const [assignmentsData, setAssignmentsData] = useState([]);
   const [topicsData, setTopicsData] = useState([]);
-  const [questionsData, setQuestionsData] = useState([]);
+  // const [questionsData, setQuestionsData] = useState([]);
+  const [itemsData, setItemsData] = useState([]);
   const [item, setItem] = useState([]);
   const [itemType, setItemType] = useState("");
   const [descriptions, setDescriptions] = useState([]);
@@ -46,7 +47,6 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
             if (response.isSuccess) {
               setItem(response.data);
               console.log(response.data);
-              console.log();
               if (response.data.attributes.topics.data.length != 0) {
                 console.log("has topic");
                 console.log(response.data.attributes.topics.data);
@@ -87,7 +87,8 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
                 response.data.attributes.questions &&
                 response.data.attributes.questions.data.length !== 0
               ) {
-                setQuestionsData(response.data.attributes.questions.data);
+                console.log(response.data.attributes.questions.data.length)
+                setItemsData(response.data.attributes.questions.data);
               }
               setIsSuccess(true);
               setIsLoading(false);
@@ -105,6 +106,15 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
           .then((response) => {
             if (response.isSuccess) {
               console.log(response.data);
+              setItem(response.data);
+              console.log(response.data);
+              // if (
+              //   response.data &&
+              //   response.data.length !== 0
+              // ) {
+              //   console.log(response.data)
+              //   setItemsData(response.data);
+              // }
               setIsSuccess(true);
               setIsLoading(false);
             }
@@ -169,6 +179,7 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
   const closeInfoDetailFn = () => {
     setAssignmentsData([]);
     setTopicsData([]);
+    setItemsData([]);
     setItem([]);
     setDescriptions("");
     setCourseType("topic");
@@ -176,107 +187,45 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
     setIsSuccess(false);
     closeFn();
   };
-  const course = (
-      courseType == "topic" ? (
-        topicsData && topicsData.length > 0 ? (
-          topicsData.map((topicItem, topicIndex) => (
-            <li key={topicIndex}>
-              <p>{topicItem.attributes.title}</p>
-              <p
-                className={
-                  descriptions[topicIndex]
-                    ? classes.SmallDescription
-                    : classes.BigDescription
-                }
-              >
-                {topicItem.attributes.description}
-              </p>
-              {topicItem.attributes.description &&
-                topicItem.attributes.description.length > 100 && (
-                  <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className={classes.FaChevronDownIcon}
-                    onClick={() =>
-                      setDescriptions((prevState) => {
-                        const newShowDescriptions = [...prevState];
-                        newShowDescriptions[topicIndex] =
-                          !newShowDescriptions[topicIndex];
-                        return newShowDescriptions;
-                      })
-                    }
-                  />
-                )}
-              <div className={classes.AssetsContainer}>
-                {topicItem.attributes.asset &&
-                  topicItem.attributes.asset.map((item, index) => {
-                    let content;
-                    if (item.mime.startsWith("image/")) {
-                      content = (
-                        <div className={classes.ItemImg} key={index}>
-                          <Link to={item.url} target="_blank">
-                            <img src={item.url} alt="Topic Image" />
-                          </Link>
-                        </div>
-                      );
-                    } else {
-                      content = (
-                        <div className={classes.ItemFile} key={index}>
-                          <Link to={item.url}>
-                            <FontAwesomeIcon
-                              icon={getIconByMime(item.mime)}
-                              className={classes.FileIcon}
-                            />
-                            <p className={classes.Title}>{item.name}</p>
-                          </Link>
-                        </div>
-                      );
-                    }
-                    return content;
-                  })}
-              </div>
-            </li>
-          ))
-        ) : (
-          <p>Not found</p>
-        )
-      ) : assignmentsData && assignmentsData.length > 0 ? (
-        assignmentsData.map((assignmentItem, assignmentIndex) => (
-          <li key={assignmentIndex}>
-            {console.log("assignment")}
-            <p>{assignmentItem.attributes.title}</p>
+  const course =
+    courseType == "topic" ? (
+      topicsData && topicsData.length > 0 ? (
+        topicsData.map((topicItem, topicIndex) => (
+          <li key={topicIndex}>
+            <p>{topicItem.attributes.title}</p>
             <p
               className={
-                descriptions[assignmentIndex]
+                descriptions[topicIndex]
                   ? classes.SmallDescription
                   : classes.BigDescription
               }
             >
-              {assignmentItem.description}
+              {topicItem.attributes.description}
             </p>
-            {assignmentItem.attributes.description &&
-              assignmentItem.attributes.description.length > 100 && (
+            {topicItem.attributes.description &&
+              topicItem.attributes.description.length > 100 && (
                 <FontAwesomeIcon
                   icon={faChevronDown}
                   className={classes.FaChevronDownIcon}
                   onClick={() =>
                     setDescriptions((prevState) => {
                       const newShowDescriptions = [...prevState];
-                      newShowDescriptions[assignmentIndex] =
-                        !newShowDescriptions[assignmentIndex];
+                      newShowDescriptions[topicIndex] =
+                        !newShowDescriptions[topicIndex];
                       return newShowDescriptions;
                     })
                   }
                 />
               )}
             <div className={classes.AssetsContainer}>
-              {assignmentItem.attributes.asset &&
-                assignmentItem.attributes.asset.map((item, index) => {
+              {topicItem.attributes.asset &&
+                topicItem.attributes.asset.map((item, index) => {
                   let content;
                   if (item.mime.startsWith("image/")) {
                     content = (
                       <div className={classes.ItemImg} key={index}>
                         <Link to={item.url} target="_blank">
-                          <img src={item.url} alt="Assignment Image" />
+                          <img src={item.url} alt="Topic Image" />
                         </Link>
                       </div>
                     );
@@ -301,41 +250,112 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
       ) : (
         <p>Not found</p>
       )
-    )
-const quiz = (
-  questionsData && questionsData.length > 0 ? (
-    <ul> {/* Use a parent container like <ul> or <ol> */}
-      {questionsData.map((questionItem, questionIndex) => (
-        <li key={questionIndex}>
-          <p>{questionItem.attributes.title}</p>
-          {console.log(questionItem.attributes)}
-          <ul> {/* Wrap nested <li> elements in a parent <ul> */}
-            {questionItem.attributes.choices.data.map((item, index) => (
-              <li
-                key={index}
-                className={`${classes.ChoiceItem} ${
-                  questionItem.attributes.answers.data.includes(item)
-                    ? classes.SelectedChoice
-                    : ""
-                }`}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
+    ) : assignmentsData && assignmentsData.length > 0 ? (
+      assignmentsData.map((assignmentItem, assignmentIndex) => (
+        <li key={assignmentIndex}>
+          {console.log("assignment")}
+          <p>{assignmentItem.attributes.title}</p>
+          <p
+            className={
+              descriptions[assignmentIndex]
+                ? classes.SmallDescription
+                : classes.BigDescription
+            }
+          >
+            {assignmentItem.description}
+          </p>
+          {assignmentItem.attributes.description &&
+            assignmentItem.attributes.description.length > 100 && (
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={classes.FaChevronDownIcon}
+                onClick={() =>
+                  setDescriptions((prevState) => {
+                    const newShowDescriptions = [...prevState];
+                    newShowDescriptions[assignmentIndex] =
+                      !newShowDescriptions[assignmentIndex];
+                    return newShowDescriptions;
+                  })
+                }
+              />
+            )}
+          <div className={classes.AssetsContainer}>
+            {assignmentItem.attributes.asset &&
+              assignmentItem.attributes.asset.map((item, index) => {
+                let content;
+                if (item.mime.startsWith("image/")) {
+                  content = (
+                    <div className={classes.ItemImg} key={index}>
+                      <Link to={item.url} target="_blank">
+                        <img src={item.url} alt="Assignment Image" />
+                      </Link>
+                    </div>
+                  );
+                } else {
+                  content = (
+                    <div className={classes.ItemFile} key={index}>
+                      <Link to={item.url}>
+                        <FontAwesomeIcon
+                          icon={getIconByMime(item.mime)}
+                          className={classes.FileIcon}
+                        />
+                        <p className={classes.Title}>{item.name}</p>
+                      </Link>
+                    </div>
+                  );
+                }
+                return content;
+              })}
+          </div>
         </li>
-      ))}
-    </ul>
-  ) : (
-    <p>Not Found</p>
-  )
-);
+      ))
+    ) : (
+      <p>Not found</p>
+    );
+  const quiz =
+    itemsData!==undefined && itemsData.length > 0 ? (
+      <ul className={classes.QuestionItemContainer}>
+        {itemsData.map((questionItem, questionIndex) => (
+          <li key={questionIndex}>
+            <p>{questionItem.attributes.title}</p>
+            {console.log(questionItem.attributes)}
+            <ul className={classes.ChoiceItemContainer}>
+              {questionItem.attributes.choices.data.map((item, index) => (
+                <li
+                  key={index}
+                  className={`${classes.ChoiceItem} ${
+                    questionItem.attributes.answers.data.includes(item)
+                      ? classes.SelectedChoice
+                      : ""
+                  }`}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>Not Found</p>
+    );
+  const note =
+    item.attributes && item.attributes.content?.length > 0 ? (
+      <div
+        className={classes.NoteContainer}
+        dangerouslySetInnerHTML={{
+          __html: item.attributes.content,
+        }}
+      />
+    ) : (
+      <p>Not Found</p>
+    );
   return (
     <Backdrop>
       {isSuccess && !isLoading && item.length !== 0 && (
         <div className={classes.InfoDetail}>
           <div className={classes.InfoHeader}>
-            <p>Title:{item.attributes.title}</p>
+            {itemType != "note" && <p>Title:{item.attributes.title}</p>}
             {itemType == "course" && (
               <>
                 <p>
@@ -358,6 +378,15 @@ const quiz = (
                 </button>
               </>
             )}
+
+            {itemType == "note" && (
+              <>
+                <p>Author:{item.attributes.author}</p>
+                {item.attributes.course && (
+                  <p>Course:{item.attributes.course}</p>
+                )}
+              </>
+            )}
             <FontAwesomeIcon
               icon={faXmark}
               className={classes.CloseBtn}
@@ -368,6 +397,7 @@ const quiz = (
             <ul className={classes.InfoContentList}>
               {itemType == "course" && course}
               {itemType == "quiz" && quiz}
+              {itemType == "note" && note}
             </ul>
           </div>
         </div>

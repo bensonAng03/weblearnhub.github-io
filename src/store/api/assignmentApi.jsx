@@ -9,7 +9,7 @@ export const assignmentApi = {
   getAssignmentsById: async (id) => {
     try {
       const response = await axios.get(
-        `${baseURL}courses/${id}?populate[0]=assignments&populate[1]=assignments.assests`,
+        `${baseURL}courses/${id}?populate=assignments`,
         { headers }
       );
       return {

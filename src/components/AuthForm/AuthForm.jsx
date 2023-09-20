@@ -70,7 +70,6 @@ const AuthForm = () => {
               })
             );
             const from = location.state?.preLocation?.pathname || "/";
-            // navigate("/welfare/library",{replace:true})
             navigate(from, { replace: true });
           }
           if(localStorage.getItem("user")!==undefined){
@@ -83,7 +82,6 @@ const AuthForm = () => {
               const userData=JSON.parse(localStorage.getItem("user"))
               userData.role=data.role.type
               localStorage.setItem("user",JSON.stringify(userData))
-              console.log(userData.role)  
               window.location.reload()
             } else {
               console.error("Error:", response.error);

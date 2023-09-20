@@ -6,6 +6,12 @@ const AuditorNavbar = ({getTypeFn}) => {
     setNavBarItem(item);
     getTypeFn(item);
   };
+  const logoutFn = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("expirationTime");
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
   return (
     <ul className={classes.NavBar}>
       <li className={navBarItem=="approveCourse"?classes.Active:""} onClick={()=>handleNavItemClick("approveCourse")}>Approved Course</li>
@@ -15,6 +21,7 @@ const AuditorNavbar = ({getTypeFn}) => {
       <li className={navBarItem=="approveQuiz"?classes.Active:""} onClick={()=>handleNavItemClick("approveQuiz")}>Approved Quiz</li>
       <li className={navBarItem=="deleteQuiz"?classes.Active:""} onClick={()=>handleNavItemClick("deleteQuiz")}>Delete Quiz</li>
       <li className={navBarItem=="reportNote"?classes.Active:""} onClick={()=>handleNavItemClick("reportNote")}>Report Note</li>
+      <li onClick={logoutFn}>Logout</li>
     </ul>
   )
 }

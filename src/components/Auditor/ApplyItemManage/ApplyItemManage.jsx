@@ -5,7 +5,7 @@ import { quizApi } from "../../../store/api/quizApi";
 import { courseApi } from "../../../store/api/courseApi";
 import EditDetail from "./EditDetail/EditDetail";
 import { reportApi } from "../../../store/api/reportApi";
-import InfoDetail from "./InfoDetial/InfoDetail";
+import InfoDetail from "./InfoDetail/InfoDetail";
 
 const ApplyItemManage = ({ type }) => {
   const [data, setData] = useState(null);
