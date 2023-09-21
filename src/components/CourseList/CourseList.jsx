@@ -46,13 +46,13 @@ const CourseList = () => {
     fetchCourse(courseType);
     fetchUserInfo();
   };
+
   const fetchCourse = (type) => {
     courseApi
       .getCourses(type)
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
           let tempArr = [...data];
           if (courseType === "notPurchasedCourses") {
             const filteredCourses = data.filter((course) => {
@@ -82,7 +82,6 @@ const CourseList = () => {
           }
           setIsSuccess(true);
         } else {
-          console.error("Error:", response.error);
           setCourses({});
           setIsSuccess(false);
         }
@@ -97,10 +96,7 @@ const CourseList = () => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
           setPoint(data.point);
-        } else {
-          console.error("Error:", response.error);
         }
       })
       .catch((error) => {
@@ -137,16 +133,14 @@ const CourseList = () => {
 
   const searchCourseFn = () => {
     courseApi
-      .getCourses("purchasedCourses", searchKeyword.toLowerCase())
+      .getCourses("notPurchasedCourses", searchKeyword.toLowerCase())
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
-          setCourseType("purchasedCourses")
+          setCourseType("notPurchasedCourses")
           setCourses(data);
           setIsSuccess(true);
         } else {
-          console.error("Error:", response.error);
           setCourses({});
           setIsSuccess(false);
         }

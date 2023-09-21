@@ -22,7 +22,6 @@ export const courseApi = {
             );
           }
         }else{
-          console.log("no userId")
           response = await axios.get(
             `${baseURL}courses?&filters[status]=approved`,
             { headers }

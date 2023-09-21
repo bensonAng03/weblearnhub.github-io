@@ -1,4 +1,3 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins, faPlus } from "@fortawesome/free-solid-svg-icons";
 import classes from "./Point.module.css";

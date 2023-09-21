@@ -178,12 +178,12 @@ const CourseCategory = () => {
                         content = (
                           <div className={classes.CourseImg} key={index}>
                             <Link
-                                to={`http://localhost:1337${item.url}`}
+                                to={item.url}
                                 target="_blank"
                               >
                             <img
                               
-                              src={`http://localhost:1337${item.url}`}
+                              src={item.url}
                               alt="Course Image"
                             />
                               </Link>
@@ -192,7 +192,7 @@ const CourseCategory = () => {
                       } else {
                         content = (
                           <div className={classes.CourseFile} key={index}>
-                            <Link to={`http://localhost:1337${item.url}`}>
+                            <Link to={item.url}>
                             <FontAwesomeIcon
                               icon={getIconByMime(item.mime)}
                               className={classes.FileIcon}

@@ -29,20 +29,15 @@ const Payment = ({
   const [expiryDate, setExpiryDate] = useState("");
   const [securityCode, setSecurityCode] = useState("");
   const [isShowInvoice, setIsShowInvoice] = useState(false);
-  console.log("type:",type)
   const formatPrice = (tempPrice, tempPoint = 0) => {
     const pointDiscountAmount = Math.min(tempPoint / 800, tempPrice * 0.15);
-    console.log("pointDiscountAmount" + pointDiscountAmount);
     const roundedPrice =
       Math.round((tempPrice - pointDiscountAmount) * 100) / 100;
-    console.log("roundedPrice", roundedPrice);
     const formattedPrice = roundToNearest(roundedPrice, 0.05).toFixed(2);
-    console.log("formattedPrice", formattedPrice);
     const usedPoints = Math.min(
       tempPoint,
       Math.floor(pointDiscountAmount * 800)
     );
-    console.log("usedpoint", usedPoints);
     return { formattedPrice, usedPoints,pointDiscountAmount};
   };
   const roundToNearest = (value, nearest) => {
@@ -69,14 +64,10 @@ const Payment = ({
       result = formatPrice(price);
       calculatedPrice = result.formattedPrice;
     } else {
-      console.log(price);
-      console.log(point);
       result = formatPrice(price, point);
-      console.log("result:",result)
       calculatedPrice = result.formattedPrice;
       usedPoint = result.usedPoints;
       discountPrice=result.pointDiscountAmount
-      console.log(usedPoint);
     }
   }, []);
 
@@ -161,13 +152,11 @@ const Payment = ({
           console.log(error);
         });
     } else {
-      console.log("purchase");
       courseApi
         .getCourseById(courseId)
         .then((response) => {
           const { data, isSuccess } = response;
           if (isSuccess) {
-            console.log(data);
             let updatedStudents;
             if (data.attributes.students !== null) {
               updatedStudents = [...data.attributes.students, "" + userId];
@@ -182,9 +171,8 @@ const Payment = ({
                 courseId
               )
               .then((response) => {
-                const { data, isSuccess } = response;
+                const {isSuccess } = response;
                 if (isSuccess) {
-                  console.log(data);
                   responseApi
                     .addResponse({
                       content: `utilizing RM${calculatedPrice} and deducting ${usedPoint} points.`,
@@ -195,7 +183,6 @@ const Payment = ({
                     .then((response) => {
                       const { isSuccess } = response;
                       if (isSuccess) {
-                        console.log(data);
                         userApi.getUserById(userId).then((response) => {
                           if (response.isSuccess) {
                             const newPoint = +response.data.point - +usedPoint;
@@ -255,19 +242,13 @@ const Payment = ({
                   quizRankApi.getQuizRankById(userId,courseId).then((response) => {
                     const { isSuccess, data } = response;
                     if (isSuccess) {
-                      console.log(data)
                       if (data.length == 0) {
                           quizRankApi.addQuizRank({
                             username,
                             userId,
                             courseId,
                             score: 0,
-                          }).then(res=>{
-                            console.log(res.data)
-                          }).catch(error=>{
-                            console.log(error)
                           })
-                        
                       }
                     }
                   });
@@ -280,22 +261,6 @@ const Payment = ({
         });
     }
   };
-  useEffect(() => {
-    userApi
-      .getUserById(userId)
-      .then((response) => {
-        const { data, isSuccess } = response;
-        if (isSuccess) {
-          // setTempPoint(data.point == null ? 0 : data.point);
-          console.log("point:" + data.point);
-        } else {
-          console.error("Error:", response.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
   const handleSecurityCode = (e) => {
     if (e.target.value > 3) {
       e.target.value = e.target.value.slice(0, 3);
@@ -358,9 +323,7 @@ const Payment = ({
               <input
                 type="number"
                 value={cardNumber}
-                onChange={(e) => {
-                  handleCardNumber(e);
-                }}
+                onChange={handleCardNumber}
                 required
               />
             </div>
@@ -390,16 +353,15 @@ const Payment = ({
                 <input
                   type="number"
                   value={securityCode}
-                  onChange={(e) => handleSecurityCode(e)}
+                  onChange={handleSecurityCode}
                   required
                 />
               </div>
             </div>
             <div className={classes.FormGroup}>
-              <p>Price:{type == "recharge" ? price : calculatedPrice}</p>
+              <p>Price:RM {type == "recharge" ? price : calculatedPrice}</p>
               <p>
-                Point:
-                {type == "recharge"
+                Point: {type == "recharge"
                   ? calculatedPoint(+price)
                   : usedPoint && usedPoint}
               </p>
