@@ -13,6 +13,7 @@ const ApplyItemManage = ({ type }) => {
   const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
   const [isReject, setIsReject] = useState(false);
   const [isShowInfoDetail, setIsShowInfoDetail] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState("");
   const inputRef = useRef(null);
   const fetchApplyItem = () => {
     setIsSuccess(false);
@@ -181,7 +182,8 @@ const ApplyItemManage = ({ type }) => {
   const rejectFn = (id) => {
     deleteApply(id);
   };
-  const toggleShowInfoDetail=()=>{
+  const toggleShowInfoDetail=(id)=>{
+    setSelectedItemId(id)
     setIsShowInfoDetail(prevState=>!prevState)
   }
   return (
@@ -194,9 +196,9 @@ const ApplyItemManage = ({ type }) => {
             data.map((applyItem, index) => {
               return (
                 <div key={index} className={classes.ApplyItem}>
-                  {isShowInfoDetail && <InfoDetail type={type} id={applyItem.attributes.itemId} content={applyItem.attributes} closeFn={toggleShowInfoDetail}/>}
+                  {isShowInfoDetail && <InfoDetail type={type} id={selectedItemId} content={applyItem.attributes} closeFn={toggleShowInfoDetail}/>}
                   
-                  <p onClick={toggleShowInfoDetail} className={classes.ItemId}>
+                  <p onClick={()=>toggleShowInfoDetail(applyItem.attributes.itemId)} className={classes.ItemId}>
                     {type === "approveQuiz" || type === "deleteQuiz"
                       ? "Quiz"
                       : type === "reportNote"

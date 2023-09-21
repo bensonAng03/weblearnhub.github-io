@@ -3,21 +3,9 @@ const baseURL = 'https://fyp-my-strapi.onrender.com/api/';
 const token = localStorage.getItem('token');
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 export const quizRankApi = {
-  getQuizRanks: async (startIndex,courseId,studentsArr=[]) => {
-    console.log(studentsArr)
+  getQuizRanks: async (courseId) => {
     try {
-      let response;
-      if (studentsArr.length > 0) {
-        let userIdFilters;
-        if(studentsArr.length==1){
-          userIdFilters=`filters[userId]=${studentsArr[0]}`
-        }else{
-         userIdFilters = studentsArr.map(userId => `filters[$or][${studentsArr.indexOf(userId)}][userId][$eq]=${userId}`).join('&');
-        }
-        response = await axios.get(`${baseURL}quiz-ranks?${userIdFilters}`, { headers });
-      } else {
-        response = await axios.get(`${baseURL}quiz-ranks?filters[courseId]=${courseId}&pagination[limit]=25&pagination[start]=${startIndex}&sort[0]=score:desc&sort[1]=updatedAt:desc`, { headers });
-      }
+      let response = await axios.get(`${baseURL}quiz-ranks?filters[courseId]=${courseId}&sort[0]=score:desc&sort[1]=updatedAt:desc`, { headers });
       return {
         isSuccess: true,
         data: response.data.data,

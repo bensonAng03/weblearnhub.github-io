@@ -31,25 +31,7 @@ const Quiz = () => {
         .then((response) => {
           const { data, isSuccess } = response;
           if (isSuccess) {
-            if (data[0]?.attributes === undefined) {
-              quizRankApi
-                .addQuizRank({
-                  username: user.username,
-                  userId: user.id,
-                  score: finalScore,
-                })
-                .then((response) => {
-                  const { data, isSuccess } = response;
-                  if (isSuccess) {
-                    console.log(data);
-                  } else {
-                    console.error("Error:", response.error);
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
-            } else {
+            if (data[0]?.attributes !== undefined) {
               quizRankApi
                 .updateQuizRank(
                   {
@@ -63,16 +45,12 @@ const Quiz = () => {
                   const { data, isSuccess } = response;
                   if (isSuccess) {
                     console.log(data);
-                  } else {
-                    console.error("Error:", response.error);
                   }
                 })
                 .catch((error) => {
                   console.error("Error:", error);
                 });
             }
-          } else {
-            console.error("Error:", response.error);
           }
         })
         .catch((error) => {
@@ -85,30 +63,7 @@ const Quiz = () => {
           const { data, isSuccess } = response;
           if (isSuccess) {
             console.log(data);
-            if (data[0] === undefined) {
-              rankApi
-                .addRank({
-                  username: user.username,
-                  userId: user.id,
-                  score: finalScore,
-                })
-
-                .then((response) => {
-                  const { data, isSuccess } = response;
-                  if (isSuccess) {
-                    // setQuestionData(data.attributes.questions.data);
-                    // setIsSuccess(true);
-                    console.log(data);
-                  } else {
-                    console.error("Error:", response.error);
-                    // setQuestionData([]);
-                    // setIsSuccess(false);
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
-            } else {
+            if (data[0] != undefined) {
               rankApi
                 .updateRank(
                   {
@@ -117,24 +72,7 @@ const Quiz = () => {
                   },
                   data[0].id
                 )
-                .then((response) => {
-                  const { data, isSuccess } = response;
-                  if (isSuccess) {
-                    // setQuestionData(data.attributes.questions.data);
-                    // setIsSuccess(true);
-                    console.log(data);
-                  } else {
-                    console.error("Error:", response.error);
-                    // setQuestionData([]);
-                    // setIsSuccess(false);
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
             }
-          } else {
-            console.error("Error:", response.error);
           }
         })
         .catch((error) => {
@@ -156,18 +94,6 @@ const Quiz = () => {
                   ? [...historyData.answeredQuizzes, id]
                   : [id],
               })
-              .then((response) => {
-                const { data, isSuccess } = response;
-                if (isSuccess) {
-                  console.log("ok");
-                  console.log(data);
-                } else {
-                  console.error("Error:", response.error);
-                }
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
           } else {
             historyApi
               .updateHistory(
@@ -177,22 +103,8 @@ const Quiz = () => {
                 },
                 data[0].id
               )
-              .then((response) => {
-                const { data, isSuccess } = response;
-                if (isSuccess) {
-                  console.log("ok");
-                  console.log(data);
-                } else {
-                  console.error("Error:", response.error);
-                }
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
           }
-        } else {
-          console.error("Error:", response.error);
-        }
+        } 
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -217,12 +129,10 @@ const Quiz = () => {
                 }
               })
             } )
-            console.log(numCorrectAnswers)
             setCorrectAnswersLength(numCorrectAnswers)
             setIsSuccess(true);
           }
         } else {
-          console.error("Error:", response.error);
           setQuestionData([]);
           setIsSuccess(false);
         }
@@ -246,19 +156,14 @@ const Quiz = () => {
               if (data[0].attributes.answeredQuizzes[i] === id) {
                 setIsFirst(false);
                 setHistoryData(data);
-                console.log("more time");
               } else {
                 setIsFirst(true);
-                console.log("first time");
               }
             }
           } else {
             setIsFirst(true);
-            console.log("first time");
           }
           setIsSuccess(true);
-        } else {
-          console.error("Error:", response.error);
         }
       })
       .catch((error) => {

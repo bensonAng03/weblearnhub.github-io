@@ -21,7 +21,8 @@ import {
 import { Link } from "react-router-dom";
 import { questionApi } from "../../../../store/api/questionApi";
 
-const InfoDetail = ({ type, id, content, closeFn }) => {
+const InfoDetail = ({ type, id, closeFn }) => {
+  console.log(id)
   const [assignmentsData, setAssignmentsData] = useState([]);
   const [topicsData, setTopicsData] = useState([]);
   // const [questionsData, setQuestionsData] = useState([]);
@@ -108,13 +109,6 @@ const InfoDetail = ({ type, id, content, closeFn }) => {
               console.log(response.data);
               setItem(response.data);
               console.log(response.data);
-              // if (
-              //   response.data &&
-              //   response.data.length !== 0
-              // ) {
-              //   console.log(response.data)
-              //   setItemsData(response.data);
-              // }
               setIsSuccess(true);
               setIsLoading(false);
             }

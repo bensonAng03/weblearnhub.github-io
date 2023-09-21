@@ -772,7 +772,7 @@ const LiveCourse = () => {
     }
   };
   const shareStream = () => {
-    if (!isToggleShareScreenLoading) {
+    if (!isToggleShareScreenLoading && !isScreenSharingRequested) {
       setIsToggleShareScreenLoading(true);
       setIsShareScreen(!isShareScreen);
       toggleShareScreen();

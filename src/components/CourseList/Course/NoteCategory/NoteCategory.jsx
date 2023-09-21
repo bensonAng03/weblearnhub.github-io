@@ -12,6 +12,7 @@ import { likeApi } from "../../../../store/api/likeApi";
 import classes from "./NoteCategory.module.css";
 import { noteRankApi } from "../../../../store/api/noteRankApi";
 import IssuanceApplicationForm from "../../../UI/IssuanceApplicationForm/IssuanceApplicationForm";
+import { rankApi } from "../../../../store/api/rankApi";
 let username = JSON.parse(localStorage.getItem("user"))?.username;
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 const NoteCategory = ({ scope }) => {
@@ -184,6 +185,7 @@ const NoteCategory = ({ scope }) => {
                   .then((response) => {
                     const { data, isSuccess } = response;
                     if (isSuccess) {
+                      updateTotalRank(authorId,"add")
                       fetchNotes();
                       console.log(data);
                     }
@@ -230,6 +232,7 @@ const NoteCategory = ({ scope }) => {
                       const { data, isSuccess } = response;
                       if (isSuccess) {
                         console.log(data);
+                        updateTotalRank(authorId,"remove")
                         fetchNotes();
                       } else {
                         console.error("Failed to update note rank");
@@ -271,6 +274,23 @@ const NoteCategory = ({ scope }) => {
       ...prevEditContainers,
       [noteId]: !prevEditContainers[noteId],
     }));
+  };
+  const updateTotalRank = async (authorId, scoreType) => {
+    try {
+      const rankApiResponse = await rankApi.getRankById(authorId);
+      if (rankApiResponse.isSuccess) {
+        let tempScore = +rankApiResponse.data[0].attributes.score;
+        if (scoreType === "add") {
+          tempScore += 150;
+          rankApi.updateRank({ score: tempScore }, rankApiResponse.data[0].id);
+        } else if (scoreType === "remove") {
+          tempScore -= 150;
+          rankApi.updateRank({ score: tempScore }, rankApiResponse.data[0].id);
+        }
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
   return (
     <>

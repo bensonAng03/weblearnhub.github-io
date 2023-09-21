@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { courseApi } from "../../../../store/api/courseApi";
 import { userApi } from "../../../../store/api/userApi";
-let studentsArr = [];
 let ratio = {
   more: [35, 20, 10, 5, 5, 5, 5, 5, 5, 5],
   three: [50, 30, 20],
@@ -18,7 +17,8 @@ let ratio = {
 };
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 const RankingBoard = ({ username }) => {
-  const { id } = useParams();
+  const params = useParams();
+  console.log(params.id)
   const [rankingsType, setRankingsType] = useState("quiz");
   const [rankingData, setRankingData] = useState([]);
   const [quizRankingData, setQuizRankingData] = useState([]);
@@ -37,11 +37,11 @@ const RankingBoard = ({ username }) => {
       return scoreB - scoreA;
     });
   };
-  const getRanks = async (index, type = scoreType) => {
+  const getRanks = async (type = scoreType) => {
     switch (type) {
       case "total":
         try {
-          const response = await rankApi.getRanks(index,id,studentsArr);
+          const response = await rankApi.getRanks(params.id);
           const { data, isSuccess } = response;
           if (isSuccess) {
             sortFn(data);
@@ -53,7 +53,7 @@ const RankingBoard = ({ username }) => {
         break;
       case "quiz":
         try {
-          const response = await quizRankApi.getQuizRanks(index, id,studentsArr);
+          const response = await quizRankApi.getQuizRanks(params.id);
           const { data, isSuccess } = response;
           if (isSuccess) {
             sortFn(data);
@@ -65,7 +65,7 @@ const RankingBoard = ({ username }) => {
         break;
       case "note":
         try {
-          const response = await noteRankApi.getNoteRanks(index,id,studentsArr);
+          const response = await noteRankApi.getNoteRanks(params.id);
           const { data, isSuccess } = response;
           if (isSuccess) {
             sortFn(data);
@@ -86,7 +86,7 @@ const RankingBoard = ({ username }) => {
     setRankingData([]);
     setNoteRankingData([]);
     setQuizRankingData([]);
-    getRanks(0, type);
+    getRanks(type);
   };
 
   useEffect(() => {
@@ -94,12 +94,11 @@ const RankingBoard = ({ username }) => {
     setQuizRankingData([]);
     setNoteRankingData([]);
     fetchUserInfo();
-    courseApi.getCourseById(id).then((response) => {
+    courseApi.getCourseById(params.id).then((response) => {
       const { data, isSuccess } = response;
       if (isSuccess) {
-        studentsArr = data.attributes.students;
         setAuthorId(data.attributes.authorId)
-        getRanks(0, scoreType);
+        getRanks(scoreType);
       }
     });
   }, []);
