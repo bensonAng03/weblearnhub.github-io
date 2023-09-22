@@ -17,6 +17,8 @@ import CoursePrice from "./CoursePrice/CoursePrice";
 import UpdateItemForm from "../UI/UpdateItemForm/UpdateItemForm";
 import RechargePage from "./RechargePage/RechargePage";
 import { userApi } from "../../store/api/userApi";
+import { updatePoint } from "../../store/reducer/pointSlice";
+import { useDispatch } from "react-redux";
 
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 let username = JSON.parse(localStorage.getItem("user"))?.username;
@@ -39,6 +41,7 @@ const CourseList = () => {
   const [point, setPoint] = useState(0);
   const [courseTitle, setCourseTitle] = useState("");
   const navigate = useNavigate();
+  const dispatch=useDispatch();
   useEffect(() => {
     fetchFn();
   }, [courseType, isShowPayment]);
@@ -96,6 +99,7 @@ const CourseList = () => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
+          dispatch(updatePoint({point:data.point}))
           setPoint(data.point);
         }
       })
@@ -228,7 +232,7 @@ const CourseList = () => {
             className={classes.AddBtn}
             onClick={toggleCourseFn}
           />
-          <Point toggleFn={toggleChargeFn} point={point} />
+          <Point toggleFn={toggleChargeFn}/>
         </div>
       </div>
       <div className={classes.BarBtnContainer}>

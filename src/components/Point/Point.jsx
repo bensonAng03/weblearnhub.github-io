@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins, faPlus } from "@fortawesome/free-solid-svg-icons";
 import classes from "./Point.module.css";
-const Point = ({toggleFn,point}) => {
+import { useSelector } from "react-redux";
+const Point = ({toggleFn}) => {
+  const curentPoint=useSelector(state=>state.point);
   return (
     <div className={classes.PointContainer}>
       <span>
-        {point ? point :0}
+        {curentPoint.point}
         <FontAwesomeIcon icon={faCoins} />
       </span>
       <button className={classes.AddPointBtn} onClick={toggleFn}>

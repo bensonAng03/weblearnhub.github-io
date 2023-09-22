@@ -11,6 +11,8 @@ import Point from "../../Point/Point";
 import { userApi } from "../../../store/api/userApi";
 import RechargePage from "../RechargePage/RechargePage";
 import Payment from "../Payment/Payment";
+import { updatePoint } from "../../../store/reducer/pointSlice";
+import { useDispatch } from "react-redux";
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 let username = JSON.parse(localStorage.getItem("user"))?.username;
 const Course = () => {
@@ -25,6 +27,7 @@ const Course = () => {
   const [isRecharge, setIsRecharge] = useState(false);
   const [rechargePrice, setRechargePrice] = useState(0);
   const [isShowPayment, setIsShowPayment] = useState(false);
+  const dispatch=useDispatch();
   useEffect(() => {
     fetchUserInfo();
     fetchCourse()
@@ -35,7 +38,9 @@ const Course = () => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
+          dispatch(updatePoint({point:data.point}))
           setPoint(data.point);
+
         }
       })
       .catch((error) => {
@@ -115,7 +120,7 @@ const Course = () => {
       )}
       {isShowPayment && (
         <Payment
-        username={username}
+          username={username}
           userId={userId}
           type={"recharge"}
           courseId={0}
@@ -128,7 +133,7 @@ const Course = () => {
       {isSuccess && courseData.length != 0 && (
         <div className={classes.Course}>
           <div className={classes.RightContainer}>
-          <Point toggleFn={toggleChargeFn} point={point} />
+          <Point toggleFn={toggleChargeFn}/>
           </div>
           <div className={classes.Contain}>
             <div className={classes.CourseInfo}>

@@ -1,11 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit"
 import {setupListeners} from "@reduxjs/toolkit/query"
-// import { authApi } from "./api/authApi";
-// import { courseApi } from "./api/courseApi";
 import { authSlice } from "./reducer/authSlice";
-// import {topicApi} from "./api/topicApi";
-// import {assignmentApi} from "./api/assignmentApi";
-// import {assestApi} from "./api/assestApi";
+import { pointSlice } from "./reducer/pointSlice";
 const store =configureStore({
     reducer:{
         // [authApi.reducerPath]:authApi.reducer,
@@ -13,7 +9,8 @@ const store =configureStore({
         // [topicApi.reducerPath]:topicApi.reducer,
         // [assignmentApi.reducerPath]:assignmentApi.reducer,
         // [assestApi.reducerPath]:assestApi.reducer,
-        auth:authSlice.reducer
+        auth:authSlice.reducer,
+        point:pointSlice.reducer
     },
     middleware:(getDefaultMiddleware)=>
     getDefaultMiddleware().concat(

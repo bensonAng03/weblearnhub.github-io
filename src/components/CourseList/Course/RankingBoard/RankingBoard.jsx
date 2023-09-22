@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { courseApi } from "../../../../store/api/courseApi";
 import { userApi } from "../../../../store/api/userApi";
+import { pointSlice, updatePoint } from "../../../../store/reducer/pointSlice";
+import { useDispatch, useSelector } from "react-redux";
 let ratio = {
   more: [35, 20, 10, 5, 5, 5, 5, 5, 5, 5],
   three: [50, 30, 20],
@@ -29,6 +31,8 @@ const RankingBoard = ({ username }) => {
   const [isManagePoint, setIsManagePoint] = useState(false);
   const [amountPoint, setAmountPoint] = useState(0);
   const [authorId, setAuthorId] = useState(0);
+
+  const dispatch=useDispatch();
   const sortFn = (data) => {
     data.sort((a, b) => {
       const scoreA = +a.attributes.score;
@@ -183,6 +187,7 @@ const RankingBoard = ({ username }) => {
             if (updateResponse.isSuccess) {
               fetchUserInfo();
               setIsManagePoint(false);
+              dispatch(updatePoint({point:newPointAfterDeduction}))
               console.log(updateResponse.data)
             }
           }
@@ -205,8 +210,6 @@ const RankingBoard = ({ username }) => {
         if (isSuccess) {
           console.log(data);
           setAmountPoint(data.point);
-        } else {
-          console.error("Error:", response.error);
         }
       })
       .catch((error) => {
