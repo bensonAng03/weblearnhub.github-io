@@ -3,10 +3,6 @@ import classes from "./Header.module.css";
 import { useEffect, useState } from "react";
 import { userApi } from "../../store/api/userApi";
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
-// const userJSON = localStorage.getItem("user");
-// let avatarUrl = userJSON
-//   ? JSON.parse(userJSON)?.avatar?.url || "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg"
-//   : "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";
 const Header = () => {
   const [isShowHeader, setIsShowHeader] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg");
@@ -17,7 +13,9 @@ const Header = () => {
     .then((response)=>{
       const {isSuccess,data}=response
       if(isSuccess){
-        setAvatarUrl(data.avatar.url)
+        if(data.avatar){
+          setAvatarUrl(data.avatar.url)
+        }
       }
     })
     .catch((error)=>{

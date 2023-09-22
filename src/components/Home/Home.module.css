@@ -34,13 +34,12 @@
 }
 .CourseInfoContainer {
   margin-top: 50px;
-  padding-top: 200px;
   max-height: 785px;
   overflow-y: auto;
   width: 95%;
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
+  align-content: flex-start;
 }
 
 .CourseInfoItem {

@@ -5,7 +5,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UpdateItemForm from "../../UI/UpdateItemForm/UpdateItemForm";
-
+import { courseApi } from "../../../store/api/courseApi";
+import { quizApi } from "../../../store/api/quizApi";
+let userId=JSON.parse(localStorage.getItem("user"))?.id;
 const QuestionManage = () => {
   const [question, setQuestion] = useState("");
   const [choices, setChoices] = useState([]);
@@ -16,11 +18,14 @@ const QuestionManage = () => {
   const [quizTitle, setQuizTitle] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [questionId, setQuestionId] = useState("");
-  const [isQuizNameEdit,setIsQuizNameEdit]=useState(false)
+  const [isQuizNameEdit, setIsQuizNameEdit] = useState(false);
+  const [courseInfo, setCourseInfo] = useState([]);
+  const [courseId, setCourseId] = useState(0);
   const params = useParams();
   const choicesListRef = useRef(null);
   useEffect(() => {
     fetchQuestions();
+    fetchCourseInfo();
   }, []);
   const navigate = useNavigate();
   const fetchQuestions = () => {
@@ -36,6 +41,9 @@ const QuestionManage = () => {
           } else {
             setQuestionData(data.attributes.questions.data);
             setQuizTitle(data.attributes.title);
+            if(data.attributes.courseId && data.attributes.courseId!==0){
+              setCourseId(data.attributes.courseId);
+            }
             setIsGetQuestionsByIdSuccess(true);
           }
         } else {
@@ -45,14 +53,30 @@ const QuestionManage = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        navigate(-1)
+        navigate(-1);
       });
   };
+  const fetchCourseInfo=()=>{
+    courseApi.getCoursesByUserId(userId)
+    .then((response) => {
+      const { data, isSuccess } = response;
+      if (isSuccess) {
+        const tempCourseInfo = data.map((course) => ({
+          id: course.id,
+          title: course.attributes.title,
+        }));
+        setCourseInfo(tempCourseInfo)
+      } 
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  }
   const delQuestion = (id) => {
     questionApi
       .delQuestion(id)
       .then((response) => {
-        const {isSuccess } = response;
+        const { isSuccess } = response;
         if (isSuccess) {
           console.log("ok");
           fetchQuestions();
@@ -82,7 +106,6 @@ const QuestionManage = () => {
       setChoices(updatedChoices);
     }
   };
-
   const handleAnswerChange = (index) => {
     const selectedIndex = selectedAnswers.indexOf(index);
     if (selectedIndex === -1) {
@@ -94,7 +117,6 @@ const QuestionManage = () => {
       setSelectedAnswers(updatedSelectedAnswers);
     }
   };
-
   const updateQuestionFn = (newQuestion, choices) => {
     const data = {
       title: newQuestion,
@@ -155,7 +177,6 @@ const QuestionManage = () => {
         });
     }
   };
-
   const createQuestionFn = () => {
     const newQuestion = question.trim();
     const trimmedChoices = choices.map((choice) => choice.trim());
@@ -173,7 +194,7 @@ const QuestionManage = () => {
 
     // Check if at least one answer is selected
     if (selectedAnswers.length === 0) {
-      console.log(selectedAnswers)
+      console.log(selectedAnswers);
       // Display error message or perform the desired action
       return;
     }
@@ -183,14 +204,12 @@ const QuestionManage = () => {
     setChoices([]);
     fetchQuestions();
   };
-
   const deleteQuestionFn = (index) => {
     const updatedQuestionData = [...questionData];
     updatedQuestionData.splice(index, 1);
     setQuestionData(updatedQuestionData);
     delQuestion(index);
   };
-
   const editQuestionFn = (index, newQuestion, choicesData, answersData) => {
     setIsEdit(true);
     setQuestion(newQuestion);
@@ -201,8 +220,15 @@ const QuestionManage = () => {
     setSelectedAnswers(selectedAnswerIndexes);
     setQuestionId(index);
   };
-  const editQuizNameFn=()=>{
-    setIsQuizNameEdit(prevState=>!prevState)
+  const editQuizNameFn = () => {
+    setIsQuizNameEdit((prevState) => !prevState);
+  };
+  const handleCourseId=(e)=>{
+    setCourseId(e.target.value)
+    if(e.target.value!=0){
+      quizApi.updateQuiz({courseId:e.target.value},+params.id)
+    }
+    fetchQuestions();
   }
   return (
     <div className={classes.QuizContainer}>
@@ -242,51 +268,67 @@ const QuestionManage = () => {
                   checked={selectedAnswers.includes(index)}
                   onChange={() => handleAnswerChange(index)}
                 />
-                <FontAwesomeIcon icon={faTrash} className={classes.FaTrash} onClick={() => handleDeleteChoice(index)}/>
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className={classes.FaTrash}
+                  onClick={() => handleDeleteChoice(index)}
+                />
               </div>
             ))}
           </div>
         </div>
         <div className={classes.DisplayBox}>
-
-        <button onClick={handleAddChoice}>Add Choice</button>
-        <button onClick={createQuestionFn}>Generate Question</button>
-        <Link to={"/quizzes"}>
-          <button>Complete</button>
-        </Link>
+          <button onClick={handleAddChoice}>Add Choice</button>
+          <button onClick={createQuestionFn}>Generate Question</button>
+          <Link to={"/quizzes"}>
+            <button>Complete</button>
+          </Link>
         </div>
       </div>
       <div className={classes.QuestionDataContainer}>
-        {isGetQuestionsByIdSuccess &&
-          Array.isArray(questionData) &&
-          questionData.length !== 0 && (
-            <>
-              <div className={classes.TitleContainer}>
-                <h3>{quizTitle}</h3>
-                <FontAwesomeIcon icon={faEdit} className={classes.FaEdit} onClick={editQuizNameFn}/>
-              </div>
-              {console.log(questionData)}
+        {isGetQuestionsByIdSuccess && (
+          <>
+            <div className={classes.TitleContainer}>
+              <h3>{quizTitle}</h3>
+              <FontAwesomeIcon
+                icon={faEdit}
+                className={classes.FaEdit}
+                onClick={editQuizNameFn}
+              />
+              <select onChange={handleCourseId} value={courseId}>
+              <option value={0}>Unassigned</option>
+                {courseInfo.map((item,index)=>(
+                  <option value={item.id} key={index}>{item.title}</option>
+                ))}
+              </select>
+            </div>
+
+            {Array.isArray(questionData) && questionData.length !== 0 && (
               <ul className={classes.QuestionDataList}>
                 {questionData?.map((questionItem, questionIndex) => (
                   <div className={classes.QuestionItem} key={questionItem.id}>
                     <div className={classes.FaIconContainer}>
-
-                     <FontAwesomeIcon className={classes.FaIcon} icon={faEdit} onClick={() =>
+                      <FontAwesomeIcon
+                        className={classes.FaIcon}
+                        icon={faEdit}
+                        onClick={() =>
                           editQuestionFn(
                             questionItem.id,
                             questionItem.attributes.title,
                             questionItem.attributes.choices.data,
                             questionItem.attributes.answers.data
                           )
-                        } />
-                      <FontAwesomeIcon className={classes.FaIcon} icon={faTrash} 
+                        }
+                      />
+                      <FontAwesomeIcon
+                        className={classes.FaIcon}
+                        icon={faTrash}
                         onClick={() => deleteQuestionFn(questionItem.id)}
                       />
                     </div>
-                    <div className={classes.QuestionTitleContainer}>Q{questionIndex + 1}:
-                    <p>
-                      {questionItem.attributes.title}
-                    </p>
+                    <div className={classes.QuestionTitleContainer}>
+                      Q{questionIndex + 1}:
+                      <p>{questionItem.attributes.title}</p>
                     </div>
                     <ul className={classes.ChoicesList}>
                       {questionItem.attributes.choices.data.map(
@@ -301,7 +343,6 @@ const QuestionManage = () => {
                             }`}
                             key={index}
                           >
-                            
                             {item}
                           </li>
                         )
@@ -310,8 +351,9 @@ const QuestionManage = () => {
                   </div>
                 ))}
               </ul>
-            </>
-          )}
+            )}
+          </>
+        )}
       </div>
     </div>
   );

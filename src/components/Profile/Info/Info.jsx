@@ -106,20 +106,21 @@ const Info = () => {
       if (data.username) {
         if (rankData.isSuccess && rankData.data.length !== 0) {
           console.log(rankData.data);
-          rankApi.updateRank({ username: data.username }, rankData.data[0].id);
+          for (const item of rankData.data) {
+            rankApi.updateRank({ username: data.username }, item.id);
+          }
         }
         if (noteRankData.isSuccess && noteRankData.data.length !== 0) {
-          noteRankApi.updateNoteRank(
-            { username: data.username },
-            noteRankData.data[0].id
-          );
+          console.log(noteRankData.data);
+          for (const item of noteRankData.data) {
+            noteRankApi.updateNoteRank({ username: data.username }, item.id);
+          }
         }
 
         if (quizRankData.isSuccess && quizRankData.data.length !== 0) {
-          quizRankApi.updateQuizRank(
-            { username: data.username },
-            quizRankData.data[0].id
-          );
+          for (const item of quizRankData.data) {
+            quizRankApi.updateQuizRank({ username: data.username }, item.id);
+          }
         }
 
         if (quizData.isSuccess && quizData.data.length !== 0) {

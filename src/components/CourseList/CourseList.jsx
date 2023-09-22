@@ -108,13 +108,10 @@ const CourseList = () => {
       courseApi
         .delCourse(courseId)
         .then((response) => {
-          const { data, isSuccess } = response;
+          const {isSuccess } = response;
           if (isSuccess) {
-            console.log(data);
             fetchCourse(courseType);
-          } else {
-            console.error("Error:", response.error);
-          }
+          } 
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -123,7 +120,6 @@ const CourseList = () => {
       setApplyCourseId(courseId);
       setIsDeleteCourse(true);
     } else if (status == "") {
-      console.log("12");
       setIsDeleteCourse(!isDeleteCourse);
     }
   };
@@ -153,7 +149,6 @@ const CourseList = () => {
     setIsAddCourse(!isAddCourse);
   };
   const publishCourseFn = (id, status = "") => {
-    console.log(status);
     if (status == "not_reviewed" || status == "rejected") {
       setIsPublish(!isPublish);
       setApplyCourseId(id);
@@ -168,7 +163,6 @@ const CourseList = () => {
     setIsShowPayment(!isShowPayment);
   };
   const openCourseFn = (course, id, title, authorId, students) => {
-    console.log("course:", course);
     setCourseTitle(title);
     if (
       authorId == userId ||
@@ -399,7 +393,6 @@ const CourseList = () => {
           )}
         </ul>
       ) : (
-        // </div>
         <div>loading...</div>
       )}
     </div>

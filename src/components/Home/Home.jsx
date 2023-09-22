@@ -49,7 +49,9 @@ const Home = () => {
     return (
       <div key={index} className={classes.CourseInfoItem}>
         <h3 className={classes.Title}>{item.attributes.title}</h3>
-        <p className={classes.Description}>{item.attributes.description}</p>
+        {item.attributes.description && (
+          <p className={classes.Description}>{item.attributes.description}</p>
+        )}
         <div className={classes.PriceContainer}>
           <p className={classes.Price}>RM {item.attributes.price}</p>
           <button
@@ -62,6 +64,7 @@ const Home = () => {
       </div>
     );
   };
+  
   const generateTeacherInfo = (item, index) => {
     const avatarUrl =
       item.avatar?.url || "https://res.cloudinary.com/dwrgzjjsz/image/upload/v1694510353/unknown_Avatar_8a0b7af8bd.jpg";

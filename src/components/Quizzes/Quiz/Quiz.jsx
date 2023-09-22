@@ -23,33 +23,99 @@ const Quiz = () => {
   const [correctQuestion, setCorrectQuestion] = useState(0);
   const [isNotFound, setIsNotFound] = useState(false);
   const [correctAnswersLength, setCorrectAnswersLength] = useState(0);
-  const [numCorrectSelected,setNumCorrectSelected]=useState(0)
+  const [numCorrectSelected, setNumCorrectSelected] = useState(0);
+  const [courseId, setCourseId] = useState(0);
+  useEffect(() => {
+    getQuestions();
+    handleIsFirst();
+  }, []);
+  const getQuestions = () => {
+    questionApi
+      .getQuestionsById(+id)
+      .then((response) => {
+        const { data, isSuccess } = response;
+        if (isSuccess) {
+          if (data.attributes.questions.data) {
+            let numCorrectAnswers = 0;
+            setIsNotFound(false);
+            setBaseScore(data.attributes.score);
+            setQuestionData(data.attributes.questions.data);
+            setCourseId(data.attributes.courseId);
+            data.attributes.questions.data.map((item) => {
+              console.log(item.attributes.answers);
+              item.attributes.answers.data.map((item) => {
+                if (item) {
+                  numCorrectAnswers++;
+                }
+              });
+            });
+            setCorrectAnswersLength(numCorrectAnswers);
+            setIsSuccess(true);
+          }
+        } else {
+          setQuestionData([]);
+          setIsSuccess(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  const handleIsFirst = () => {
+    quizRankApi
+      .getQuizRankById(user.id, courseId)
+      .then((response) => {
+        const { data, isSuccess } = response;
+        if (isSuccess) {
+          if (data[0]?.attributes !== undefined) {
+            historyApi
+              .geHistoryById()
+              .then((response) => {
+                const { data, isSuccess } = response;
+                if (isSuccess) {
+                  if (data[0]?.attributes?.answeredQuizzes) {
+                    for (
+                      let i = 0;
+                      i < data[0].attributes.answeredQuizzes.length;
+                      i++
+                    ) {
+                      if (data[0].attributes.answeredQuizzes[i] === id) {
+                        setIsFirst(false);
+                        setHistoryData(data);
+                      } else {
+                        setIsFirst(true);
+                      }
+                    }
+                  } else {
+                    setIsFirst(true);
+                  }
+                  setIsSuccess(true);
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
   const updateRank = (finalScore) => {
     if (user.id !== authorId) {
       quizRankApi
-        .getQuizRankById()
+        .getQuizRankById(user.id, courseId)
         .then((response) => {
           const { data, isSuccess } = response;
           if (isSuccess) {
             if (data[0]?.attributes !== undefined) {
-              quizRankApi
-                .updateQuizRank(
-                  {
-                    username: user.username,
-                    userId: user.id,
-                    score: +data[0].attributes.score + finalScore,
-                  },
-                  data[0].id
-                )
-                .then((response) => {
-                  const { data, isSuccess } = response;
-                  if (isSuccess) {
-                    console.log(data);
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
+              quizRankApi.updateQuizRank(
+                {
+                  score: +data[0].attributes.score + finalScore,
+                },
+                data[0].id
+              )
             }
           }
         })
@@ -58,20 +124,17 @@ const Quiz = () => {
         });
 
       rankApi
-        .getRankById(user.id)
+        .getRankById(user.id, courseId)
         .then((response) => {
           const { data, isSuccess } = response;
           if (isSuccess) {
-            console.log(data);
             if (data[0] != undefined) {
-              rankApi
-                .updateRank(
-                  {
-                    ...data[0].attributes,
-                    score: +data[0].attributes.score + finalScore,
-                  },
-                  data[0].id
-                )
+              rankApi.updateRank(
+                {
+                  score: +data[0].attributes.score + finalScore,
+                },
+                data[0].id
+              );
             }
           }
         })
@@ -87,94 +150,27 @@ const Quiz = () => {
         const { data, isSuccess } = response;
         if (isSuccess) {
           if (data[0]?.attributes === undefined) {
-            historyApi
-              .addHistory({
-                userId: user.id,
-                answeredQuizzes: historyData.answeredQuizzes
-                  ? [...historyData.answeredQuizzes, id]
-                  : [id],
-              })
+            historyApi.addHistory({
+              userId: user.id,
+              answeredQuizzes: historyData.answeredQuizzes
+                ? [...historyData.answeredQuizzes, id]
+                : [id],
+            });
           } else {
-            historyApi
-              .updateHistory(
-                {
-                  ...data[0].attributes,
-                  answeredQuizzes: [...data[0].attributes.answeredQuizzes, id],
-                },
-                data[0].id
-              )
+            historyApi.updateHistory(
+              {
+                ...data[0].attributes,
+                answeredQuizzes: [...data[0].attributes.answeredQuizzes, id],
+              },
+              data[0].id
+            );
           }
-        } 
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  const getQuestions = () => {
-    questionApi
-      .getQuestionsById(+id)
-      .then((response) => {
-        const { data, isSuccess } = response;
-        if (isSuccess) {
-          if (data.attributes.questions.data) {
-            let numCorrectAnswers=0;
-            setIsNotFound(false);
-            setBaseScore(data.attributes.score);
-            setQuestionData(data.attributes.questions.data);
-            data.attributes.questions.data.map((item) =>{
-              console.log(item.attributes.answers)
-              item.attributes.answers.data.map((item)=>{
-                if(item){
-                  numCorrectAnswers++
-                }
-              })
-            } )
-            setCorrectAnswersLength(numCorrectAnswers)
-            setIsSuccess(true);
-          }
-        } else {
-          setQuestionData([]);
-          setIsSuccess(false);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
-  const handleIsFirst = () => {
-    historyApi
-      .geHistoryById()
-      .then((response) => {
-        const { data, isSuccess } = response;
-        if (isSuccess) {
-          if (data[0]?.attributes?.answeredQuizzes) {
-            for (
-              let i = 0;
-              i < data[0].attributes.answeredQuizzes.length;
-              i++
-            ) {
-              if (data[0].attributes.answeredQuizzes[i] === id) {
-                setIsFirst(false);
-                setHistoryData(data);
-              } else {
-                setIsFirst(true);
-              }
-            }
-          } else {
-            setIsFirst(true);
-          }
-          setIsSuccess(true);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  useEffect(() => {
-    getQuestions();
-    handleIsFirst();
-  }, []);
-
   const handleChoiceSelect = (choice, questionIndex) => {
     setSelectedChoices((prevChoices) => {
       const updatedChoices = [...prevChoices];
@@ -196,15 +192,13 @@ const Quiz = () => {
     const elapsedTime = (currentTime - openTime) / 1000; // Calculate elapsed time in seconds
     const baseScore = Math.floor(AllbaseScore / questionData.length);
     let chooseCorrectAnswer = 0;
-    let choosePartiallyCorrectAnswer=0
+    let choosePartiallyCorrectAnswer = 0;
     let tempTotalScore = 0;
     let tempQuestionInfo = {};
     let tempQuestionInfoArr = [];
     for (let i = 0; i < questionData.length; i++) {
       const correctAnswers = questionData[i].attributes.answers.data;
       const selectedAnswer = selectedChoices[i] || [];
-      console.log(correctAnswers);
-      console.log(selectedAnswer);
       tempQuestionInfo = {
         question: questionData[i].attributes.title,
         isCorrect: false,
@@ -234,7 +228,7 @@ const Quiz = () => {
         ) {
           // All choices are correct
           questionScore = baseScore;
-          choosePartiallyCorrectAnswer+=correctAnswers.length
+          choosePartiallyCorrectAnswer += correctAnswers.length;
           tempQuestionInfo.isCorrect = true;
         } else if (
           intersection.length > 0 &&
@@ -255,33 +249,34 @@ const Quiz = () => {
     console.log(chooseCorrectAnswer);
     setCorrectQuestion(chooseCorrectAnswer);
     setQuestionInfo(tempQuestionInfoArr);
-    setNumCorrectSelected(chooseCorrectAnswer+choosePartiallyCorrectAnswer)
-    console.log(chooseCorrectAnswer)
-    console.log(choosePartiallyCorrectAnswer)
+    setNumCorrectSelected(chooseCorrectAnswer + choosePartiallyCorrectAnswer);
+    console.log(chooseCorrectAnswer);
+    console.log(choosePartiallyCorrectAnswer);
     let maxTime = 120 * chooseCorrectAnswer; // 单题最大时间（秒）
     maxTime += 120 * choosePartiallyCorrectAnswer; // 单题最大时间（秒）
     const maxTimeBonus = baseScore * 2 * chooseCorrectAnswer; // 最大时间加成分数
-    const maxPartiallyTimeBonus = baseScore * 1.5 * choosePartiallyCorrectAnswer; // 最大时间加成分数
-    console.log(maxTimeBonus)
-    let timeBonus = maxTimeBonus+maxPartiallyTimeBonus;
-    console.log(timeBonus)
+    const maxPartiallyTimeBonus =
+      baseScore * 1.5 * choosePartiallyCorrectAnswer; // 最大时间加成分数
+    console.log(maxTimeBonus);
+    let timeBonus = maxTimeBonus + maxPartiallyTimeBonus;
+    console.log(timeBonus);
     if (elapsedTime <= maxTime) {
-      let timeMultiplier=0
-      if(maxTimeBonus!==0){
+      let timeMultiplier = 0;
+      if (maxTimeBonus !== 0) {
         timeMultiplier = maxTimeBonus - 7.5 * elapsedTime;
       }
-      if(maxPartiallyTimeBonus!==0){
+      if (maxPartiallyTimeBonus !== 0) {
         timeMultiplier += maxPartiallyTimeBonus - 7.5 * elapsedTime;
       }
       timeBonus = Math.round(timeMultiplier);
     } else {
       timeBonus = 0;
     }
-    console.log(timeBonus)
+    console.log(timeBonus);
 
     // Calculate final score
-    console.log(totalScore)
-    console.log(timeBonus)
+    console.log(totalScore);
+    console.log(timeBonus);
     const finalScore = Math.round(totalScore + timeBonus);
     console.log(questionData.length);
     console.log(questionData.score);
@@ -337,9 +332,7 @@ const Quiz = () => {
           )}
         </>
       ) : (
-        
         <div className={classes.NotFound}>Not Found</div>
-        
       )}
     </div>
   );
