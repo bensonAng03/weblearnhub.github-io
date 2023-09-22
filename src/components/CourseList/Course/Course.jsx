@@ -24,9 +24,10 @@ const Course = () => {
   const [point, setPoint] = useState(false);
   const [isRecharge, setIsRecharge] = useState(false);
   const [rechargePrice, setRechargePrice] = useState(0);
-  const [isShowQRCode, setIsShowQRCode] = useState(false);
+  const [isShowPayment, setIsShowPayment] = useState(false);
   useEffect(() => {
     fetchUserInfo();
+    fetchCourse()
   }, []);
   const fetchUserInfo = () => {
     userApi
@@ -34,10 +35,7 @@ const Course = () => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
           setPoint(data.point);
-        } else {
-          console.error("Error:", response.error);
         }
       })
       .catch((error) => {
@@ -52,22 +50,13 @@ const Course = () => {
         if (isSuccess) {
           setCourseData(data.attributes);
           setIsSuccess(true);
-        } else {
-          console.error("Error:", response.error);
-          setCourseData({});
-          setIsSuccess(false);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
+        setCourseData({});
+        setIsSuccess(false);
       });
-  };
-
-  useEffect(() => {
-    fetchCourse();
-  }, [params.id]);
-  const publishFn = () => {
-    // setIsPublish(true);
   };
   const editCourseNameFn = () => {
     setIsCourseNameEdit(!isCourseNameEdit);
@@ -90,11 +79,11 @@ const Course = () => {
   const rechargedFn = (price) => {
     setRechargePrice(price);
     setIsRecharge((prevState) => !prevState);
-    setIsShowQRCode((prevState) => !prevState);
+    setIsShowPayment((prevState) => !prevState);
     toggleChargeFn();
   };
-  const toggleShowQrCodeFn = () => {
-    setIsShowQRCode(!isShowQRCode);
+  const toggleShowPaymentFn = () => {
+    setIsShowPayment(!isShowPayment);
   };
   return (
     <>
@@ -124,7 +113,7 @@ const Course = () => {
       {isRecharge && (
         <RechargePage toggleFn={toggleChargeFn} rechargedFn={rechargedFn} />
       )}
-      {isShowQRCode && (
+      {isShowPayment && (
         <Payment
         username={username}
           userId={userId}
@@ -132,7 +121,8 @@ const Course = () => {
           courseId={0}
           price={rechargePrice}
           point={point}
-          closeFn={toggleShowQrCodeFn}
+          fetchFn={fetchUserInfo}
+          closeFn={toggleShowPaymentFn}
         />
       )}
       {isSuccess && courseData.length != 0 && (
@@ -177,7 +167,7 @@ const Course = () => {
                   </Link>
                 </button>
                 {courseData.authorId == userId && (
-                  <Link to={`publish/none/0`} className={classes.PublishBtn} onClick={publishFn}>
+                  <Link to={`publish/none/0`} className={classes.PublishBtn}>
                     Publish
                   </Link>
                 )}
