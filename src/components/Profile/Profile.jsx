@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Info from "./Info/Info";
 import ProfileNavbar from "./ProfileNavbar/ProfileNavbar";
 import classes from "./Profile.module.css"

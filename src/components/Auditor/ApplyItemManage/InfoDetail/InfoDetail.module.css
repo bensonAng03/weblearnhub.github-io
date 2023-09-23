@@ -1,22 +1,22 @@
 .InfoDetail {
-    padding: 20px;
-    border-radius: 15px;
+  padding: 20px;
+  border-radius: 15px;
   background-color: white;
   max-width: 75%;
   min-width: 650px;
-  height:90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
 }
-.InfoHeader{
+.InfoHeader {
   position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 97%;
-    margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 97%;
+  margin-left: 15px;
 }
-.InfoHeader button{
+.InfoHeader button {
   position: absolute;
   right: 15px;
   width: 120px;
@@ -28,16 +28,16 @@
   cursor: pointer;
   border-radius: 5px;
 }
-.InfoHeader button:hover{
-  background-color: rgb(134, 134, 191);;
+.InfoHeader button:hover {
+  background-color: rgb(134, 134, 191);
 }
-.CloseBtn{
+.CloseBtn {
   cursor: pointer;
   position: absolute;
   right: -5px;
   top: -5px;
 }
-.CourseTypeBtn{
+.CourseTypeBtn {
   position: absolute;
   right: 80px;
   top: 10px;
@@ -56,12 +56,12 @@
   height: 100%;
   overflow: auto;
 }
-.InfoContentList li{
-    margin-bottom:5px;
-    width: 95%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #e7e7e7;
+.InfoContentList li {
+  margin-bottom: 5px;
+  width: 95%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #e7e7e7;
 }
 .ItemImg {
   margin: 0 5px;
@@ -72,11 +72,11 @@
   height: 120px;
 }
 .FileIcon {
-    margin-top: 20px;
-    font-size: 60px;
-    width: 110px;
-    color: rgb(193, 159, 230);
-  }
+  margin-top: 20px;
+  font-size: 60px;
+  width: 110px;
+  color: rgb(193, 159, 230);
+}
 .ItemFile {
   margin: 0 5px;
   padding: 10px;
@@ -91,55 +91,55 @@
   overflow: auto;
 }
 .BigDescription {
-    text-align: left;
-    width: 610px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .SmallDescription {
-    width: 610px;
-    text-align: left;
-    word-wrap: break-word;
-  }
-  .FaChevronDownIcon {
-    position: absolute;
-    top: 10px;
-    right: 5px;
-  }
-  .QuestionItemContainer{
-    word-wrap: break-word;
-    margin-top: 10px;
-    width: 98%;
-    padding: 0px 1%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .ChoiceItemContainer{
-    margin-top: 5px;
-    background-color: white;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 5px;
-  }
-  .ChoiceItemContainer li{
-    word-wrap: break-word;
-    margin: 5px 0;
-    width: 97%;
-  }
-  .ChoiceItemContainer .SelectedChoice{
-    background-color: rgb(149, 149, 255);
-    color: white;
-  }
-  .NoteContainer{
-    word-wrap: break-word;
-    width: 90%;
-    height: 95%;
-    padding: 20px;
-    margin-top: 10px;
-    background-color: #e7e7e7;
-    border-radius: 5px;
-  }
+  text-align: left;
+  width: 610px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.SmallDescription {
+  width: 610px;
+  text-align: left;
+  word-wrap: break-word;
+}
+.FaChevronDownIcon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+.QuestionItemContainer {
+  word-wrap: break-word;
+  margin-top: 10px;
+  width: 98%;
+  padding: 0px 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ChoiceItemContainer {
+  margin-top: 5px;
+  background-color: white;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+.ChoiceItemContainer li {
+  word-wrap: break-word;
+  margin: 5px 0;
+  width: 97%;
+}
+.ChoiceItemContainer .SelectedChoice {
+  background-color: rgb(149, 149, 255);
+  color: white;
+}
+.NoteContainer {
+  word-wrap: break-word;
+  width: 90%;
+  height: 95%;
+  padding: 20px;
+  margin-top: 10px;
+  background-color: #e7e7e7;
+  border-radius: 5px;
+}

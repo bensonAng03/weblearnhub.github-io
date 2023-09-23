@@ -1,95 +1,96 @@
-.NotResourse{
-    color: gray;
-    font-style: 24px;
+.NotResourse {
+  color: gray;
+  font-style: 24px;
 }
-.CourseContainer{
-    margin-top: 10px;
-    overflow: hidden;
-    text-align: left;
-    width: 650px;
-    border: 1px solid rgb(132, 176, 242);
+.CourseContainer {
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+  overflow: hidden;
+  text-align: left;
+  width: 650px;
+  border: 1px solid rgb(132, 176, 242);
 }
-.TopBox{
-    position: relative;
-    height: 30px;
-    padding: 10px;
-    display: flex;
-    background-color: rgb(176, 202, 239);
+.TopBox {
+  position: relative;
+  height: 30px;
+  padding: 10px;
+  display: flex;
+  background-color: rgb(176, 202, 239);
 }
-.BottomBox{
-    position: relative;
-    overflow: hidden;
-    padding: 10px;
+.BottomBox {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
 }
 .BigDescription {
-    text-align: left;
-    width: 610px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  text-align: left;
+  width: 610px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .SmallDescription {
-    width: 610px;
-    text-align: left;
-    word-wrap: break-word;
+  width: 610px;
+  text-align: left;
+  word-wrap: break-word;
 }
-.FaChevronDownIcon{
-    position: absolute;
-    top: 10px;
-    right: 5px;
+.FaChevronDownIcon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
-.AssetsContainer{
-    display: flex;
-    width: 100%;
-    overflow: auto;
+.AssetsContainer {
+  display: flex;
+  width: 100%;
+  overflow: auto;
 }
-.CourseImg{
-    margin: 0 5px;
-    max-height: 125px;
-    position: relative;
+.CourseImg {
+  margin: 0 5px;
+  max-height: 125px;
+  position: relative;
 }
-.CourseImg img{
-    height: 120px;
+.CourseImg img {
+  height: 120px;
 }
 .CourseTitle {
-    position: relative;
-    text-align: left;
-    width: 540px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-.IconContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 15px;
-    top: 15px;
+  position: relative;
+  text-align: left;
+  width: 540px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-.FaIcon{
-    margin-left: 5px;
+.IconContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 15px;
+  top: 15px;
 }
-.FileIcon{
-    margin-top: 25px;
-    font-size: 60px;
-    width: 110px;
-    color: rgb(193, 159, 230);
+.FaIcon {
+  margin-left: 5px;
 }
-.CourseFile{
-    margin:0 5px;
-    padding: 10px;
-    font-size: 13px;
-    background-color: rgb(82, 3, 171);
-    border-radius: 10px;
+.FileIcon {
+  margin-top: 25px;
+  font-size: 60px;
+  width: 110px;
+  color: rgb(193, 159, 230);
+}
+.CourseFile {
+  margin: 0 5px;
+  padding: 10px;
+  font-size: 13px;
+  background-color: rgb(82, 3, 171);
+  border-radius: 10px;
 }
 .Title {
-    color: rgb(193, 159, 230);
-    width: 100px;
-    overflow: hidden;
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  
+  color: rgb(193, 159, 230);
+  width: 100px;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

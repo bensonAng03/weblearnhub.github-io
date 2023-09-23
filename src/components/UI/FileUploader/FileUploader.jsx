@@ -72,14 +72,11 @@ const FileUploader = ({
   assignmentId = 0,
   index = 0,
 }) => {
-  console.log(data)
-  const [files, setFiles] = useState(
-    data ? data: []
-  );
+  const [files, setFiles] = useState(data ? data : []);
   const fileInputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    if (assignmentId == 0)  {
+    if (assignmentId == 0) {
       getFilesInfo(files);
     }
   }, []);
@@ -89,7 +86,6 @@ const FileUploader = ({
       e.preventDefault();
       const file = fileInputRef.current.files[0];
       if (!file) {
-        console.log("No file selected");
         setIsLoading(false);
         return;
       }
@@ -98,7 +94,6 @@ const FileUploader = ({
         .then((response) => {
           const { data, isSuccess } = response;
           if (isSuccess) {
-            console.log("文件上传成功", data);
             setIsLoading(false);
             const uploadedFile = {
               name: file.name,
@@ -106,86 +101,65 @@ const FileUploader = ({
               url: data[0].url,
               id: data[0].id,
             };
-            console.log("Upload successful");
-            console.log("File URL:", data[0].url);
-            console.log("File ID:", data[0].id);
-            console.log("File Type:", data[0].mime);
             const newFile = [...files, uploadedFile];
             setFiles(newFile);
             if (assignmentId !== 0) {
-              getFilesInfo(newFile, assignmentId,index);
+              getFilesInfo(newFile, assignmentId, index);
             } else {
               getFilesInfo(newFile);
             }
-          } else {
-            console.error("文件上传失败", response.error);
-            // setAssetsData({})
-            setIsLoading(false);
           }
         })
         .catch((error) => {
-          // 处理错误的逻辑
-          console.error("请求发生错误", error);
+          // Logic for handling errors
+          console.error(error);
           setIsLoading(false);
         });
     }
   };
   const handleRemoveFile = (id) => {
-    // 在 Strapi 媒体库中删除文件
-    console.log(id);
-    assetApi
-      .deleteAsset(id)
-      .then((response) => {
-        const { data, isSuccess } = response;
-        if (isSuccess) {
-          console.log("success");
-        } else {
-          console.error("Error:", response.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    // 从 files 数组中删除文件
+    // Delete files in Strapi media library
+    assetApi.deleteAsset(id);
+    //Remove files from files array
     const updatedFiles = files.filter((file) => file.id !== id);
     setFiles(updatedFiles);
     if (assignmentId !== 0) {
-      getFilesInfo(updatedFiles, assignmentId,index);
+      getFilesInfo(updatedFiles, assignmentId, index);
     } else {
       getFilesInfo(updatedFiles);
     }
   };
   return (
     <div className={classes.FilesContainer}>
-        <div className={classes.FilesList}>
-          {files.length !== 0 &&
-            files.map((file) => (
-              <div
-                className={
-                  files.length > 3
-                    ? classes.File
-                    : `${classes.File} ${classes.LessFile}`
-                }
-                key={file.name + nanoid()}
-              >
-                {type === "big" && (
-                  <FontAwesomeIcon
-                    className={classes.FileIcon}
-                    icon={getIconByFileType(file.mime)}
-                  />
-                )}
-                <div className={classes.BottomBox}>
-                  <span className={classes.FileName}>{file.name}</span>
-                  <FontAwesomeIcon
-                    className={classes.DeleteIcon}
-                    icon={faTimes}
-                    onClick={() => handleRemoveFile(file.id)}
-                  />
-                </div>
+      <div className={classes.FilesList}>
+        {files.length !== 0 &&
+          files.map((file) => (
+            <div
+              className={
+                files.length > 3
+                  ? classes.File
+                  : `${classes.File} ${classes.LessFile}`
+              }
+              key={file.name + nanoid()}
+            >
+              {type === "big" && (
+                <FontAwesomeIcon
+                  className={classes.FileIcon}
+                  icon={getIconByFileType(file.mime)}
+                />
+              )}
+              <div className={classes.BottomBox}>
+                <span className={classes.FileName}>{file.name}</span>
+                <FontAwesomeIcon
+                  className={classes.DeleteIcon}
+                  icon={faTimes}
+                  onClick={() => handleRemoveFile(file.id)}
+                />
               </div>
-            ))}
-        </div>
-      
+            </div>
+          ))}
+      </div>
+
       <div className={classes.UploadArea}>
         <label htmlFor="fileInput" className={classes.UploadButton}>
           {isLoading ? (

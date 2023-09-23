@@ -79,8 +79,6 @@ const Info = () => {
       });
   };
   const updateAllData = async (data) => {
-    console.log(data);
-    console.log(userId);
     try {
       const rankResponse = rankApi.getRankById(userId);
       const noteRankResponse = noteRankApi.getNoteRankById(userId);
@@ -105,13 +103,11 @@ const Info = () => {
       ]);
       if (data.username) {
         if (rankData.isSuccess && rankData.data.length !== 0) {
-          console.log(rankData.data);
           for (const item of rankData.data) {
             rankApi.updateRank({ username: data.username }, item.id);
           }
         }
         if (noteRankData.isSuccess && noteRankData.data.length !== 0) {
-          console.log(noteRankData.data);
           for (const item of noteRankData.data) {
             noteRankApi.updateNoteRank({ username: data.username }, item.id);
           }
@@ -137,7 +133,6 @@ const Info = () => {
       }
       if(data.avatar){
         if (avatarId !== 0) {
-          console.log("delete");
           assetApi.deleteAsset(avatarId);
         }
       }
@@ -151,7 +146,7 @@ const Info = () => {
         );
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     return true;
   };

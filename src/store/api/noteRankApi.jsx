@@ -11,12 +11,8 @@ export const noteRankApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getNoteRankById: async (id, courseId = 0) => {
@@ -38,12 +34,8 @@ export const noteRankApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getNotesByUserId: async (id) => {
@@ -57,12 +49,8 @@ export const noteRankApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   addNoteRank: async (noteRankData) => {
@@ -77,12 +65,8 @@ export const noteRankApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   updateNoteRank: async (noteRankData, id) => {
@@ -97,12 +81,8 @@ export const noteRankApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
 };

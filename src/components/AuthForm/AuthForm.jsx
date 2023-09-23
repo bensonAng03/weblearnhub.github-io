@@ -78,7 +78,6 @@ const AuthForm = () => {
           .then((response) => {
             const { data, isSuccess } = response;
             if (isSuccess) {
-              console.log(data)
               const userData=JSON.parse(localStorage.getItem("user"))
               userData.role=data.role.type
               localStorage.setItem("user",JSON.stringify(userData))
@@ -92,7 +91,7 @@ const AuthForm = () => {
         })
         .catch((error) => {
           setError(error.message);
-          console.log(error.message);
+          console.error(error.message);
         });
     } else {
       let isFormValid = true;

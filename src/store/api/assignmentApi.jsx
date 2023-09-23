@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-const baseURL = 'https://fyp-my-strapi.onrender.com/api/';
+const baseURL = "https://fyp-my-strapi.onrender.com/api/";
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
 export const assignmentApi = {
@@ -15,29 +15,24 @@ export const assignmentApi = {
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getAssignmentById: async (id) => {
     try {
-      const response = await axios.get(
-        `${baseURL}assignments/${id}`,
-        { headers }
-      );
+      const response = await axios.get(`${baseURL}assignments/${id}`, {
+        headers,
+      });
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   addAssignment: async (assignmentData) => {
@@ -50,15 +45,13 @@ export const assignmentApi = {
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
-  updateAssignment: async (assignmentData,id) => {
+  updateAssignment: async (assignmentData, id) => {
     try {
       const response = await axios.put(
         `${baseURL}assignments/${id}`,
@@ -68,26 +61,24 @@ export const assignmentApi = {
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   delAssignment: async (id) => {
     try {
-      const response = await axios.delete(`${baseURL}assignments/${id}`,{headers});
+      const response = await axios.delete(`${baseURL}assignments/${id}`, {
+        headers,
+      });
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
 };

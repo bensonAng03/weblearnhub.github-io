@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classes from './ProfileNavbar.module.css';
 
 const Navbar = ({getNavItem}) => {
@@ -11,7 +11,6 @@ const Navbar = ({getNavItem}) => {
   const [navItem, setNavItem] = useState('info');
 
   const handleNavItemClick = (itemId) => {
-    console.log(itemId)
     setNavItem(itemId);
     getNavItem(itemId)
   };

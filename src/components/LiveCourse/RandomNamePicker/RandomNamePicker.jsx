@@ -8,7 +8,6 @@ const RandomNamePicker = ({ users }) => {
   const [allUsernames, setAllUsernames] = useState([]);
   const [selectedUsername, setSelectedUsername] = useState(null);
   const [isShowUserList, setIsShowUserList] = useState(false);
-  console.log(users)
   useEffect(() => {
     resetFn()
   }, []);
@@ -53,7 +52,6 @@ const RandomNamePicker = ({ users }) => {
     const filteredUsernames = usernames.filter(
       (username) => username !== publisherName
     );
-    console.log(filteredUsernames)
     setAllUsernames(filteredUsernames);
     setRemainingUsernames(filteredUsernames);
     setSelectedUsername([]);

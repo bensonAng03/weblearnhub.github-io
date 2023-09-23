@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { courseApi } from "../../../../store/api/courseApi";
 import { userApi } from "../../../../store/api/userApi";
-import { pointSlice, updatePoint } from "../../../../store/reducer/pointSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { updatePoint } from "../../../../store/reducer/pointSlice";
+import { useDispatch} from "react-redux";
 let ratio = {
   more: [35, 20, 10, 5, 5, 5, 5, 5, 5, 5],
   three: [50, 30, 20],
@@ -20,7 +20,6 @@ let ratio = {
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 const RankingBoard = ({ username }) => {
   const params = useParams();
-  console.log(params.id)
   const [rankingsType, setRankingsType] = useState("quiz");
   const [rankingData, setRankingData] = useState([]);
   const [quizRankingData, setQuizRankingData] = useState([]);
@@ -37,7 +36,6 @@ const RankingBoard = ({ username }) => {
     data.sort((a, b) => {
       const scoreA = +a.attributes.score;
       const scoreB = +b.attributes.score;
-      console.log(scoreA, scoreB);
       return scoreB - scoreA;
     });
   };
@@ -111,13 +109,9 @@ const RankingBoard = ({ username }) => {
   };
 
   const rewardRanking = async () => {
-    console.log("point:" + point, "amountPoint:" + amountPoint);
-    console.log(rankingsType);
-    console.log("amountPoint:" +amountPoint)
     if (point === 0 || point < 500 || point > +amountPoint) {
       return;
     }
-    console.log("1")
   
     let rankData;
     switch (rankingsType) {
@@ -146,7 +140,6 @@ const RankingBoard = ({ username }) => {
     if (newPointAfterDeduction >= 0 && isSuccess) {
       try {
         await userApi.updateUser({ point: newPointAfterDeduction }, userId);
-        console.log("2");
         const rewardRatio =
           rankData.length > 3
             ? ratio.more
@@ -160,10 +153,8 @@ const RankingBoard = ({ username }) => {
           remainingPoint =
             point *
             (1 - rewardRatio.reduce((sum, value) => sum + value, 0) / 100);
-            console.log(remainingPoint)
+
         }
-  
-        console.log(rankData);
   
         for (let i = 0; i < rankData.length; i++) {
           const rank = rankData[i];
@@ -178,7 +169,6 @@ const RankingBoard = ({ username }) => {
             }
   
             let newPoint = pointToAdd + (+data.point || 0);
-            console.log("userId:"+rank.attributes.userId,"add:"+pointToAdd)
             const updateResponse = await userApi.updateUser(
               { point: newPoint },
               rank.attributes.userId
@@ -188,7 +178,6 @@ const RankingBoard = ({ username }) => {
               fetchUserInfo();
               setIsManagePoint(false);
               dispatch(updatePoint({point:newPointAfterDeduction}))
-              console.log(updateResponse.data)
             }
           }
         }
@@ -208,7 +197,6 @@ const RankingBoard = ({ username }) => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
           setAmountPoint(data.point);
         }
       })

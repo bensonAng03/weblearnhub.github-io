@@ -10,7 +10,7 @@ const IssuanceApplicationForm = ({
   itemId,
   type,
   closeFn,
-  fetchFn = () => {},
+  fetchFn = null,
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [outline, setOutline] = useState("");
@@ -20,7 +20,6 @@ const IssuanceApplicationForm = ({
   const [reportReason, setReportReason] = useState("");
   const [changeReason, setChangeReason] = useState("");
   const [changePrice, setChangePrice] = useState("");
-  console.log(itemId)
   const ApplyFn = () => {
     let contextData = "",
       priceData = 0,
@@ -79,32 +78,27 @@ const IssuanceApplicationForm = ({
           authorId: userId,
         })
         .then((response) => {
-          const { data, isSuccess } = response;
+          const {isSuccess } = response;
           if (isSuccess) {
             if (type == "approveCourse") {
               courseApi
                 .updateCourse({ status: "pending" }, itemId)
                 .then((response) => {
-                  const { data, isSuccess } = response;
+                  const {isSuccess } = response;
                   if (isSuccess) {
                     fetchFn && fetchFn("customCourses");
-                  } else {
-                    console.log(response.error);
                   }
                 });
             }
             closeFn(itemId);
-          } else {
-            console.error("Error:", response.error);
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error(error);
         });
     }
   };
   const chooseReportInfoFn = (e) => {
-    console.log(e.target.textContent);
     let newChoices = [...defaultChoices];
     if (newChoices.length !== 0 && newChoices.includes(e.target.textContent)) {
       newChoices = newChoices.filter((choice) => choice !== e.target.textContent);

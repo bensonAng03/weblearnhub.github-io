@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import classes from "./ContentNavbar.module.css"
 const ContentNavbar = ({getTypeFn,type}) => {
   const [navBarItem,setNavBarItem]=useState(type)

@@ -11,44 +11,35 @@ export const applyApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getApplyById: async (id) => {
     try {
-      const response = await axios.get(`${baseURL}applies/${id}`, {headers});
+      const response = await axios.get(`${baseURL}applies/${id}`, { headers });
       return {
         isSuccess: true,
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getAppliesByType: async (type) => {
     try {
-      const response = await axios.get(`${baseURL}applies?filters[type]=${type}`, { headers });
+      const response = await axios.get(
+        `${baseURL}applies?filters[type]=${type}`,
+        { headers }
+      );
       return {
         isSuccess: true,
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   addApply: async (applyData) => {
@@ -79,28 +70,22 @@ export const applyApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   delApply: async (id) => {
     try {
-      const response = await axios.delete(`${baseURL}applies/${id}`, {headers});
+      const response = await axios.delete(`${baseURL}applies/${id}`, {
+        headers,
+      });
       return {
         isSuccess: true,
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
 };

@@ -8,8 +8,7 @@ export const courseApi = {
     try {
       let response;
       if (keyword == null) {
-        console.log(type)
-        if(userId){
+        if (userId) {
           if (type == "customCourses") {
             response = await axios.get(
               `${baseURL}courses?filters[authorId]=${userId}`,
@@ -21,16 +20,19 @@ export const courseApi = {
               { headers }
             );
           }
-        }else{
+        } else {
           response = await axios.get(
             `${baseURL}courses?&filters[status]=approved`,
             { headers }
           );
         }
       } else {
-        response = await axios.get(`${baseURL}courses?_q=${keyword}&filters[status]=approved`, {
-          headers,
-        });
+        response = await axios.get(
+          `${baseURL}courses?_q=${keyword}&filters[status]=approved`,
+          {
+            headers,
+          }
+        );
       }
       return {
         isSuccess: true,
@@ -53,12 +55,8 @@ export const courseApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getCourseById: async (id) => {
@@ -69,12 +67,8 @@ export const courseApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   addCourse: async (courseData) => {
@@ -89,12 +83,8 @@ export const courseApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   updateCourse: async (courseData, id) => {
@@ -109,12 +99,8 @@ export const courseApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   delCourse: async (id) => {
@@ -127,12 +113,8 @@ export const courseApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
 };

@@ -69,7 +69,7 @@ const UpdateItemForm = ({
             status: "not_reviewed",
           })
           .then((response) => {
-            const { data, isSuccess } = response;
+            const {isSuccess } = response;
             if (isSuccess) {
               fetchFn && fetchFn("customQuizzes");
             }
@@ -88,7 +88,7 @@ const UpdateItemForm = ({
             id
           )
           .then((response) => {
-            const { data, isSuccess } = response;
+            const {isSuccess } = response;
             if (isSuccess) {
               fetchFn && fetchFn("customQuizzes");
             }

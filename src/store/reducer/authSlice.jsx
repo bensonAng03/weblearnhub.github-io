@@ -23,7 +23,6 @@ export const authSlice=createSlice({
             state.isLogged=true;
             state.token=action.payload.token;
             state.user=action.payload.user;
-            console.log(state)
             const currentTime=Date.now();
             const timeout=1000*60*60*24*7;
             state.expirationTime=currentTime+timeout;

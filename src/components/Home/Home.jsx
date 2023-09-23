@@ -25,7 +25,7 @@ const Home = () => {
         setIsTeacherInfoLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setIsTeacherInfoLoading(false);
     }
   };
@@ -41,7 +41,7 @@ const Home = () => {
         setIsCourseInfoLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setIsCourseInfoLoading(false);
     }
   };

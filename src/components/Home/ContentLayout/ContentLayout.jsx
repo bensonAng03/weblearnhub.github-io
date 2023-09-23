@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ContentNavbar from './ContentNavbar/ContentNavbar'
 import Content from './Content/Content'
 import classes from "./ContentLayout.module.css"

@@ -15,7 +15,6 @@ export const authApi = {
   login: async (user) => {
     try {
       const response = await axios.post(`${baseURL}auth/local`, user);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       const errorMessage = error.response.data.error.message;

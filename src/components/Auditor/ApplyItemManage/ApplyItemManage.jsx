@@ -22,13 +22,12 @@ const ApplyItemManage = ({ type }) => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
           setData(data);
           setIsSuccess(true);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   useEffect(() => {
@@ -45,7 +44,7 @@ const ApplyItemManage = ({ type }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   const acceptFn = (
@@ -72,7 +71,7 @@ const ApplyItemManage = ({ type }) => {
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
           break;
         case "changeCoursePrice":
@@ -86,12 +85,11 @@ const ApplyItemManage = ({ type }) => {
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
           break;
         case "approveQuiz":
           if (inputRef.current.value > 0) {
-            console.log("1232");
             quizApi
               .updateQuiz(
                 {
@@ -108,7 +106,7 @@ const ApplyItemManage = ({ type }) => {
                 }
               })
               .catch((error) => {
-                console.log(error);
+                console.error(error);
               });
           }
           break;
@@ -123,7 +121,7 @@ const ApplyItemManage = ({ type }) => {
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
           break;
         case "deleteCourse":
@@ -137,7 +135,7 @@ const ApplyItemManage = ({ type }) => {
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
           break;
         case "reportCourse":
@@ -159,15 +157,14 @@ const ApplyItemManage = ({ type }) => {
               type,
             })
             .then((response) => {
-              const { data, isSuccess } = response;
+              const {isSuccess } = response;
               if (isSuccess) {
-                console.log(data);
                 fetchApplyItem();
                 deleteApply(applyId);
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
           break;
         default:
@@ -176,7 +173,6 @@ const ApplyItemManage = ({ type }) => {
     }
   };
   const toggleShowEditDetail = () => {
-    console.log(isReject);
     setIsReject(!isReject);
   };
   const rejectFn = (id) => {

@@ -2,7 +2,6 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 import { useEffect, useState } from "react";
 import { userApi } from "../../store/api/userApi";
-import { useSelector } from "react-redux";
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 const Header = () => {
   const [isShowHeader, setIsShowHeader] = useState(false);
@@ -20,7 +19,7 @@ const Header = () => {
       }
     })
     .catch((error)=>{
-      console.log(error)
+      console.error(error)
     })
   },[])
   useEffect(() => {

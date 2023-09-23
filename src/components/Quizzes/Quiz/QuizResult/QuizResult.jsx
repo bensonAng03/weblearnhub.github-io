@@ -1,12 +1,21 @@
-import React from "react";
-import classes from "./QuizResult.module.css"; // 引入CSS模块
+import classes from "./QuizResult.module.css";
 import Backdrop from "../../../UI/Backdrop/Backdrop";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
-const QuizResult = ({ score, numCorrectQuestions, numQuestions,numCorrectSelected,numCorrectAnswerLength,questionInfo }) => {
-  const percentage = ((numCorrectSelected / numCorrectAnswerLength) * 100).toFixed(2);
+const QuizResult = ({
+  score,
+  numCorrectQuestions,
+  numQuestions,
+  numCorrectSelected,
+  numCorrectAnswerLength,
+  questionInfo,
+}) => {
+  const percentage = (
+    (numCorrectSelected / numCorrectAnswerLength) *
+    100
+  ).toFixed(2);
   let encouragementMessage = "";
 
   if (percentage >= 90) {
@@ -21,12 +30,14 @@ const QuizResult = ({ score, numCorrectQuestions, numQuestions,numCorrectSelecte
 
   return (
     <Backdrop>
-      <div className={classes.QuizResult}> {/* 应用CSS模块类名 */}
+      <div className={classes.QuizResult}>
         <Link to="/quizzes">
-          <FontAwesomeIcon icon={faXmark} className={classes.CloseBtn} /> {/* 应用CSS模块类名 */}
+          <FontAwesomeIcon icon={faXmark} className={classes.CloseBtn} />
         </Link>
         <h2>Quiz Result</h2>
-        <p>{percentage}% - {encouragementMessage}</p>
+        <p>
+          {percentage}% - {encouragementMessage}
+        </p>
         <p className={classes.Score}>{score}</p>
         <p className={classes.ScoreFraction}>
           {numCorrectQuestions}/{numQuestions}
@@ -41,18 +52,22 @@ const QuizResult = ({ score, numCorrectQuestions, numQuestions,numCorrectSelecte
               </tr>
             </thead>
             <tbody>
-              {questionInfo.map((item, index) => {
-                            console.log(item.isCorrect)
-              return(
-                
-                <tr key={index} className={item.isCorrect==false ? classes.RedColor:""}>
+              {questionInfo && questionInfo.map((item, index) => (
+                <tr
+                  key={index}
+                  className={item.isCorrect == false ? classes.RedColor : ""}
+                >
                   <td>{index + 1}</td>
-                  <td><p className={classes.Question}>{item.question}</p></td>
-                  <td><p className={classes.CorrectAnswers}>{item.correctAnswers.join(", ")}</p></td>
+                  <td>
+                    <p className={classes.Question}>{item.question}</p>
+                  </td>
+                  <td>
+                    <p className={classes.CorrectAnswers}>
+                      {item.correctAnswers.join(", ")}
+                    </p>
+                  </td>
                 </tr>
-                )
-
-              })}
+              ))}
             </tbody>
           </table>
         </div>

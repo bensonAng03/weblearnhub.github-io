@@ -32,7 +32,7 @@ const Payment = ({
   const formatPrice = (tempPrice, tempPoint = 0) => {
     const pointDiscountAmount = Math.min(tempPoint / 800, tempPrice * 0.15);
     const roundedPrice =
-      Math.round((tempPrice - pointDiscountAmount) * 100) / 100;
+    Math.round((tempPrice - pointDiscountAmount) * 100) / 100;
     const formattedPrice = roundToNearest(roundedPrice, 0.05).toFixed(2);
     const usedPoints = Math.min(
       tempPoint,
@@ -72,19 +72,18 @@ const Payment = ({
   }, []);
 
   const isValidExpiryDate=(date)=>{
-    // 验证日期格式 "MM/YY"，其中 MM 是 01 到 12 的数字，YY 是 00 到 99 的数字
+    // MM should be a number from 01 to 12, and YY should be a number from 00 to 99.
     const pattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
     
     if (!pattern.test(date)) {
-      return false; // 日期格式不正确，直接返回 false
+      // The date format is not valid, so return false immediately.
+      return false; 
     }
-  
-    const [month, year] = date.split('/'); // 将输入日期拆分为月份和年份部分
-    const inputDate = new Date(`20${year}`, month - 1); // 创建输入日期的 JavaScript Date 对象
-  
-    const today = new Date(); // 获取当前日期
-  
-    // 比较输入日期和当前日期
+    // Split the input date into month and year parts
+    const [month, year] = date.split('/');
+    //Create a JavaScript Date object for the input date
+    const inputDate = new Date(`20${year}`, month - 1); 
+    const today = new Date();
     return inputDate >= today;
   }
   const handleSubmit = (e) => {
@@ -139,17 +138,17 @@ const Payment = ({
                       }
                     })
                     .catch((error) => {
-                      console.log(error);
+                      console.error(error);
                     });
                 }
               })
               .catch((error) => {
-                console.log(error);
+                console.error(error);
               });
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     } else {
       courseApi
@@ -209,7 +208,7 @@ const Payment = ({
                       }
                     })
                     .catch((error) => {
-                      console.log(error);
+                      console.error(error);
                     });
 
                   noteRankApi.getNoteRankById(userId,courseId).then((response) => {
@@ -257,7 +256,7 @@ const Payment = ({
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     }
   };

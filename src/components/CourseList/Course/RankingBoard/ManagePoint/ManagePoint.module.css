@@ -1,6 +1,5 @@
 .ManagePoint {
   background-color: white;
-  padding: 20px;
   width: 400px;
   height: 200px;
   display: flex;
@@ -10,6 +9,8 @@
   font-size: 18px;
   line-height: 25px;
   position: relative;
+  padding: 20px;
+  border-radius: 5px;
 }
 .DeleteBtn {
   position: absolute;
@@ -21,9 +22,10 @@
   width: 100%;
 }
 .ManagePointItem input {
+  padding: 5px;
   margin-top: 25px;
   height: 25px;
-  width: 90%;
+  width: 87%;
 }
 .ManagePointItem p {
   display: block;

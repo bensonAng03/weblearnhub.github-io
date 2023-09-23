@@ -42,7 +42,6 @@ const Quiz = () => {
             setQuestionData(data.attributes.questions.data);
             setCourseId(data.attributes.courseId);
             data.attributes.questions.data.map((item) => {
-              console.log(item.attributes.answers);
               item.attributes.answers.data.map((item) => {
                 if (item) {
                   numCorrectAnswers++;
@@ -187,13 +186,11 @@ const Quiz = () => {
     });
   };
   const handleQuizSubmit = () => {
-    // totalScore,numQuestions
     const currentTime = Date.now();
     const elapsedTime = (currentTime - openTime) / 1000; // Calculate elapsed time in seconds
     const baseScore = Math.floor(AllbaseScore / questionData.length);
     let chooseCorrectAnswer = 0;
     let choosePartiallyCorrectAnswer = 0;
-    let tempTotalScore = 0;
     let tempQuestionInfo = {};
     let tempQuestionInfoArr = [];
     for (let i = 0; i < questionData.length; i++) {
@@ -204,12 +201,10 @@ const Quiz = () => {
         isCorrect: false,
         correctAnswers: questionData[i].attributes.answers.data,
       };
-      let questionScore = 0;
 
       if (correctAnswers.length === 1) {
         // Single choice question
         if (correctAnswers[0] === selectedAnswer[0]) {
-          questionScore = baseScore;
           chooseCorrectAnswer++;
           tempQuestionInfo.isCorrect = true;
         }
@@ -227,7 +222,6 @@ const Quiz = () => {
           difference.length === 0
         ) {
           // All choices are correct
-          questionScore = baseScore;
           choosePartiallyCorrectAnswer += correctAnswers.length;
           tempQuestionInfo.isCorrect = true;
         } else if (
@@ -235,31 +229,23 @@ const Quiz = () => {
           intersection.length < correctAnswers.length
         ) {
           // Partially correct
-          const scoreMultiplier = intersection.length / correctAnswers.length;
-          questionScore = baseScore * scoreMultiplier;
           choosePartiallyCorrectAnswer++;
         }
       }
-
-      tempTotalScore += questionScore;
       tempQuestionInfoArr.push(tempQuestionInfo);
-      console.log(tempTotalScore);
     }
     // Calculate time bonus
-    console.log(chooseCorrectAnswer);
     setCorrectQuestion(chooseCorrectAnswer);
     setQuestionInfo(tempQuestionInfoArr);
     setNumCorrectSelected(chooseCorrectAnswer + choosePartiallyCorrectAnswer);
-    console.log(chooseCorrectAnswer);
-    console.log(choosePartiallyCorrectAnswer);
-    let maxTime = 120 * chooseCorrectAnswer; // 单题最大时间（秒）
-    maxTime += 120 * choosePartiallyCorrectAnswer; // 单题最大时间（秒）
-    const maxTimeBonus = baseScore * 2 * chooseCorrectAnswer; // 最大时间加成分数
+    //Maximum time for a single question (seconds)
+    let maxTime = 120 * chooseCorrectAnswer; 
+    maxTime += 120 * choosePartiallyCorrectAnswer; 
+    //Maximum time addition score
+    const maxTimeBonus = baseScore * 2 * chooseCorrectAnswer; 
     const maxPartiallyTimeBonus =
-      baseScore * 1.5 * choosePartiallyCorrectAnswer; // 最大时间加成分数
-    console.log(maxTimeBonus);
+      baseScore * 1.5 * choosePartiallyCorrectAnswer; 
     let timeBonus = maxTimeBonus + maxPartiallyTimeBonus;
-    console.log(timeBonus);
     if (elapsedTime <= maxTime) {
       let timeMultiplier = 0;
       if (maxTimeBonus !== 0) {
@@ -272,17 +258,11 @@ const Quiz = () => {
     } else {
       timeBonus = 0;
     }
-    console.log(timeBonus);
 
     // Calculate final score
-    console.log(totalScore);
-    console.log(timeBonus);
     const finalScore = Math.round(totalScore + timeBonus);
-    console.log(questionData.length);
-    console.log(questionData.score);
     setTotalScore(questionData.length * (baseScore * 2) + baseScore);
     setScore(finalScore);
-    console.log(finalScore);
     if (isFirst) {
       updateRank(finalScore);
       updateHistory();

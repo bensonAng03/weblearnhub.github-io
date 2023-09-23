@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import classes from "./AuditorNavbar.module.css"
 const AuditorNavbar = ({getTypeFn}) => {
   const [navBarItem,setNavBarItem]=useState("approveCourse")

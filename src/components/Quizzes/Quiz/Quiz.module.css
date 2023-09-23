@@ -1,27 +1,27 @@
-.Quiz{
+.Quiz {
   background-color: black;
   width: 100%;
   height: 100%;
   overflow: auto;
 }
 .QuestionContainer {
-    height: 100%;
-    padding: 10px;
-    color: gray;
-    font-size: 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    overflow: hidden;
+  height: 100%;
+  padding: 10px;
+  color: gray;
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  overflow: hidden;
 }
-.Question{
+.Question {
   word-wrap: break-word;
 }
-.ChoicesList{
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 10px;
+.ChoicesList {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 10px;
 }
 .ChoiceItem {
   padding: 5px;
@@ -36,11 +36,11 @@
   border-radius: 5px;
   cursor: pointer;
 }
-.ChoiceItem p{
+.ChoiceItem p {
   width: 100%;
   word-wrap: break-word;
 }
-.Selected{
+.Selected {
   background-color: green;
 }
 .SubmitBtn {
@@ -56,7 +56,7 @@
 .SubmitBtn:hover {
   background-color: rgb(134, 134, 191);
 }
-.NotFound{
+.NotFound {
   color: white;
   margin-top: 20px;
 }

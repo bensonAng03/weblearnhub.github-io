@@ -15,8 +15,6 @@ const NeedAuditor = (props) => {
                 if(data.role.type==="auditor"){
                     setIsAdmin(true)
                 }
-            } else {
-              console.error("Error:", response.error);
             }
           })
           .catch((error) => {

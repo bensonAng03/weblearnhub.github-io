@@ -42,7 +42,6 @@ const NoteCategory = ({ scope }) => {
         .then((response) => {
           const { data:noteData, isSuccess } = response;
           if (isSuccess) {
-            console.log(noteData)
             setNotesData(noteData);
             likeApi.getLikes()
             .then((response) => {
@@ -62,7 +61,7 @@ const NoteCategory = ({ scope }) => {
               }
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
             setIsSuccess(true);
           } else {
@@ -97,14 +96,11 @@ const NoteCategory = ({ scope }) => {
     noteApi
       .updateNote(noteDataTemp, noteIdParam)
       .then((response) => {
-        const { data, isSuccess } = response;
+        const {isSuccess } = response;
         if (isSuccess) {
           setIsEditNote(false);
           setNoteData("");
           fetchNotes();
-          console.log("Note updated successfully:", data);
-        } else {
-          console.error("Failed to update note:", data);
         }
       })
       .catch((error) => {
@@ -119,9 +115,6 @@ const NoteCategory = ({ scope }) => {
         const { isSuccess } = response;
         if (isSuccess) {
           fetchNotes();
-          console.log("Note deleted successfully");
-        } else {
-          console.error("Failed to delete note");
         }
       })
       .catch((error) => {
@@ -152,7 +145,6 @@ const NoteCategory = ({ scope }) => {
       let status=false;
       for(let item of isLikesList){
         if(item.id==id){
-          console.log(item)
           status=item.status
         }
       }
@@ -173,7 +165,6 @@ const NoteCategory = ({ scope }) => {
             .then((response) => {
               const { data, isSuccess } = response;
               if (isSuccess) {
-                console.log(data)
                 noteRankApi
                   .updateNoteRank(
                     {
@@ -183,11 +174,10 @@ const NoteCategory = ({ scope }) => {
                     data[0].id
                   )
                   .then((response) => {
-                    const { data, isSuccess } = response;
+                    const {isSuccess } = response;
                     if (isSuccess) {
                       updateTotalRank(authorId,"add")
                       fetchNotes();
-                      console.log(data);
                     }
                   })
                   .catch((error) => {
@@ -199,7 +189,6 @@ const NoteCategory = ({ scope }) => {
               console.error("Error:", error);
             });
         } else {
-          console.log("123")
           const likeData = await likeApi.getLikes(id);
           if (
             likeData.isSuccess &&
@@ -217,7 +206,6 @@ const NoteCategory = ({ scope }) => {
               .getNoteRankById(authorId,courseId)
               .then((response) => {
                 const { data, isSuccess } = response;
-                console.log(data);
                 if (isSuccess && data[0]?.attributes !== undefined) {
                   const newScore = +data[0].attributes.score - 150; // 取消点赞减 150 分
                   noteRankApi
@@ -229,9 +217,8 @@ const NoteCategory = ({ scope }) => {
                       data[0].id
                     )
                     .then((response) => {
-                      const { data, isSuccess } = response;
+                      const {isSuccess } = response;
                       if (isSuccess) {
-                        console.log(data);
                         updateTotalRank(authorId,"remove")
                         fetchNotes();
                       } else {
@@ -269,7 +256,6 @@ const NoteCategory = ({ scope }) => {
     }));
   };
   const toggleBarContainer = (noteId) => {
-    console.log(noteId);
     setBarContainers((prevEditContainers) => ({
       ...prevEditContainers,
       [noteId]: !prevEditContainers[noteId],

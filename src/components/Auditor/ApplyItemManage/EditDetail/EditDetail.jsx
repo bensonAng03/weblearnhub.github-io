@@ -10,7 +10,6 @@ const EditDetail = ({ id,itemId, authorId, type, rejectFn, toggleFn }) => {
   const [defaultChoices, setDefaultChoices] = useState([]);
   const [rejectReason, setRejectReason] = useState("");
   const chooseResponseInfoFn = (e) => {
-    console.log(e.target.textContent);
     let newChoices = [...defaultChoices];
     if (newChoices.length !== 0 && newChoices.includes(e.target.textContent)) {
       newChoices = newChoices.filter((choice) => choice !== e.target.textContent);
@@ -18,7 +17,6 @@ const EditDetail = ({ id,itemId, authorId, type, rejectFn, toggleFn }) => {
       newChoices.push(e.target.textContent);
     }
     setDefaultChoices(newChoices);
-    console.log(newChoices);
   };
   const handleRejectFeedback = () => {
     if (type=="reportCourse" || type=="reportNote") return
@@ -34,7 +32,6 @@ const EditDetail = ({ id,itemId, authorId, type, rejectFn, toggleFn }) => {
     if (rejectReason.trim() !== "" || defaultChoices.length !== 0) {
       let content = "";
       let choices = [...defaultChoices].join(",");
-      console.log(choices);
       if (rejectReason.trim()) {
         content = rejectReason.trim();
       }
@@ -58,7 +55,7 @@ const EditDetail = ({ id,itemId, authorId, type, rejectFn, toggleFn }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     } else {
       alert(

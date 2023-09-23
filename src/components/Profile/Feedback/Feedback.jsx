@@ -15,13 +15,12 @@ const Feedback = ({ navItem }) => {
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data);
           setIsResponseSuccess(true);
           setResponseData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   const fetchReport = () => {
@@ -35,7 +34,7 @@ const Feedback = ({ navItem }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   useEffect(() => {
@@ -123,7 +122,6 @@ const Feedback = ({ navItem }) => {
     ));
   };
   const deleteFn = () => {
-    console.log(selectItemIdArr.length);
     if (selectItemIdArr.length > 0) {
       let tempItemArr = [...selectItemIdArr];
       if (navItem === "response") {

@@ -13,7 +13,6 @@ import {
 import IssuanceApplicationForm from "../UI/IssuanceApplicationForm/IssuanceApplicationForm";
 import { applyApi } from "../../store/api/applyApi";
 import UpdateItemForm from "../UI/UpdateItemForm/UpdateItemForm";
-// let username = JSON.parse(localStorage.getItem("user"))?.username;
 let userId=JSON.parse(localStorage.getItem("user"))?.id;
 const Quizzes = () => {
   const [quizzes, setQuizzes] = useState({});
@@ -30,13 +29,11 @@ const Quizzes = () => {
   }, [courseType]);
   const fetchQuizzes = (type) => {
     setIsLoading(true);
-    console.log(type)
     quizApi
       .getQuizzes(type)
       .then((response) => {
         const { data, isSuccess } = response;
         if (isSuccess) {
-          console.log(data)
           setQuizzes(data);
           setIsLoading(false);
         } else {
@@ -56,11 +53,9 @@ const Quizzes = () => {
       quizApi
         .delQuiz(quizId)
         .then((response) => {
-          const { data, isSuccess } = response;
+          const {isSuccess } = response;
           if (isSuccess) {
             fetchQuizzes(courseType);
-          } else {
-            console.error("Error:", response.error);
           }
         })
         .catch((error) => {
@@ -74,8 +69,6 @@ const Quizzes = () => {
     }
   };
   const publishQuizFn = (quizId, status) => {
-    console.log(quizId);
-    console.log(status)
     if (status == "not_reviewed" || status == "rejected") {
       applyApi
         .addApply({
@@ -87,15 +80,13 @@ const Quizzes = () => {
           authorId:userId
         })
         .then((response) => {
-          const { data, isSuccess } = response;
+          const {isSuccess } = response;
           if (isSuccess) {
-            console.log("success1");
             quizApi
               .updateQuiz({ status: "pending" }, quizId)
               .then((response) => {
-                const { data, isSuccess } = response;
+                const { isSuccess } = response;
                 if (isSuccess) {
-                  console.log("success");
                   fetchQuizzes(courseType);
                 }
               });

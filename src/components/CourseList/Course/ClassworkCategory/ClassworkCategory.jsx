@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import classes from "./ClassworkCategory.module.css";
 import { Link, useParams } from "react-router-dom";
-import {assignmentApi} from "../../../../store/api/assignmentApi";
+import { assignmentApi } from "../../../../store/api/assignmentApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFile,
@@ -26,7 +26,9 @@ let username = JSON.parse(localStorage.getItem("user"))?.username;
 const ClassworkCategory = () => {
   const [assignmentsData, setAssignmentsData] = useState({});
   const [isSuccess, setIsSuccess] = useState({});
-  const [descriptions, setDescriptions] = useState([]);
+  const [descriptions, setDescriptions] = useState(
+    new Array(assignmentsData?.assignments?.data.length).fill(false)
+  );
   const [authorId, setAuthorId] = useState("");
   const [isShowFileUploader, setIsShowFileUploader] = useState(
     new Array(assignmentsData.assignments?.data.length).fill(false)
@@ -48,12 +50,6 @@ const ClassworkCategory = () => {
   useEffect(() => {
     getAssignments();
   }, [params.id]);
-  useEffect(() => {
-    // 初始化 showDescriptions 数组，长度与 assignmentsData.assignments.data 相同
-    setDescriptions(
-      Array(assignmentsData?.assignments?.data.length).fill(false)
-    );
-  }, [assignmentsData]);
   const getAssignments = () => {
     setIsUsernameArrSuccess(false);
     assignmentApi
@@ -92,9 +88,6 @@ const ClassworkCategory = () => {
                   submissionForUser = item.attributes.submission[userId]
                     ? item.attributes.submission[userId]
                     : null;
-                  console.log(item.attributes.submission);
-                  console.log(submissionForUser);
-                  console.log(item.attributes.submission[userId]);
                 }
                 return {
                   id: item.id,
@@ -115,17 +108,12 @@ const ClassworkCategory = () => {
                   submission: item.attributes.submission,
                 })
               );
-
-              // 删除item.attributes.submission[userId]
               allSubmission.forEach((item) => {
                 if (item.submission && item.submission[userId] !== undefined) {
                   delete item.submission[userId];
                 }
               });
-              // setSubmittedUserIdArr(allSubmission)
-
               setOtherPersonSubmission(allSubmission);
-              console.log(allSubmission);
             }
           }
 
@@ -188,7 +176,6 @@ const ClassworkCategory = () => {
         deleteAssetResponse = await assetApi.deleteAsset(item.id);
       }
     }
-    console.log(asset);
     if (asset.length == 0 || deleteAssetResponse?.isSuccess) {
       assignmentApi
         .delAssignment(id)
@@ -224,7 +211,7 @@ const ClassworkCategory = () => {
       mySubmission[index].submission = {
         [userId]: {
           username,
-          score:0,
+          score: 0,
           homework: files,
         },
       };
@@ -242,40 +229,27 @@ const ClassworkCategory = () => {
                 submission: item.attributes.submission,
               })
             );
-            console.log(tempAllSubmission);
-
-            // 删除item.attributes.submission[userId]
+            // To delete item.attributes.submission[userId]
             tempAllSubmission.forEach((item) => {
               if (item.submission && item.submission[userId] !== undefined) {
                 delete item.submission[userId];
               }
             });
-            console.log(tempAllSubmission);
             let tempSubmission = {
               ...tempAllSubmission[index].submission,
               ...mySubmission[index].submission,
             };
-            assignmentApi
-              .updateAssignment(
-                {
-                  submission: tempSubmission,
-                },
-                assignmentId
-              )
-              .then((response) => {
-                const { data, isSuccess } = response;
-                if (isSuccess) {
-                  console.log(data);
-                }
-              })
-              .catch((error) => {
-                console.error(error);
-              });
+            assignmentApi.updateAssignment(
+              {
+                submission: tempSubmission,
+              },
+              assignmentId
+            );
           }
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   const showUserListFn = (index) => {
@@ -293,7 +267,7 @@ const ClassworkCategory = () => {
     });
   };
   const showUserAssignmentFn = (assignmentsIndex, id) => {
-    if(previousAssignmentIndex!==null){
+    if (previousAssignmentIndex !== null) {
       setIsShowUserAssignment((prevState) => {
         const newState = [...prevState];
         newState[previousAssignmentIndex] = false;
@@ -305,7 +279,7 @@ const ClassworkCategory = () => {
       otherPersonSubmission[assignmentsIndex].submission[id]
     ) {
       setShowAssignmentByUserId(id);
-      setPreviousAssignmentIndex(assignmentsIndex)
+      setPreviousAssignmentIndex(assignmentsIndex);
       setIsShowUserAssignment((prevState) => {
         const newState = [...prevState];
         newState[assignmentsIndex] = true;
@@ -314,7 +288,6 @@ const ClassworkCategory = () => {
     }
   };
   const hideUserAssignmentFn = () => {
-
     if (showAssignmentByUserId) {
       setIsShowUserAssignment((prevState) => {
         const newState = [...prevState];
@@ -338,47 +311,38 @@ const ClassworkCategory = () => {
                 submission: item.attributes.submission,
               })
             );
-            let tempMySubmission=[]
-            // 删除item.attributes.submission[userId]
+            let tempMySubmission = [];
             tempAllSubmission.forEach((item) => {
-              if (item.submission && item.submission[showAssignmentByUserId] !== undefined) {
-                tempMySubmission={
-                  [showAssignmentByUserId]:{
+              if (
+                item.submission &&
+                item.submission[showAssignmentByUserId] !== undefined
+              ) {
+                tempMySubmission = {
+                  [showAssignmentByUserId]: {
                     ...item.submission[showAssignmentByUserId],
-                    score:e.target.value+"",
-                  }
-                }
+                    score: e.target.value + "",
+                  },
+                };
                 delete item.submission[showAssignmentByUserId];
               }
             });
-            console.log(tempMySubmission)
             let tempSubmission = {
               ...tempAllSubmission[index].submission,
               ...tempMySubmission,
             };
-            assignmentApi
-              .updateAssignment(
-                {
-                  submission: tempSubmission,
-                },
-                assignmentsId
-              )
-              .then((response) => {
-                const { data, isSuccess } = response;
-                if (isSuccess) {
-                  console.log(data);
-                }
-              })
-              .catch((error) => {
-                console.error(error);
-              });
+            assignmentApi.updateAssignment(
+              {
+                submission: tempSubmission,
+              },
+              assignmentsId
+            );
           }
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
-  }
+  };
   return (
     <>
       {isSuccess ? (
@@ -475,11 +439,13 @@ const ClassworkCategory = () => {
                         onClick={() => hideUserAssignmentFn()}
                         icon={faHome}
                       />
-                      <Link to={`/courses/${params.id}/publish/classwork/${assignmentsItem.id}`}>
-                      <FontAwesomeIcon
-                        className={classes.FaIcon}
-                        icon={faEdit}
-                      />
+                      <Link
+                        to={`/courses/${params.id}/publish/classwork/${assignmentsItem.id}`}
+                      >
+                        <FontAwesomeIcon
+                          className={classes.FaIcon}
+                          icon={faEdit}
+                        />
                       </Link>
                       <FontAwesomeIcon
                         className={classes.FaIcon}
@@ -493,45 +459,54 @@ const ClassworkCategory = () => {
                       />
                     </div>
                   ) : (
-                    
-                      <div className={classes.FlexBox}>
-                        <div className={classes.ScoreContainer}>Score:{mySubmission[assignmentsIndex]?.submission?.[
-                                  userId
-                                ]?.score}</div>
-                        <FontAwesomeIcon
-                          icon={faChevronDown}
-                          className={classes.FaIcon}
-                          onClick={() => showFileUploaderFn(assignmentsIndex)}
-                        />
-                        {isShowFileUploader[assignmentsIndex] == true && (
-                          <div
-                            className={classes.FileUploaderContainer}
-                            onMouseLeave={() =>
-                              hideFileUploaderFn(assignmentsIndex)
-                            }
-                          >
-                            <FileUploader
-                              type="small"
-                              // isPublish={false}
-                              getFilesInfo={getFilesInfo}
-                              data={
-                                mySubmission[assignmentsIndex]?.submission?.[
-                                  userId
-                                ]?.homework || null
-                              }
-                              assignmentId={mySubmission[assignmentsIndex].id}
-                              index={assignmentsIndex}
-                            />
-                          </div>
-                        )}
+                    <div className={classes.FlexBox}>
+                      <div className={classes.ScoreContainer}>
+                        Score:
+                        {
+                          mySubmission[assignmentsIndex]?.submission?.[userId]
+                            ?.score
+                        }
                       </div>
-                    
+                      <FontAwesomeIcon
+                        icon={faChevronDown}
+                        className={classes.FaIcon}
+                        onClick={() => showFileUploaderFn(assignmentsIndex)}
+                      />
+                      {isShowFileUploader[assignmentsIndex] == true && (
+                        <div
+                          className={classes.FileUploaderContainer}
+                          onMouseLeave={() =>
+                            hideFileUploaderFn(assignmentsIndex)
+                          }
+                        >
+                          <FileUploader
+                            type="small"
+                            // isPublish={false}
+                            getFilesInfo={getFilesInfo}
+                            data={
+                              mySubmission[assignmentsIndex]?.submission?.[
+                                userId
+                              ]?.homework || null
+                            }
+                            assignmentId={mySubmission[assignmentsIndex].id}
+                            index={assignmentsIndex}
+                          />
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
                 <div className={classes.BottomBox}>
                   {isShowUserAssignment[assignmentsIndex] ? (
-                  <div className={classes.ScoreInputContainer}>Score:<input type="number" onKeyUp={(e)=>handleMarkFn(assignmentsItem.id,assignmentsIndex,e)}/></div>
-                  
+                    <div className={classes.ScoreInputContainer}>
+                      Score:
+                      <input
+                        type="number"
+                        onKeyUp={(e) =>
+                          handleMarkFn(assignmentsItem.id, assignmentsIndex, e)
+                        }
+                      />
+                    </div>
                   ) : (
                     <>
                       {assignmentsItem.attributes.description && (
@@ -577,14 +552,8 @@ const ClassworkCategory = () => {
                                   className={classes.ClassworkImg}
                                   key={index}
                                 >
-                                  <Link
-                                    to={item.url}
-                                    target="_blank"
-                                  >
-                                  <img
-                                    src={item.url}
-                                    alt="Classwork Image"
-                                  />
+                                  <Link to={item.url} target="_blank">
+                                    <img src={item.url} alt="Classwork Image" />
                                   </Link>
                                 </div>
                               );
@@ -595,11 +564,11 @@ const ClassworkCategory = () => {
                                   key={index}
                                 >
                                   <Link to={item.url}>
-                                  <FontAwesomeIcon
-                                    icon={getIconByMime(item.mime)}
-                                    className={classes.FileIcon}
-                                  />
-                                  <p className={classes.Title}>{item.name}</p>
+                                    <FontAwesomeIcon
+                                      icon={getIconByMime(item.mime)}
+                                      className={classes.FileIcon}
+                                    />
+                                    <p className={classes.Title}>{item.name}</p>
                                   </Link>
                                 </div>
                               );
@@ -615,15 +584,9 @@ const ClassworkCategory = () => {
                                     className={classes.ClassworkImg}
                                     key={index}
                                   >
-                                    <img
-                                      src={item.url}
-                                      alt="Classwork Image"
-                                    />
+                                    <img src={item.url} alt="Classwork Image" />
 
-                                    <Link
-                                      to={item.url}
-                                      target="_blank"
-                                    >
+                                    <Link to={item.url} target="_blank">
                                       <FontAwesomeIcon
                                         icon={faExpand}
                                         className={classes.ExpandBtn}
@@ -637,9 +600,7 @@ const ClassworkCategory = () => {
                                     className={classes.ClassworkFile}
                                     key={index}
                                   >
-                                    <Link 
-                                      to={item.url}
-                                    >
+                                    <Link to={item.url}>
                                       <FontAwesomeIcon
                                         icon={getIconByMime(item.mime)}
                                         className={classes.FileIcon}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Card from "../../../UI/Card/Card";
 import classes from "./CourseCategory.module.css";
 import { Link, useParams } from "react-router-dom";
 import {topicApi} from "../../../../store/api/topicApi";
@@ -23,15 +22,11 @@ const CourseCategory = () => {
   const params = useParams();
   const [topicsData, setTopicsData] = useState({});
   const [isSuccess, setIsSuccess] = useState({});
-  const [descriptions, setDescriptions] = useState([]);
+  const [descriptions, setDescriptions] = useState(new Array(topicsData?.topics?.data.length).fill(false));
   const [authorId, setAuthorId] = useState("");
   useEffect(() => {
     getTopics();
   }, [params.id]);
-  useEffect(() => {
-    // 初始化 showDescriptions 数组，长度与 assignmentsData.assignments.data 相同
-    setDescriptions(Array(topicsData?.topics?.data.length).fill(false));
-  }, [topicsData]);
   const getTopics = () => {
     topicApi
       .getTopicsById(params.id)
@@ -41,14 +36,12 @@ const CourseCategory = () => {
           setTopicsData(data.attributes);
           setAuthorId(data.attributes.authorId)
           setIsSuccess(true);
-        } else {
-          console.error("Error:", response.error);
-          setTopicsData({});
-          setIsSuccess(false);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
+        setTopicsData({});
+        setIsSuccess(false);
       });
   };
   const getIconByMime = (mime) => {
@@ -118,10 +111,9 @@ const CourseCategory = () => {
       {isSuccess ? (
         topicsData.topics?.data.length !== 0 ? (
           topicsData.topics?.data.map((topicsItem, topicsIndex) => (
-            <Card
+            <div
               className={classes.CourseContainer}
               key={topicsIndex}
-              shadow="false"
             >
               <div className={classes.TopBox}>
                 <h2 className={classes.CourseTitle}>
@@ -208,7 +200,7 @@ const CourseCategory = () => {
                   </div>
                 )}
               </div>
-            </Card>
+            </div>
           ))
         ) : (
           <div className={classes.NotResourse}>

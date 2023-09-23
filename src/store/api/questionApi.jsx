@@ -1,27 +1,25 @@
-import axios from 'axios';
+import axios from "axios";
 
-const baseURL = 'https://fyp-my-strapi.onrender.com/api/';
+const baseURL = "https://fyp-my-strapi.onrender.com/api/";
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
 export const questionApi = {
   getQuestionsById: async (id) => {
     try {
-        const response = await axios.get(
-          `${baseURL}quizzes/${id}?populate=questions`,
-          { headers }
-        );
-      
+      const response = await axios.get(
+        `${baseURL}quizzes/${id}?populate=questions`,
+        { headers }
+      );
+
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   addQuestion: async (questionData) => {
@@ -34,15 +32,13 @@ export const questionApi = {
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
-  updateQuestion: async (questionData,id) => {
+  updateQuestion: async (questionData, id) => {
     try {
       const response = await axios.put(
         `${baseURL}questions/${id}`,
@@ -52,26 +48,24 @@ export const questionApi = {
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   delQuestion: async (id) => {
     try {
-      const response = await axios.delete(`${baseURL}questions/${id}`,{headers});
+      const response = await axios.delete(`${baseURL}questions/${id}`, {
+        headers,
+      });
       return {
         isSuccess: true,
         data: response.data.data,
-      }
-    } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response ? error.response.data.error.message : error.message,
       };
+    } catch (error) {
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
 };

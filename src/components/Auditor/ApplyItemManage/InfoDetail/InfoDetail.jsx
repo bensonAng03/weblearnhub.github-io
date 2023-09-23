@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./InfoDetail.module.css";
 import { topicApi } from "../../../../store/api/topicApi";
 import { assignmentApi } from "../../../../store/api/assignmentApi";
-import { quizApi } from "../../../../store/api/quizApi";
 import { noteApi } from "../../../../store/api/noteApi";
 import Backdrop from "../../../UI/Backdrop/Backdrop";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,10 +21,8 @@ import { Link } from "react-router-dom";
 import { questionApi } from "../../../../store/api/questionApi";
 
 const InfoDetail = ({ type, id, closeFn }) => {
-  console.log(id)
   const [assignmentsData, setAssignmentsData] = useState([]);
   const [topicsData, setTopicsData] = useState([]);
-  // const [questionsData, setQuestionsData] = useState([]);
   const [itemsData, setItemsData] = useState([]);
   const [item, setItem] = useState([]);
   const [itemType, setItemType] = useState("");
@@ -35,7 +32,6 @@ const InfoDetail = ({ type, id, closeFn }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
     setIsLoading(true);
-    console.log(type);
     switch (type) {
       case "deleteCourse":
       case "changeCoursePrice":
@@ -47,23 +43,19 @@ const InfoDetail = ({ type, id, closeFn }) => {
           .then((response) => {
             if (response.isSuccess) {
               setItem(response.data);
-              console.log(response.data);
               if (response.data.attributes.topics.data.length != 0) {
-                console.log("has topic");
-                console.log(response.data.attributes.topics.data);
                 setTopicsData(response.data.attributes.topics.data);
               }
             }
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
           });
         assignmentApi
           .getAssignmentsById(id)
           .then((response) => {
             if (response.isSuccess) {
               if (response.data.attributes.assignments.data.length != 0) {
-                console.log("has assignment");
                 setAssignmentsData(response.data.attributes.assignments.data);
               }
               setIsSuccess(true);
@@ -71,7 +63,7 @@ const InfoDetail = ({ type, id, closeFn }) => {
             }
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
             setIsLoading(false);
           });
         break;
@@ -82,13 +74,11 @@ const InfoDetail = ({ type, id, closeFn }) => {
           .getQuestionsById(id)
           .then((response) => {
             if (response.isSuccess) {
-              console.log(response.data);
               setItem(response.data);
               if (
                 response.data.attributes.questions &&
                 response.data.attributes.questions.data.length !== 0
               ) {
-                console.log(response.data.attributes.questions.data.length)
                 setItemsData(response.data.attributes.questions.data);
               }
               setIsSuccess(true);
@@ -96,7 +86,7 @@ const InfoDetail = ({ type, id, closeFn }) => {
             }
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
             setIsLoading(false);
           });
         break;
@@ -106,15 +96,13 @@ const InfoDetail = ({ type, id, closeFn }) => {
           .getNoteById(id)
           .then((response) => {
             if (response.isSuccess) {
-              console.log(response.data);
               setItem(response.data);
-              console.log(response.data);
               setIsSuccess(true);
               setIsLoading(false);
             }
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
             setIsLoading(false);
           });
         break;
@@ -247,7 +235,6 @@ const InfoDetail = ({ type, id, closeFn }) => {
     ) : assignmentsData && assignmentsData.length > 0 ? (
       assignmentsData.map((assignmentItem, assignmentIndex) => (
         <li key={assignmentIndex}>
-          {console.log("assignment")}
           <p>{assignmentItem.attributes.title}</p>
           <p
             className={
@@ -312,7 +299,6 @@ const InfoDetail = ({ type, id, closeFn }) => {
         {itemsData.map((questionItem, questionIndex) => (
           <li key={questionIndex}>
             <p>{questionItem.attributes.title}</p>
-            {console.log(questionItem.attributes)}
             <ul className={classes.ChoiceItemContainer}>
               {questionItem.attributes.choices.data.map((item, index) => (
                 <li

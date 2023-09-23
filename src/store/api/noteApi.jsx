@@ -21,12 +21,8 @@ export const noteApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getNotesByUserId: async (id) => {
@@ -41,12 +37,8 @@ export const noteApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   getNoteById: async (id) => {
@@ -57,12 +49,8 @@ export const noteApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   addNote: async (noteData) => {
@@ -77,12 +65,8 @@ export const noteApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   updateNote: async (noteData, id) => {
@@ -97,12 +81,8 @@ export const noteApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
   delNote: async (id) => {
@@ -113,12 +93,8 @@ export const noteApi = {
         data: response.data.data,
       };
     } catch (error) {
-      return {
-        isSuccess: false,
-        error: error.response
-          ? error.response.data.error.message
-          : error.message,
-      };
+      const errorMessage = error.response.data.error.message;
+      throw new Error(errorMessage);
     }
   },
 };

@@ -44,7 +44,6 @@ const PublishPage = () => {
     }
   };
   const getFilesInfo = (files) => {
-    console.log(files)
     setAsset(files);
   };
   const closePublishModal = () => {
@@ -52,9 +51,8 @@ const PublishPage = () => {
   };
   const publishSomething = () => {
     if (title === "") {
-      console.log("Title cannot be empty!");
+      alert("Title cannot be empty!");
     }
-    console.log(itemId)
     if (itemId != 0) {
       if (type == "course") {
         topicApi

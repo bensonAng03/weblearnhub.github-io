@@ -9,7 +9,6 @@ import Backdrop from '../../../../UI/Backdrop/Backdrop';
 
 const TextCompiler = ({addNote, updateNote,closeNote, data, username, userId}) => {
   const params = useParams();
-  console.log(params.id)
   let noteData = "";
   const editorRef = useRef(null);
   const addNoteFn = () => {
@@ -21,7 +20,7 @@ const TextCompiler = ({addNote, updateNote,closeNote, data, username, userId}) =
     noteData = "";
   }
 
-  const handleEditorChange = (content, editor) => {
+  const handleEditorChange = (content) => {
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd');
     noteData = {

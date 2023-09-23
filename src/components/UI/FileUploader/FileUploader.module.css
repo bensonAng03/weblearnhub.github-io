@@ -25,7 +25,7 @@
   }
   
   .LessFile {
-    width: 87%; /* 改成100%以适应不同大小的容器 */
+    width: 87%; 
   }
   
   .FileIcon {

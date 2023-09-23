@@ -1,4 +1,3 @@
-import React from "react";
 import Backdrop from "../../UI/Backdrop/Backdrop";
 import classes from "./RechargePage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
