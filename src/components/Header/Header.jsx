@@ -9,18 +9,20 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(()=>{
-    userApi.getUserById(userId)
-    .then((response)=>{
-      const {isSuccess,data}=response
-      if(isSuccess){
-        if(data.avatar){
-          setAvatarUrl(data.avatar.url)
+    if(userId){
+      userApi.getUserById(userId)
+      .then((response)=>{
+        const {isSuccess,data}=response
+        if(isSuccess){
+          if(data.avatar){
+            setAvatarUrl(data.avatar.url)
+          }
         }
-      }
-    })
-    .catch((error)=>{
-      console.error(error)
-    })
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    }
   },[])
   useEffect(() => {
     if (location.pathname.startsWith("/live/")) {
