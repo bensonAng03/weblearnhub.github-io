@@ -79,12 +79,12 @@ const Course = () => {
     setIsReportCourse(!isReportCourse);
   };
   const toggleChargeFn = () => {
-    setIsRecharge((prevState) => !prevState);
+    setIsRecharge(!isRecharge);
   };
   const rechargedFn = (price) => {
     setRechargePrice(price);
-    setIsRecharge((prevState) => !prevState);
-    setIsShowPayment((prevState) => !prevState);
+    setIsRecharge(!isRecharge);
+    setIsShowPayment(!isShowPayment);
     toggleChargeFn();
   };
   const toggleShowPaymentFn = () => {
