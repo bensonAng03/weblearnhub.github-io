@@ -137,13 +137,15 @@ const Info = () => {
         }
       }
       if (courseData.isSuccess && courseData.data.length !== 0) {
-        courseApi.updateCourse(
-          {
-            author: data.username || courseData.data[0].username,
-            avatar: data.avatar || courseData.data[0].avatar,
-          },
-          courseData.data[0].id
-        );
+        for (const item of courseData.data) {
+          courseApi.updateCourse(
+            {
+              author: data.username || courseData.data[0].username,
+              avatar: data.avatar || courseData.data[0].avatar,
+            },
+            item.id
+          );
+        }
       }
     } catch (err) {
       console.error(err);
