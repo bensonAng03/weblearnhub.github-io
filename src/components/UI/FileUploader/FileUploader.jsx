@@ -98,7 +98,7 @@ const FileUploader = ({
             const uploadedFile = {
               name: file.name,
               mime: data[0].mime,
-              url: data[0].url,
+              url:"https://fyp-my-strapi.onrender.com"+ data[0].url,
               id: data[0].id,
             };
             const newFile = [...files, uploadedFile];

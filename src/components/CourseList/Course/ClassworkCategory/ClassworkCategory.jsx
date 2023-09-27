@@ -15,7 +15,6 @@ import {
   faTrash,
   faEdit,
   faChevronDown,
-  faExpand,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import FileUploader from "../../../UI/FileUploader/FileUploader";
