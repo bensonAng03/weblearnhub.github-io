@@ -1,4 +1,4 @@
-.Invoice{
+.Receipt{
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
@@ -7,7 +7,7 @@
   position: relative;
   line-height: 25px;
 }
-.Invoice h3{
+.Receipt h3{
   color: rgb(0, 105, 147);
 }
 .PaymentForm {

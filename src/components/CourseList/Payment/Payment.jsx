@@ -13,6 +13,7 @@ let discountPrice;
 let calculatedPrice;
 let usedPoint;
 let result = {};
+let originPrice;
 const Payment = ({
   fetchFn=null,
   courseName,
@@ -24,6 +25,7 @@ const Payment = ({
   closeFn,
   price = 0,
 }) => {
+  const [originPrice,setOriginPirce]=useState(price!==0 && price)
   const [cardNumber, setCardNumber] = useState("");
   const [nameOnCard, setNameOnCard] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -278,16 +280,16 @@ const Payment = ({
   return (
     <Backdrop>
       {isShowInvoice ? (
-        <div className={classes.Invoice}>
+        <div className={classes.Receipt}>
           <FontAwesomeIcon
             icon={faXmark}
             className={classes.CloseBtn}
             onClick={closeFn}
           />
-          <h3>Invoice</h3>
-          <p>Invoice Date: {new Date().toLocaleString()}</p>
+          <h3>Receipt</h3>
+          <p>Receipt Date: {new Date().toLocaleString()}</p>
           <p>Recipient: {username}</p>
-          <hr />
+          <hr/>
           <h3>Items</h3>
           <ul>
             <li>
@@ -295,8 +297,8 @@ const Payment = ({
                 ? `Point(${calculatedPoint(+price)})`
                 : capitalizeFirstLetter(courseName)}
               : 1 * RM
-              {calculatedPrice} = RM
-              {calculatedPrice}
+              {originPrice} = RM
+              {originPrice}
             </li>
             {type !== "recharge" && (
               <li>

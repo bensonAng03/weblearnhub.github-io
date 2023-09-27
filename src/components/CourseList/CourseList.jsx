@@ -19,6 +19,7 @@ import RechargePage from "./RechargePage/RechargePage";
 import { userApi } from "../../store/api/userApi";
 import { updatePoint } from "../../store/reducer/pointSlice";
 import { useDispatch } from "react-redux";
+import ConfirmModal from "../UI/ConfirmModal/ConfirmModal";
 
 let userId = JSON.parse(localStorage.getItem("user"))?.id;
 let username = JSON.parse(localStorage.getItem("user"))?.username;
@@ -40,6 +41,7 @@ const CourseList = () => {
   const [rechargePrice, setRechargePrice] = useState(0);
   const [point, setPoint] = useState(0);
   const [courseTitle, setCourseTitle] = useState("");
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const dispatch=useDispatch();
   useEffect(() => {
@@ -109,17 +111,8 @@ const CourseList = () => {
   };
   const deleteCourseFn = (courseId, status = "") => {
     if (status == "not_reviewed" || status == "rejected") {
-      courseApi
-        .delCourse(courseId)
-        .then((response) => {
-          const {isSuccess } = response;
-          if (isSuccess) {
-            fetchCourse(courseType);
-          } 
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        toggleShowDeleteModal()
+        setApplyCourseId(courseId);
     } else if (status == "approved") {
       setApplyCourseId(courseId);
       setIsDeleteCourse(true);
@@ -127,6 +120,23 @@ const CourseList = () => {
       setIsDeleteCourse(!isDeleteCourse);
     }
   };
+  const toggleShowDeleteModal=()=>{
+      setIsShowDeleteModal(!isShowDeleteModal)
+  }
+  const confirmDeleteCourseFn=()=>{
+    courseApi
+    .delCourse(applyCourseId)
+    .then((response) => {
+      const {isSuccess } = response;
+      if (isSuccess) {
+        fetchCourse(courseType);
+        setIsShowDeleteModal(false)
+      } 
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  }
   const handleSearchInputChange = (event) => {
     setSearchKeyword(event.target.value);
   };
@@ -211,6 +221,10 @@ const CourseList = () => {
   };
   return (
     <div className={classes.CourseListOuter}>
+      {
+        isShowDeleteModal && <ConfirmModal deleteFn={confirmDeleteCourseFn} toggleFn={toggleShowDeleteModal} message={`Are you sure you want to delete the course?`}/>
+
+      }
       <div className={classes.FunctionContainer}>
         <div className={classes.LeftContainer}>
           <input

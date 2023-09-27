@@ -67,13 +67,3 @@
   justify-content: space-evenly;
   margin: 0 10px;
 }
-/* .FormModel .error{
-    color: red;
-    margin-top: 0;
-}
-.FormModel .error::before{
-    line-height: 15px;
-    font-size: 16px;
-    color: red;
-    content: "Password and confirm password are different!  ";
-} */

@@ -4,7 +4,7 @@ import classes from './ProfileNavbar.module.css';
 const Navbar = ({getNavItem}) => {
   const navItems = [
     { id: 'info', label: 'Info' },
-    { id: 'response', label: 'Response' },
+    { id: 'response', label: 'Feedback' },
     { id: 'report', label: 'Report' },
   ];
 

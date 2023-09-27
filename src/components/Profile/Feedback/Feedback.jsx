@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { responseApi } from "../../../store/api/responseApi";
 import { reportApi } from "../../../store/api/reportApi";
 import classes from "./Feedback.module.css";
+import ConfirmModal from "../../UI/ConfirmModal/ConfirmModal";
+// import Backdrop from "../../UI/Backdrop/Backdrop";
 const Feedback = ({ navItem }) => {
   const [feedbackData, setResponseData] = useState([]);
   const [reportData, setReportData] = useState([]);
@@ -9,6 +11,7 @@ const Feedback = ({ navItem }) => {
   const [isReportSuccess, setIsResportSuccess] = useState(false);
   const [selectItemIdArr, setSelectItemIdArr] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const fetchResponse = () => {
     responseApi
       .getResponsesByUserId()
@@ -130,6 +133,7 @@ const Feedback = ({ navItem }) => {
             if (res.isSuccess) {
               tempItemArr = tempItemArr.filter((itemId) => itemId !== item);
               setSelectItemIdArr(tempItemArr);
+              setIsShowDeleteModal(!isShowDeleteModal)
               fetchResponse();
             }
           });
@@ -140,6 +144,7 @@ const Feedback = ({ navItem }) => {
             if (res.isSuccess) {
               tempItemArr = tempItemArr.filter((itemId) => itemId !== item);
               setSelectItemIdArr(tempItemArr);
+              setIsShowDeleteModal(!isShowDeleteModal)
               fetchReport();
             }
           });
@@ -147,11 +152,21 @@ const Feedback = ({ navItem }) => {
       }
     }
   };
+  const toggleShowDeleteModal=()=>{
+    if (selectItemIdArr.length > 0) {
+
+      setIsShowDeleteModal(!isShowDeleteModal)
+    }
+  }
   return (
     <div className={classes.Feedback}>
+      {
+        isShowDeleteModal && <ConfirmModal deleteFn={deleteFn} toggleFn={toggleShowDeleteModal} message={`Are you sure you want to delete the ${navItem=="response" ? "feedback" : "report" } messages?`}/>
+
+      }
       <div className={classes.BtnContainer}>
       <button onClick={selectAllFn}>Select all</button>
-      <button onClick={deleteFn}>Delete</button>
+      <button onClick={toggleShowDeleteModal}>Delete</button>
       </div>
       <div>
         {(isResponseSuccess || isReportSuccess) &&

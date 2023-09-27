@@ -481,7 +481,6 @@ const ClassworkCategory = () => {
                         >
                           <FileUploader
                             type="small"
-                            // isPublish={false}
                             getFilesInfo={getFilesInfo}
                             data={
                               mySubmission[assignmentsIndex]?.submission?.[
@@ -584,12 +583,10 @@ const ClassworkCategory = () => {
                                     className={classes.ClassworkImg}
                                     key={index}
                                   >
-                                    <img src={item.url} alt="Classwork Image" />
-
                                     <Link to={item.url} target="_blank">
-                                      <FontAwesomeIcon
-                                        icon={faExpand}
-                                        className={classes.ExpandBtn}
+                                      <img
+                                        src={item.url}
+                                        alt="Classwork Image"
                                       />
                                     </Link>
                                   </div>
